@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
   
+  <!-- QR 생성 및 PDF 변환 CDN 라이브러리 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -34,7 +35,7 @@
     }
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
 
-    /* 상단 타이틀 (크기 확대) */
+    /* 상단 타이틀 디자인 */
     header.main-header {
       text-align: center;
       padding: 36px 14px 16px;
@@ -49,14 +50,14 @@
     }
     header.main-header h1 {
       font-family: 'Gaegu', cursive;
-      font-size: 42px; /* 제목 크기 대폭 확대 */
+      font-size: 42px;
       font-weight: 700;
       color: #3F3323;
       line-height: 1.25;
       margin-bottom: 8px;
     }
     header.main-header .desc {
-      font-size: 16px; /* 설명 크기 확대 */
+      font-size: 16px;
       color: #554A3B;
       margin-bottom: 8px;
       font-weight: 500;
@@ -76,9 +77,9 @@
       font-weight: 700;
     }
 
-    /* 빨랫줄 그리드 (폭 및 카드 크기 확대) */
+    /* 빨랫줄 그리드 */
     .clothesline-wrap {
-      max-width: 960px; /* 전체 보드 가로폭 확장 */
+      max-width: 960px;
       margin: 0 auto;
       padding: 10px 18px 120px;
     }
@@ -101,7 +102,7 @@
     .row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px; /* 카드 간격 확대 */
+      gap: 18px;
       padding: 0 4px;
     }
     .pin {
@@ -135,7 +136,7 @@
       box-shadow: 0 1px 3px rgba(70,50,20,.3);
     }
     
-    /* 카드 본체 크기 및 글자 확대 */
+    /* 카드 디자인 */
     .card {
       background: var(--card);
       padding: 12px;
@@ -146,14 +147,14 @@
     }
     .card:hover { transform: translateY(-3px); }
     .card .ph {
-      height: 135px; /* 카드 높이 확대 (108px -> 135px) */
+      height: 135px;
       border-radius: 2px;
       display: flex;
       align-items: flex-end;
       padding: 12px;
       overflow: hidden;
       font-family: 'Gaegu', cursive;
-      font-size: 17.5px; /* 본문 글자 크기 확대 (15px -> 17.5px) */
+      font-size: 17.5px;
       line-height: 1.48;
       color: #382F24;
     }
@@ -166,7 +167,7 @@
     }
     .card .nm {
       font-family: 'Gaegu', cursive;
-      font-size: 19px; /* 이름 크기 확대 (16.5px -> 19px) */
+      font-size: 19px;
       font-weight: 700;
       margin-top: 10px;
       color: #4A3F2F;
@@ -280,7 +281,7 @@
     table.stat-table th, table.stat-table td { border: 1px solid var(--line); padding: 8px; text-align: center; }
     table.stat-table th { background: #F8F5EE; }
 
-    /* 상세 읽기 및 삭제 모달창 */
+    /* 상세 읽기 및 모달 */
     .modal-dim {
       position: fixed;
       inset: 0;
@@ -302,10 +303,31 @@
       border: 1px solid var(--line);
       position: relative;
     }
-    .modal-card .who { font-family: 'Gaegu', cursive; font-size: 24px; color: #4A3F2F; margin-bottom: 12px; border-bottom: 1px dashed var(--line); padding-bottom: 8px; }
-    .modal-card .body { font-family: 'Gaegu', cursive; font-size: 22px; line-height: 1.6; color: #382F24; white-space: pre-wrap; margin-bottom: 20px; }
+    .modal-card .who {
+      font-family: 'Gaegu', cursive;
+      font-size: 24px;
+      color: #4A3F2F;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed var(--line);
+      padding-bottom: 8px;
+    }
+    .modal-card .body {
+      font-family: 'Gaegu', cursive;
+      font-size: 22px;
+      line-height: 1.6;
+      color: #382F24;
+      white-space: pre-wrap;
+      margin-bottom: 20px;
+    }
     .modal-actions { display: flex; gap: 8px; }
-    .modal-actions button { flex: 1; height: 44px; border-radius: 10px; font-weight: 700; border: 1px solid var(--line); cursor: pointer; }
+    .modal-actions button {
+      flex: 1;
+      height: 44px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      cursor: pointer;
+    }
     .btn-delete { background: #FDF2F0; color: var(--err); border-color: #F8D3CE !important; }
 
     #pdfRenderArea { display: none; background: #fff; padding: 30px; color: #000; }
@@ -449,8 +471,9 @@ let isFirstLoad = true;
 let selectedMsg = null;
 const ROW_COUNT = 3;
 
+// localStorage를 이용한 관리자 세션 체크
 function isAdmin() {
-  return sessionStorage.getItem('is_admin_logged') === 'true';
+  return localStorage.getItem('is_admin_logged') === 'true';
 }
 
 function tone(id) {
@@ -487,12 +510,12 @@ if (mode === 'admin') {
   initStudent();
 }
 
-// ──────────────── 관리자 인증 ────────────────
+// ──────────────── 관리자 인증 (localStorage 사용) ────────────────
 document.getElementById('btnLogin').onclick = function() {
   const id = document.getElementById('admIdInput').value.trim();
   const pw = document.getElementById('admPwInput').value.trim();
   if (id === ADMIN_ID && pw === ADMIN_PW) {
-    sessionStorage.setItem('is_admin_logged', 'true');
+    localStorage.setItem('is_admin_logged', 'true');
     document.getElementById('adminLoginView').style.display = 'none';
     document.getElementById('adminView').style.display = 'block';
     loadAdminDashboard();
@@ -503,7 +526,7 @@ document.getElementById('btnLogin').onclick = function() {
 };
 
 function adminLogout() {
-  sessionStorage.removeItem('is_admin_logged');
+  localStorage.removeItem('is_admin_logged');
   location.reload();
 }
 
@@ -684,7 +707,7 @@ function openDetailModal(id) {
   document.getElementById('mWho').innerText = `${msg.name} (${msg.student_id})`;
   document.getElementById('mBody').innerText = msg.message;
 
-  // 관리자로 로그인된 경우에만 삭제 버튼 노출
+  // 관리자 권한이 있는 브라우저에서만 삭제 버튼 표시
   const delBtn = document.getElementById('mDeleteBtn');
   if (isAdmin()) {
     delBtn.style.display = 'block';
@@ -701,7 +724,8 @@ function closeModal() {
 }
 
 function deleteCurrentMessage() {
-  if (!selectedMsg) return;
+  if (!selectedMsg || !isAdmin()) return;
+
   if (!confirm(`'${selectedMsg.name}' 학생의 글을 삭제하시겠습니까?`)) return;
 
   fetch(API_URL, {
@@ -717,7 +741,7 @@ function deleteCurrentMessage() {
     if (!res.ok) throw new Error(res.error);
     alert('게시물이 삭제되었습니다.');
     closeModal();
-    // 목록 갱신
+    // 화면 및 배열에서 즉시 제거
     allLetters = allLetters.filter(x => x.id !== selectedMsg.id);
     renderClothesline(allLetters);
     document.getElementById('dispMeta').innerHTML = `지금까지 <b>${allLetters.length}</b>장이 걸렸습니다`;
