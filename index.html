@@ -923,11 +923,15 @@ function exitSlideShow() {
   resetActivity();
 }
 
-// ──────────────── 3. 상세 모달 및 삭제 ────────────────
+// ──────────────── 3. 상세 모달 및 삭제 (수정) ────────────────
+let selectedMsgId = null; // 객체 대신 확실한 ID 문자열을 직접 보관
+
 function openDetailModal(id) {
   const msg = allLetters.find(x => x.id === id);
   if (!msg) return;
+  
   selectedMsg = msg;
+  selectedMsgId = id; // 대상 ID를 별도 저장
 
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   document.getElementById('mWho').innerText = `${msg.name} (${subInfo})`;
@@ -946,27 +950,47 @@ function openDetailModal(id) {
 function closeModal() {
   document.getElementById('detailModal').hidden = true;
   selectedMsg = null;
+  selectedMsgId = null;
 }
 
 function deleteCurrentMessage() {
-  if (!selectedMsg || !isAdmin()) return;
-  if (!confirm(`'${selectedMsg.name}'님의 글을 삭제하시겠습니까?`)) return;
+  // selectedMsgId를 직접 검사하여 안전하게 처리
+  if (!selectedMsgId || !isAdmin()) {
+    return alert('삭제할 대상을 찾을 수 없거나 관리자 권한이 없습니다.');
+  }
+
+  const targetId = selectedMsgId;
+  const authorName = selectedMsg ? selectedMsg.name : '해당';
+
+  if (!confirm(`'${authorName}'님의 글을 삭제하시겠습니까?`)) return;
+
+  const delBtn = document.getElementById('mDeleteBtn');
+  delBtn.disabled = true;
+  delBtn.innerText = '삭제 중...';
 
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action: 'deleteMessage', id: selectedMsg.id })
+    body: JSON.stringify({ action: 'deleteMessage', id: targetId })
   })
   .then(r => r.json())
   .then(res => {
     if (!res.ok) throw new Error(res.error);
-    alert('게시물이 삭제되었습니다.');
+    alert('게시물이 정상적으로 삭제되었습니다.');
     closeModal();
-    allLetters = allLetters.filter(x => x.id !== selectedMsg.id);
+    // 배열 및 화면에서 즉시 제거
+    allLetters = allLetters.filter(x => x.id !== targetId);
+    lastKnownIds.delete(targetId);
     renderClothesline(allLetters);
     document.getElementById('dispMeta').innerHTML = `지금까지 <b>${allLetters.length}</b>장이 걸렸습니다`;
   })
-  .catch(err => alert('삭제 실패: ' + err.message));
+  .catch(err => {
+    alert('삭제 실패: ' + err.message);
+  })
+  .finally(() => {
+    delBtn.disabled = false;
+    delBtn.innerText = '이 게시물 삭제';
+  });
 }
 
 // ──────────────── 4. 대시보드 관리 ────────────────
