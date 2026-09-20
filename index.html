@@ -34,7 +34,6 @@
     }
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
 
-    /* 상단 헤더 */
     header.main-header {
       text-align: center;
       padding: 36px 14px 16px;
@@ -76,7 +75,6 @@
       font-weight: 700;
     }
 
-    /* 대상자 뱃지 */
     .role-badge-header {
       display: inline-block;
       margin-bottom: 8px;
@@ -89,7 +87,6 @@
     .role-teacher { background: #F7E4E9; color: #8C354F; }
     .role-parent { background: #F7EFE4; color: #8C6235; }
 
-    /* 빨랫줄 그리드 */
     .clothesline-wrap {
       max-width: 960px;
       margin: 0 auto;
@@ -148,7 +145,6 @@
       box-shadow: 0 1px 3px rgba(70,50,20,.3);
     }
     
-    /* 카드 디자인 */
     .card {
       background: var(--card);
       padding: 12px;
@@ -196,14 +192,12 @@
       color: var(--sub);
     }
 
-    /* 학년별 테마 */
     .t-grade1 { background: linear-gradient(160deg, #FDF2D9, #F7E2B5); }
     .t-grade2 { background: linear-gradient(160deg, #DDF3E4, #C2E7CD); }
     .t-grade3 { background: linear-gradient(160deg, #DFE6F7, #C6D4F2); }
     .t-teacher { background: linear-gradient(160deg, #FBE0E7, #F5C6D3); }
     .t-parent { background: linear-gradient(160deg, #EFE6D8, #DFD1BE); }
 
-    /* 새 글 중앙 팝업 */
     .popup-focus {
       position: fixed !important;
       top: 50% !important;
@@ -220,7 +214,6 @@
       to { opacity: 1; transform: translate(-50%, -50%) scale(1.6); }
     }
 
-    /* 5분 미입력 시 하이라이트 슬라이드 카드 */
     .slide-highlight-card {
       position: fixed !important;
       top: 50% !important;
@@ -252,7 +245,6 @@
       letter-spacing: 0.05em;
     }
 
-    /* 우하단 고정 QR */
     .floating-qr {
       position: fixed;
       right: 24px;
@@ -273,7 +265,6 @@
       margin-top: 7px;
     }
 
-    /* 폼 스타일 */
     .form-box {
       background: #fff;
       border-radius: 16px;
@@ -397,7 +388,7 @@
 </head>
 <body>
 
-<!-- 1. 작성 화면 -->
+<!-- 1. 작성 화면 (학생, 교사, 학부모) -->
 <div id="writeView" class="wrap" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -452,7 +443,6 @@
     <div class="qr-tip">스마트폰으로 글 남기기</div>
   </div>
 
-  <!-- 5분 이상 미입력 시 슬라이드 쇼 영역 -->
   <div id="screensaverArea" style="display:none;">
     <div class="slide-backdrop" onclick="exitSlideShow()">
       ✨ 따뜻한 응원의 마음들을 전해드립니다 (화면을 누르면 보드로 돌아갑니다)
@@ -461,7 +451,7 @@
   </div>
 </div>
 
-<!-- 3. 관리자 로그인 화면 -->
+<!-- 3. 관리자 로그인 화면 (기본 접속 시 노출) -->
 <div id="adminLoginView" class="wrap" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -545,8 +535,8 @@ const ADMIN_ID = 'admin';
 const ADMIN_PW = '7895301';
 
 const qs = new URLSearchParams(location.search);
-const mode = qs.get('mode');
-const roleParam = qs.get('role') || 'student';
+const modeParam = qs.get('mode');
+const roleParam = qs.get('role');
 const paramTopicId = qs.get('topic');
 
 let activeTopic = null;
@@ -557,13 +547,13 @@ let selectedMsg = null;
 const ROW_COUNT = 3;
 
 // ── 5분 미입력 슬라이드 및 자동 스크롤 변수 ──
-const IDLE_LIMIT = 5 * 60 * 1000; // 5분
+const IDLE_LIMIT = 5 * 60 * 1000;
 let lastActivityTime = Date.now();
 let isSlideShowActive = false;
 let slideIndex = 0;
 let slideTimer = null;
 let autoScrollInterval = null;
-let scrollDirection = 1; // 1: 아래로, -1: 위로
+let scrollDirection = 1;
 let userInteracting = false;
 
 function isAdmin() {
@@ -588,13 +578,31 @@ function getBaseUrl() {
 
 function formatPeriodText(start, end) {
   if (!start && !end) return '';
-  const sStr = start ? start.slice(0, 10) : '시작일 미지정';
-  const eStr = end ? end.slice(0, 10) : '마감일 미지정';
+  const sStr = start ? String(start).slice(0, 10) : '시작일 미지정';
+  const eStr = end ? String(end).slice(0, 10) : '마감일 미지정';
   return `작성 기간 : ${sStr} ~ ${eStr}`;
 }
 
-// ──────────────── 화면 라우팅 ────────────────
-if (mode === 'admin') {
+// ──────────────── 초기 화면 라우팅 (기본 접속: 관리자 화면) ────────────────
+if (modeParam === 'display') {
+  // 1. 전광판 뷰어 모드
+  document.getElementById('displayView').style.display = 'block';
+  initDisplay();
+  setupDisplayAutomation();
+} else if (modeParam === 'student' || roleParam === 'student') {
+  // 2. 학생용 작성 화면
+  document.getElementById('writeView').style.display = 'block';
+  initWriter('student');
+} else if (modeParam === 'teacher' || roleParam === 'teacher') {
+  // 3. 교사용 작성 화면
+  document.getElementById('writeView').style.display = 'block';
+  initWriter('teacher');
+} else if (modeParam === 'parent' || roleParam === 'parent') {
+  // 4. 학부모용 작성 화면
+  document.getElementById('writeView').style.display = 'block';
+  initWriter('parent');
+} else {
+  // 5. 기본 접속 주소: 관리자 로그인 및 대시보드
   if (isAdmin()) {
     document.getElementById('adminView').style.display = 'block';
     loadAdminDashboard();
@@ -602,16 +610,9 @@ if (mode === 'admin') {
   } else {
     document.getElementById('adminLoginView').style.display = 'block';
   }
-} else if (mode === 'display') {
-  document.getElementById('displayView').style.display = 'block';
-  initDisplay();
-  setupDisplayAutomation(); // 자동 스크롤 및 5분 감지 시작
-} else {
-  document.getElementById('writeView').style.display = 'block';
-  initWriter(roleParam);
 }
 
-// ──────────────── 관리자 로그인/로그아웃 ────────────────
+// ──────────────── 관리자 인증 ────────────────
 document.getElementById('btnLogin').onclick = function() {
   const id = document.getElementById('admIdInput').value.trim();
   const pw = document.getElementById('admPwInput').value.trim();
@@ -661,7 +662,7 @@ function initWriter(role) {
       if (pText) document.getElementById('viewPeriod').innerText = pText;
 
       if (activeTopic.end_at) {
-        const endDate = new Date(activeTopic.end_at.slice(0, 10) + 'T23:59:59');
+        const endDate = new Date(String(activeTopic.end_at).slice(0, 10) + 'T23:59:59');
         if (new Date() > endDate) {
           document.getElementById('writeFormBox').style.display = 'none';
           document.getElementById('closedNotice').style.display = 'block';
@@ -742,7 +743,8 @@ function initDisplay() {
       const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
       if (pText) document.getElementById('dispPeriod').innerText = pText;
 
-      const targetUrl = `${getBaseUrl()}?role=student&topic=${activeTopic.id}`;
+      // QR코드는 학생 전용 작성 주소로 생성
+      const targetUrl = `${getBaseUrl()}?mode=student&topic=${activeTopic.id}`;
       new QRCode(document.getElementById('qrArea'), {
         text: targetUrl,
         width: 130,
@@ -777,7 +779,6 @@ function pollMessages() {
         if (!lastKnownIds.has(m.id)) {
           lastKnownIds.add(m.id);
           hasNew = true;
-          // 새 글 발생 시 슬라이드 쇼를 즉시 중단하고 활동 시간 갱신
           exitSlideShow();
           resetActivity();
           showPopupFocus(m);
@@ -836,7 +837,6 @@ function showPopupFocus(m) {
 
 // ──────────────── 2-1. 자동 스크롤 및 5분 미입력 슬라이드 쇼 ────────────────
 function setupDisplayAutomation() {
-  // 사용자의 화면 터치/클릭/스크롤 시 활동시간 갱신
   ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
     window.addEventListener(evt, () => {
       resetActivity();
@@ -844,25 +844,22 @@ function setupDisplayAutomation() {
     });
   });
 
-  // 사용자가 수동 스크롤 조작 시 자동 스크롤 잠시 정지
   window.addEventListener('wheel', () => {
     userInteracting = true;
     clearTimeout(window._userScrollTimer);
     window._userScrollTimer = setTimeout(() => { userInteracting = false; }, 3000);
   });
 
-  // 1. 자동 천천히 스크롤 (부드럽게 위아래 순환)
   autoScrollInterval = setInterval(() => {
     if (isSlideShowActive || userInteracting) return;
     
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    if (maxScroll <= 50) return; // 글이 적어 스크롤이 불필요하면 실행 안 함
+    if (maxScroll <= 50) return;
 
     const currentScroll = window.scrollY;
 
     if (scrollDirection === 1) {
       if (currentScroll >= maxScroll - 5) {
-        // 맨 아래 도달 시 2초 정지 후 방향 전환
         userInteracting = true;
         setTimeout(() => { scrollDirection = -1; userInteracting = false; }, 2000);
       } else {
@@ -870,7 +867,6 @@ function setupDisplayAutomation() {
       }
     } else {
       if (currentScroll <= 5) {
-        // 맨 위 도달 시 2초 정지 후 방향 전환
         userInteracting = true;
         setTimeout(() => { scrollDirection = 1; userInteracting = false; }, 2000);
       } else {
@@ -879,7 +875,6 @@ function setupDisplayAutomation() {
     }
   }, 40);
 
-  // 2. 5분 미입력 체크 타이머
   setInterval(() => {
     if (!isSlideShowActive && allLetters.length > 0) {
       if (Date.now() - lastActivityTime >= IDLE_LIMIT) {
@@ -899,7 +894,7 @@ function startSlideShow() {
   document.getElementById('screensaverArea').style.display = 'block';
   slideIndex = 0;
   showNextSlide();
-  slideTimer = setInterval(showNextSlide, 4500); // 4.5초 간격으로 다음 글 크게 조명
+  slideTimer = setInterval(showNextSlide, 4500);
 }
 
 function showNextSlide() {
@@ -983,9 +978,9 @@ function loadAdminDashboard() {
       const container = document.getElementById('adminTopicList');
       container.innerHTML = '';
       res.data.forEach(t => {
-        const studentUrl = `${getBaseUrl()}?role=student&topic=${t.id}`;
-        const teacherUrl = `${getBaseUrl()}?role=teacher&topic=${t.id}`;
-        const parentUrl = `${getBaseUrl()}?role=parent&topic=${t.id}`;
+        const studentUrl = `${getBaseUrl()}?mode=student&topic=${t.id}`;
+        const teacherUrl = `${getBaseUrl()}?mode=teacher&topic=${t.id}`;
+        const parentUrl = `${getBaseUrl()}?mode=parent&topic=${t.id}`;
         const displayUrl = `${getBaseUrl()}?mode=display&topic=${t.id}`;
         const pText = formatPeriodText(t.start_at, t.end_at);
 
@@ -998,9 +993,9 @@ function loadAdminDashboard() {
             
             <div class="link-group">
               <div style="font-size:12px; font-weight:700; color:#6E6355; margin-bottom:2px;">📌 작성 링크 (클릭 시 이동 및 복사 가능)</div>
-              <a href="${studentUrl}" target="_blank">🧑‍🎓 학생용 작성 링크</a>
-              <a href="${teacherUrl}" target="_blank">👩‍🏫 교사용 작성 링크</a>
-              <a href="${parentUrl}" target="_blank">👨‍👩‍👧 학부모용 작성 링크</a>
+              <a href="${studentUrl}" target="_blank">🧑‍🎓 학생용 작성 링크 (?mode=student)</a>
+              <a href="${teacherUrl}" target="_blank">👩‍🏫 교사용 작성 링크 (?mode=teacher)</a>
+              <a href="${parentUrl}" target="_blank">👨‍👩‍👧 학부모용 작성 링크 (?mode=parent)</a>
             </div>
 
             <div style="margin-top:14px; display:flex; gap:10px; align-items:center;">
@@ -1127,7 +1122,7 @@ function loadStats() {
       list.sort((a, b) => b.count - a.count);
 
       list.forEach(item => {
-        const dateStr = item.last_at ? item.last_at.slice(5, 10).replace('-', '/') : '-';
+        const dateStr = item.last_at ? String(item.last_at).slice(5, 10).replace('-', '/') : '-';
         tableHtml += `
           <tr>
             <td><span class="badge">${escapeHtml(item.role || '학생')}</span></td>
