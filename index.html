@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
   
-  <!-- QR 생성 및 PDF 저장 CDN 라이브러리 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -33,41 +32,43 @@
       min-height: 100dvh;
       word-break: keep-all;
     }
-    .wrap { max-width: 600px; margin: 0 auto; padding: 20px 14px 100px; }
+    .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
 
-    /* 1. 상단 타이틀 디자인 */
+    /* 상단 타이틀 (크기 확대) */
     header.main-header {
       text-align: center;
-      padding: 32px 14px 14px;
+      padding: 36px 14px 16px;
       position: relative;
     }
     header.main-header .sc {
-      font-size: 11px;
-      letter-spacing: .4em;
-      color: #A79880;
-      margin-bottom: 8px;
+      font-size: 13px;
+      letter-spacing: .45em;
+      color: #93856E;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
     header.main-header h1 {
       font-family: 'Gaegu', cursive;
-      font-size: 34px;
+      font-size: 42px; /* 제목 크기 대폭 확대 */
       font-weight: 700;
-      color: #4A3F2F;
-      line-height: 1.3;
-      margin-bottom: 6px;
+      color: #3F3323;
+      line-height: 1.25;
+      margin-bottom: 8px;
     }
     header.main-header .desc {
-      font-size: 14.5px;
-      color: #5C5243;
-      margin-bottom: 6px;
+      font-size: 16px; /* 설명 크기 확대 */
+      color: #554A3B;
+      margin-bottom: 8px;
+      font-weight: 500;
     }
     header.main-header .period-text {
-      font-size: 12px;
+      font-size: 13.5px;
       color: var(--point);
-      font-weight: 600;
+      font-weight: 700;
     }
     header.main-header .meta-count {
-      margin-top: 10px;
-      font-size: 12.5px;
+      margin-top: 12px;
+      font-size: 14px;
       color: var(--sub);
     }
     header.main-header .meta-count b {
@@ -75,44 +76,44 @@
       font-weight: 700;
     }
 
-    /* 2. 빨랫줄(줄집게) 스타일 그리드 */
+    /* 빨랫줄 그리드 (폭 및 카드 크기 확대) */
     .clothesline-wrap {
-      max-width: 820px;
+      max-width: 960px; /* 전체 보드 가로폭 확장 */
       margin: 0 auto;
-      padding: 10px 14px 120px;
+      padding: 10px 18px 120px;
     }
     .line {
       position: relative;
-      padding: 34px 0 10px;
-      margin-bottom: 12px;
+      padding: 38px 0 14px;
+      margin-bottom: 14px;
     }
     .line::before {
       content: '';
       position: absolute;
       left: 0;
       right: 0;
-      top: 16px;
-      height: 2px;
-      background: #C6B79B;
+      top: 18px;
+      height: 2.5px;
+      background: #C4B599;
       border-radius: 2px;
       box-shadow: 0 1px 0 rgba(255,255,255,.7);
     }
     .row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 18px; /* 카드 간격 확대 */
       padding: 0 4px;
     }
     .pin {
       position: relative;
       min-width: 0;
-      padding-top: 12px;
+      padding-top: 14px;
       background: none;
       border: 0;
       cursor: pointer;
       text-align: left;
       animation: sway 4.6s ease-in-out infinite;
-      transform-origin: 50% -12px;
+      transform-origin: 50% -14px;
     }
     .pin:nth-child(2n) { animation-delay: -1.4s; }
     .pin:nth-child(3n) { animation-delay: -2.7s; }
@@ -120,66 +121,66 @@
       0%, 100% { transform: rotate(-1.2deg); }
       50% { transform: rotate(1.4deg); }
     }
-    /* 나무집게 */
     .pin::before {
       content: '';
       position: absolute;
-      top: -12px;
+      top: -14px;
       left: 50%;
-      margin-left: -5px;
-      width: 10px;
-      height: 24px;
+      margin-left: -6px;
+      width: 12px;
+      height: 28px;
       background: linear-gradient(180deg, #E8CFA3, #CFAF7C);
       border-radius: 3px;
       z-index: 3;
       box-shadow: 0 1px 3px rgba(70,50,20,.3);
     }
+    
+    /* 카드 본체 크기 및 글자 확대 */
     .card {
       background: var(--card);
-      padding: 10px;
-      border-radius: 2px;
-      box-shadow: 0 4px 12px rgba(90,70,40,.16);
+      padding: 12px;
+      border-radius: 3px;
+      box-shadow: 0 5px 14px rgba(90,70,40,.18);
       border: 1px solid #EFE7D6;
+      transition: transform 0.2s ease;
     }
+    .card:hover { transform: translateY(-3px); }
     .card .ph {
-      height: 108px;
-      border-radius: 1px;
+      height: 135px; /* 카드 높이 확대 (108px -> 135px) */
+      border-radius: 2px;
       display: flex;
       align-items: flex-end;
-      padding: 9px;
+      padding: 12px;
       overflow: hidden;
       font-family: 'Gaegu', cursive;
-      font-size: 15px;
-      line-height: 1.44;
-      color: #42392C;
+      font-size: 17.5px; /* 본문 글자 크기 확대 (15px -> 17.5px) */
+      line-height: 1.48;
+      color: #382F24;
     }
     .card .ph span {
       display: -webkit-box;
-      -webkit-line-clamp: 4;
+      -webkit-line-clamp: 5;
       -webkit-box-orient: vertical;
       overflow: hidden;
       overflow-wrap: anywhere;
     }
     .card .nm {
       font-family: 'Gaegu', cursive;
-      font-size: 16.5px;
+      font-size: 19px; /* 이름 크기 확대 (16.5px -> 19px) */
       font-weight: 700;
-      margin-top: 8px;
+      margin-top: 10px;
       color: #4A3F2F;
       display: flex;
-      flex-direction: column;
-      gap: 1px;
+      justify-content: space-between;
+      align-items: baseline;
       overflow: hidden;
     }
     .card .nm em {
       font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-size: 10px;
-      font-weight: 400;
+      font-size: 11.5px;
+      font-weight: 500;
       font-style: normal;
       color: var(--sub);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     /* 카드 톤 */
@@ -198,7 +199,7 @@
       z-index: 9999;
       box-shadow: 0 24px 70px rgba(0,0,0,0.45) !important;
       animation: popIn 0.5s ease forwards;
-      width: 320px;
+      width: 360px;
       pointer-events: none;
     }
     @keyframes popIn {
@@ -206,37 +207,37 @@
       to { opacity: 1; transform: translate(-50%, -50%) scale(1.6); }
     }
 
-    /* 4. 오른쪽 맨 아래 고정 QR코드 박스 */
+    /* 우하단 고정 QR코드 박스 */
     .floating-qr {
       position: fixed;
-      right: 20px;
-      bottom: 20px;
+      right: 24px;
+      bottom: 24px;
       z-index: 90;
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(4px);
-      padding: 12px 14px 10px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(70, 50, 20, 0.2);
+      padding: 14px 16px 12px;
+      border-radius: 16px;
+      box-shadow: 0 8px 26px rgba(70, 50, 20, 0.22);
       border: 1px solid var(--line);
       text-align: center;
     }
     .floating-qr .qr-tip {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
       color: var(--point-dark);
-      margin-top: 6px;
+      margin-top: 7px;
     }
 
-    /* 작성 폼 및 대시보드 */
+    /* 폼 및 관리자 공통 */
     .form-box {
       background: #fff;
       border-radius: 16px;
-      padding: 22px;
+      padding: 24px;
       margin-top: 18px;
       border: 1px solid var(--line);
       box-shadow: 0 4px 14px rgba(0,0,0,0.04);
     }
-    label { display: block; font-size: 12.5px; font-weight: 600; color: var(--sub); margin: 14px 0 6px; }
+    label { display: block; font-size: 13px; font-weight: 600; color: var(--sub); margin: 14px 0 6px; }
     input, textarea {
       width: 100%;
       border: 1px solid var(--line);
@@ -245,19 +246,19 @@
       font-size: 15px;
       font-family: inherit;
     }
-    textarea { min-height: 140px; resize: none; }
+    textarea { min-height: 140px; resize: none; font-size: 16px; }
     .date-row { display: flex; gap: 10px; }
     .date-row > div { flex: 1; }
 
     button.primary {
       width: 100%;
-      height: 50px;
+      height: 52px;
       margin-top: 18px;
       background: var(--point);
       color: #fff;
       border: none;
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 16.5px;
       font-weight: 700;
       cursor: pointer;
     }
@@ -278,6 +279,34 @@
     table.stat-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
     table.stat-table th, table.stat-table td { border: 1px solid var(--line); padding: 8px; text-align: center; }
     table.stat-table th { background: #F8F5EE; }
+
+    /* 상세 읽기 및 삭제 모달창 */
+    .modal-dim {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(30, 20, 10, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-dim[hidden] { display: none; }
+    .modal-card {
+      background: #FFFDF7;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      border: 1px solid var(--line);
+      position: relative;
+    }
+    .modal-card .who { font-family: 'Gaegu', cursive; font-size: 24px; color: #4A3F2F; margin-bottom: 12px; border-bottom: 1px dashed var(--line); padding-bottom: 8px; }
+    .modal-card .body { font-family: 'Gaegu', cursive; font-size: 22px; line-height: 1.6; color: #382F24; white-space: pre-wrap; margin-bottom: 20px; }
+    .modal-actions { display: flex; gap: 8px; }
+    .modal-actions button { flex: 1; height: 44px; border-radius: 10px; font-weight: 700; border: 1px solid var(--line); cursor: pointer; }
+    .btn-delete { background: #FDF2F0; color: var(--err); border-color: #F8D3CE !important; }
 
     #pdfRenderArea { display: none; background: #fff; padding: 30px; color: #000; }
     #pdfRenderArea .pdf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
@@ -308,7 +337,7 @@
   </div>
 </div>
 
-<!-- 2. 교실 TV / 전광판 뷰어 (빨랫줄 카드 및 우하단 QR) -->
+<!-- 2. 교실 TV / 전광판 뷰어 -->
 <div id="displayView" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -318,10 +347,8 @@
     <div class="meta-count" id="dispMeta">편지를 불러오는 중입니다</div>
   </header>
 
-  <!-- 빨랫줄 메시지 보드 영역 -->
   <main class="clothesline-wrap" id="dispClothesline"></main>
 
-  <!-- 오른쪽 맨 아래 고정 QR코드 -->
   <div class="floating-qr">
     <div id="qrArea"></div>
     <div class="qr-tip">스마트폰으로 글 남기기</div>
@@ -349,7 +376,7 @@
   <header class="main-header" style="position:relative;">
     <div class="sc">서 현 고 등 학 교</div>
     <h1>보드 관리 대시보드</h1>
-    <div class="desc">주제 개설, 날짜 기간 관리, PDF 보관 및 통계</div>
+    <div class="desc">주제 개설, 기간 관리, PDF 보관 및 통계</div>
     <button onclick="adminLogout()" style="position:absolute; right:10px; top:15px; border:none; background:none; font-size:12px; color:var(--err); cursor:pointer;">로그아웃</button>
   </header>
 
@@ -391,6 +418,18 @@
   <div id="adminTopicList"></div>
 </div>
 
+<!-- 상세 보기 및 관리자 삭제 모달 -->
+<div class="modal-dim" id="detailModal" hidden>
+  <div class="modal-card">
+    <div class="who" id="mWho"></div>
+    <div class="body" id="mBody"></div>
+    <div class="modal-actions">
+      <button type="button" onclick="closeModal()">닫기</button>
+      <button type="button" class="btn-delete" id="mDeleteBtn" style="display:none;" onclick="deleteCurrentMessage()">이 게시물 삭제</button>
+    </div>
+  </div>
+</div>
+
 <div id="pdfRenderArea"></div>
 
 <script>
@@ -407,7 +446,12 @@ let activeTopic = null;
 let allLetters = [];
 let lastKnownIds = new Set();
 let isFirstLoad = true;
+let selectedMsg = null;
 const ROW_COUNT = 3;
+
+function isAdmin() {
+  return sessionStorage.getItem('is_admin_logged') === 'true';
+}
 
 function tone(id) {
   let n = 0;
@@ -419,7 +463,6 @@ function getBaseUrl() {
   return window.location.origin + window.location.pathname;
 }
 
-// 3. 기간 설정 날짜까지만 표시
 function formatPeriodText(start, end) {
   if (!start && !end) return '';
   const sStr = start ? start.slice(0, 10) : '시작일 미지정';
@@ -429,7 +472,7 @@ function formatPeriodText(start, end) {
 
 // ──────────────── 화면 라우팅 ────────────────
 if (mode === 'admin') {
-  if (sessionStorage.getItem('is_admin_logged') === 'true') {
+  if (isAdmin()) {
     document.getElementById('adminView').style.display = 'block';
     loadAdminDashboard();
     loadStats();
@@ -464,7 +507,7 @@ function adminLogout() {
   location.reload();
 }
 
-// ──────────────── 1. 학생 작성 화면 ────────────────
+// ──────────────── 1. 학생 화면 ────────────────
 function initStudent() {
   fetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
     .then(r => r.json())
@@ -481,7 +524,6 @@ function initStudent() {
       const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
       if (pText) document.getElementById('viewPeriod').innerText = pText;
 
-      // 종료일 검증 (해당 날짜 23:59:59까지 유효)
       if (activeTopic.end_at) {
         const endDate = new Date(activeTopic.end_at.slice(0, 10) + 'T23:59:59');
         if (new Date() > endDate) {
@@ -533,7 +575,7 @@ function initStudent() {
   };
 }
 
-// ──────────────── 2. 전광판 뷰어 (빨랫줄 + 우하단 QR) ────────────────
+// ──────────────── 2. 전광판 뷰어 ────────────────
 function initDisplay() {
   fetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
     .then(r => r.json())
@@ -546,12 +588,11 @@ function initDisplay() {
       const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
       if (pText) document.getElementById('dispPeriod').innerText = pText;
 
-      // 우하단 QR 생성
       const targetUrl = `${getBaseUrl()}?topic=${activeTopic.id}`;
       new QRCode(document.getElementById('qrArea'), {
         text: targetUrl,
-        width: 120,
-        height: 120
+        width: 130,
+        height: 130
       });
 
       pollMessages();
@@ -565,10 +606,9 @@ function pollMessages() {
     .then(r => r.json())
     .then(res => {
       if (!res.ok) return;
-      const msgs = res.data.slice().reverse(); // 새 글이 상단으로
+      const msgs = res.data.slice().reverse();
       allLetters = msgs;
 
-      // 건수 표기
       document.getElementById('dispMeta').innerHTML = `지금까지 <b>${msgs.length}</b>장이 걸렸습니다`;
 
       if (isFirstLoad) {
@@ -578,7 +618,6 @@ function pollMessages() {
         return;
       }
 
-      // 새 글 감지 시 중앙 팝업 후 다시 빨랫줄 렌더
       let hasNew = false;
       msgs.forEach(m => {
         if (!lastKnownIds.has(m.id)) {
@@ -596,11 +635,10 @@ function pollMessages() {
     });
 }
 
-// 2. 그림과 같은 빨랫줄 형태로 렌더링
 function renderClothesline(letters) {
   const container = document.getElementById('dispClothesline');
   if (!letters.length) {
-    container.innerHTML = '<div style="text-align:center; padding:60px; color:var(--sub);">첫 번째 응원 카드를 걸어주세요!</div>';
+    container.innerHTML = '<div style="text-align:center; padding:60px; color:var(--sub); font-size:16px;">첫 번째 응원 카드를 걸어주세요!</div>';
     return;
   }
 
@@ -609,11 +647,11 @@ function renderClothesline(letters) {
     html += '<div class="line"><div class="row">';
     letters.slice(i, i + ROW_COUNT).forEach(l => {
       html += `
-        <div class="pin">
+        <div class="pin" onclick="openDetailModal('${l.id}')">
           <div class="card">
             <div class="ph ${tone(l.id)}"><span>${escapeHtml(l.message)}</span></div>
             <div class="nm">
-              ${escapeHtml(l.name)}
+              <span>${escapeHtml(l.name)}</span>
               <em>${escapeHtml(l.student_id)}</em>
             </div>
           </div>
@@ -629,17 +667,65 @@ function showPopupFocus(m) {
   const popup = document.createElement('div');
   popup.className = `card ${tone(m.id)} popup-focus`;
   popup.innerHTML = `
-    <div style="font-family:'Gaegu',cursive; font-size:20px; line-height:1.5; margin-bottom:12px;">${escapeHtml(m.message)}</div>
-    <div style="font-size:13px; font-weight:700; color:var(--point-dark); text-align:right;">${escapeHtml(m.student_id)} ${escapeHtml(m.name)}</div>
+    <div style="font-family:'Gaegu',cursive; font-size:24px; line-height:1.5; margin-bottom:12px;">${escapeHtml(m.message)}</div>
+    <div style="font-size:15px; font-weight:700; color:var(--point-dark); text-align:right;">${escapeHtml(m.student_id)} ${escapeHtml(m.name)}</div>
   `;
   document.body.appendChild(popup);
 
-  setTimeout(() => {
-    popup.remove();
-  }, 4500);
+  setTimeout(() => { popup.remove(); }, 4500);
 }
 
-// ──────────────── 3. 대시보드 관리 ────────────────
+// ──────────────── 3. 상세 보기 및 관리자 삭제 ────────────────
+function openDetailModal(id) {
+  const msg = allLetters.find(x => x.id === id);
+  if (!msg) return;
+  selectedMsg = msg;
+
+  document.getElementById('mWho').innerText = `${msg.name} (${msg.student_id})`;
+  document.getElementById('mBody').innerText = msg.message;
+
+  // 관리자로 로그인된 경우에만 삭제 버튼 노출
+  const delBtn = document.getElementById('mDeleteBtn');
+  if (isAdmin()) {
+    delBtn.style.display = 'block';
+  } else {
+    delBtn.style.display = 'none';
+  }
+
+  document.getElementById('detailModal').hidden = false;
+}
+
+function closeModal() {
+  document.getElementById('detailModal').hidden = true;
+  selectedMsg = null;
+}
+
+function deleteCurrentMessage() {
+  if (!selectedMsg) return;
+  if (!confirm(`'${selectedMsg.name}' 학생의 글을 삭제하시겠습니까?`)) return;
+
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      action: 'deleteMessage',
+      id: selectedMsg.id
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (!res.ok) throw new Error(res.error);
+    alert('게시물이 삭제되었습니다.');
+    closeModal();
+    // 목록 갱신
+    allLetters = allLetters.filter(x => x.id !== selectedMsg.id);
+    renderClothesline(allLetters);
+    document.getElementById('dispMeta').innerHTML = `지금까지 <b>${allLetters.length}</b>장이 걸렸습니다`;
+  })
+  .catch(err => alert('삭제 실패: ' + err.message));
+}
+
+// ──────────────── 4. 대시보드 관리 ────────────────
 function loadAdminDashboard() {
   fetch(`${API_URL}?action=listTopics&t=${Date.now()}`)
     .then(r => r.json())
@@ -655,12 +741,12 @@ function loadAdminDashboard() {
         container.innerHTML += `
           <div class="admin-card">
             <span class="badge ${t.is_active ? 'active' : ''}">${t.is_active ? '진행 중' : '보관/종료'}</span>
-            <h4 style="margin:8px 0;">${escapeHtml(t.title)}</h4>
-            <p style="font-size:13px; color:var(--sub);">${escapeHtml(t.description)}</p>
-            ${pText ? `<p style="font-size:12px; color:var(--point); margin-top:4px;">${escapeHtml(pText)}</p>` : ''}
-            <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
-              <a href="${studentUrl}" target="_blank" style="font-size:13px; color:var(--point); text-decoration:none; font-weight:600;">작성 링크</a>
-              <a href="${displayUrl}" target="_blank" style="font-size:13px; color:var(--point); text-decoration:none; font-weight:600;">전광판 보기</a>
+            <h4 style="margin:8px 0; font-size:17px;">${escapeHtml(t.title)}</h4>
+            <p style="font-size:14px; color:var(--sub);">${escapeHtml(t.description)}</p>
+            ${pText ? `<p style="font-size:13px; color:var(--point); margin-top:4px;">${escapeHtml(pText)}</p>` : ''}
+            <div style="margin-top:14px; display:flex; gap:10px; align-items:center;">
+              <a href="${studentUrl}" target="_blank" style="font-size:13.5px; color:var(--point); text-decoration:none; font-weight:700;">작성 링크</a>
+              <a href="${displayUrl}" target="_blank" style="font-size:13.5px; color:var(--point); text-decoration:none; font-weight:700;">전광판 보기</a>
               <button class="sub-btn" style="margin-left:auto; font-weight:700; color:var(--point);" onclick="downloadPDF('${t.id}', '${escapeHtml(t.title)}')">📄 PDF 저장</button>
             </div>
           </div>
@@ -687,8 +773,8 @@ function loadAdminDashboard() {
         action: 'createTopic',
         title: title,
         description: desc,
-        start_at: startAt, // YYYY-MM-DD
-        end_at: endAt     // YYYY-MM-DD
+        start_at: startAt,
+        end_at: endAt
       })
     })
     .then(r => r.json())
@@ -705,7 +791,7 @@ function loadAdminDashboard() {
   };
 }
 
-// ──────────────── 4. PDF 저장 ────────────────
+// ──────────────── 5. PDF 저장 ────────────────
 function downloadPDF(topicId, topicTitle) {
   fetch(`${API_URL}?action=listMessages&topic_id=${topicId}&t=${Date.now()}`)
     .then(r => r.json())
@@ -716,17 +802,17 @@ function downloadPDF(topicId, topicTitle) {
 
       const renderArea = document.getElementById('pdfRenderArea');
       renderArea.innerHTML = `
-        <h1 style="text-align:center; font-family:'Gaegu',cursive; font-size:32px; border-bottom:2px solid #333; padding-bottom:12px;">
+        <h1 style="text-align:center; font-family:'Gaegu',cursive; font-size:36px; border-bottom:2px solid #333; padding-bottom:12px;">
           서현고등학교 - ${topicTitle}
         </h1>
-        <div style="font-size:12px; text-align:right; margin:8px 0 16px; color:#666;">
+        <div style="font-size:13px; text-align:right; margin:8px 0 16px; color:#666;">
           출력 일시: ${new Date().toLocaleString('ko-KR')} / 총 ${res.data.length}개 메모
         </div>
         <div class="pdf-grid">
           ${res.data.map(m => `
             <div class="pdf-card">
-              <div style="font-family:'Gaegu',cursive; font-size:18px; margin-bottom:10px; line-height:1.4;">${escapeHtml(m.message)}</div>
-              <div style="font-size:12px; color:#666; text-align:right;">- ${escapeHtml(m.student_id)}${escapeHtml(m.name)}</div>
+              <div style="font-family:'Gaegu',cursive; font-size:20px; margin-bottom:10px; line-height:1.45;">${escapeHtml(m.message)}</div>
+              <div style="font-size:13px; color:#666; text-align:right;">- ${escapeHtml(m.student_id)}${escapeHtml(m.name)}</div>
             </div>
           `).join('')}
         </div>
@@ -749,7 +835,7 @@ function downloadPDF(topicId, topicTitle) {
     });
 }
 
-// ──────────────── 5. 참여자 통계 ────────────────
+// ──────────────── 6. 참여자 통계 ────────────────
 function loadStats() {
   fetch(`${API_URL}?action=getStats&t=${Date.now()}`)
     .then(r => r.json())
