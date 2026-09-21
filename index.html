@@ -145,39 +145,47 @@
       box-shadow: 0 1px 3px rgba(70,50,20,.3);
     }
     
+    /* 카드 본체: 글 길이에 맞춰 유연하게 확장 */
     .card {
       background: var(--card);
-      padding: 12px;
-      border-radius: 3px;
+      padding: 14px;
+      border-radius: 4px;
       box-shadow: 0 5px 14px rgba(90,70,40,.18);
       border: 1px solid #EFE7D6;
       transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .card:hover { transform: translateY(-3px); }
+    
     .card .ph {
-      height: 135px;
-      border-radius: 2px;
+      min-height: 140px;
+      height: auto;
+      border-radius: 3px;
       display: flex;
-      align-items: flex-end;
-      padding: 12px;
-      overflow: hidden;
+      align-items: flex-start;
+      padding: 14px;
       font-family: 'Gaegu', cursive;
-      font-size: 17.5px;
-      line-height: 1.48;
+      font-size: 19px;
+      line-height: 1.55;
       color: #382F24;
+      word-break: break-word;
     }
     .card .ph span {
-      display: -webkit-box;
-      -webkit-line-clamp: 5;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      display: block;
+      width: 100%;
+      white-space: pre-wrap;
+      overflow: visible;
       overflow-wrap: anywhere;
     }
     .card .nm {
       font-family: 'Gaegu', cursive;
-      font-size: 19px;
+      font-size: 19.5px;
       font-weight: 700;
-      margin-top: 10px;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(0,0,0,0.08);
       color: #4A3F2F;
       display: flex;
       justify-content: space-between;
@@ -186,7 +194,7 @@
     }
     .card .nm em {
       font-family: 'Pretendard Variable', Pretendard, sans-serif;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 500;
       font-style: normal;
       color: var(--sub);
@@ -218,16 +226,16 @@
       position: fixed !important;
       top: 50% !important;
       left: 50% !important;
-      transform: translate(-50%, -50%) scale(1.5) !important;
+      transform: translate(-50%, -50%) scale(1.4) !important;
       z-index: 95;
-      width: 400px;
-      max-width: 85vw;
+      width: 440px;
+      max-width: 88vw;
       box-shadow: 0 30px 80px rgba(50,30,10,0.4) !important;
       animation: slideFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     @keyframes slideFadeIn {
-      from { opacity: 0; transform: translate(-50%, -46%) scale(1.3); }
-      to { opacity: 1; transform: translate(-50%, -50%) scale(1.5); }
+      from { opacity: 0; transform: translate(-50%, -46%) scale(1.2); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1.4); }
     }
     .slide-backdrop {
       position: fixed;
@@ -347,7 +355,7 @@
     .modal-card {
       background: #FFFDF7;
       width: 100%;
-      max-width: 440px;
+      max-width: 460px;
       border-radius: 16px;
       padding: 24px;
       box-shadow: 0 16px 40px rgba(0,0,0,0.25);
@@ -369,6 +377,8 @@
       color: #382F24;
       white-space: pre-wrap;
       margin-bottom: 20px;
+      max-height: 60vh;
+      overflow-y: auto;
     }
     .modal-actions { display: flex; gap: 8px; }
     .modal-actions button {
@@ -451,7 +461,7 @@
   </div>
 </div>
 
-<!-- 3. 관리자 로그인 화면 (기본 접속 시 노출) -->
+<!-- 3. 관리자 로그인 화면 (기본 URL 접속 시 실행) -->
 <div id="adminLoginView" class="wrap" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -544,6 +554,7 @@ let allLetters = [];
 let lastKnownIds = new Set();
 let isFirstLoad = true;
 let selectedMsg = null;
+let selectedMsgId = null; // 삭제 대상 ID 보관
 const ROW_COUNT = 3;
 
 // ── 5분 미입력 슬라이드 및 자동 스크롤 변수 ──
@@ -583,26 +594,22 @@ function formatPeriodText(start, end) {
   return `작성 기간 : ${sStr} ~ ${eStr}`;
 }
 
-// ──────────────── 초기 화면 라우팅 (기본 접속: 관리자 화면) ────────────────
+// ──────────────── 초기 화면 라우팅 ────────────────
 if (modeParam === 'display') {
-  // 1. 전광판 뷰어 모드
   document.getElementById('displayView').style.display = 'block';
   initDisplay();
   setupDisplayAutomation();
 } else if (modeParam === 'student' || roleParam === 'student') {
-  // 2. 학생용 작성 화면
   document.getElementById('writeView').style.display = 'block';
   initWriter('student');
 } else if (modeParam === 'teacher' || roleParam === 'teacher') {
-  // 3. 교사용 작성 화면
   document.getElementById('writeView').style.display = 'block';
   initWriter('teacher');
 } else if (modeParam === 'parent' || roleParam === 'parent') {
-  // 4. 학부모용 작성 화면
   document.getElementById('writeView').style.display = 'block';
   initWriter('parent');
 } else {
-  // 5. 기본 접속 주소: 관리자 로그인 및 대시보드
+  // 기본 주소 접속 시 관리자 화면으로 분기
   if (isAdmin()) {
     document.getElementById('adminView').style.display = 'block';
     loadAdminDashboard();
@@ -743,7 +750,6 @@ function initDisplay() {
       const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
       if (pText) document.getElementById('dispPeriod').innerText = pText;
 
-      // QR코드는 학생 전용 작성 주소로 생성
       const targetUrl = `${getBaseUrl()}?mode=student&topic=${activeTopic.id}`;
       new QRCode(document.getElementById('qrArea'), {
         text: targetUrl,
@@ -923,15 +929,13 @@ function exitSlideShow() {
   resetActivity();
 }
 
-// ──────────────── 3. 상세 모달 및 삭제 (수정) ────────────────
-let selectedMsgId = null; // 객체 대신 확실한 ID 문자열을 직접 보관
-
+// ──────────────── 3. 상세 모달 및 삭제 (안전 ID 참조) ────────────────
 function openDetailModal(id) {
   const msg = allLetters.find(x => x.id === id);
   if (!msg) return;
   
   selectedMsg = msg;
-  selectedMsgId = id; // 대상 ID를 별도 저장
+  selectedMsgId = id;
 
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   document.getElementById('mWho').innerText = `${msg.name} (${subInfo})`;
@@ -954,7 +958,6 @@ function closeModal() {
 }
 
 function deleteCurrentMessage() {
-  // selectedMsgId를 직접 검사하여 안전하게 처리
   if (!selectedMsgId || !isAdmin()) {
     return alert('삭제할 대상을 찾을 수 없거나 관리자 권한이 없습니다.');
   }
@@ -978,15 +981,12 @@ function deleteCurrentMessage() {
     if (!res.ok) throw new Error(res.error);
     alert('게시물이 정상적으로 삭제되었습니다.');
     closeModal();
-    // 배열 및 화면에서 즉시 제거
     allLetters = allLetters.filter(x => x.id !== targetId);
     lastKnownIds.delete(targetId);
     renderClothesline(allLetters);
     document.getElementById('dispMeta').innerHTML = `지금까지 <b>${allLetters.length}</b>장이 걸렸습니다`;
   })
-  .catch(err => {
-    alert('삭제 실패: ' + err.message);
-  })
+  .catch(err => alert('삭제 실패: ' + err.message))
   .finally(() => {
     delBtn.disabled = false;
     delBtn.innerText = '이 게시물 삭제';
