@@ -273,6 +273,38 @@
       margin-top: 7px;
     }
 
+    /* 좌하단 배경음악 컨트롤러 */
+    .bgm-btn {
+      position: fixed;
+      left: 24px;
+      bottom: 24px;
+      z-index: 92;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--line);
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px rgba(70, 50, 20, 0.18);
+      transition: all 0.2s ease;
+    }
+    .bgm-btn:hover {
+      transform: scale(1.04);
+      background: #FFFDF7;
+    }
+    .bgm-btn.playing {
+      color: var(--point);
+      border-color: var(--point);
+      background: #FFF8E9;
+    }
+
     .form-box {
       background: #fff;
       border-radius: 16px;
@@ -448,10 +480,18 @@
 
   <main class="clothesline-wrap" id="dispClothesline"></main>
 
+  <!-- 우하단 QR코드 -->
   <div class="floating-qr">
     <div id="qrArea"></div>
     <div class="qr-tip">스마트폰으로 글 남기기</div>
   </div>
+
+  <!-- 좌하단 유튜브 배경음악 제어 버튼 -->
+  <button type="button" class="bgm-btn" id="bgmToggleBtn" onclick="toggleBgm()">
+    <span id="bgmIcon">🎵</span>
+    <span id="bgmText">피아노 배경음악 켜기</span>
+  </button>
+  <div id="youtubePlayer" style="display:none;"></div>
 
   <div id="screensaverArea" style="display:none;">
     <div class="slide-backdrop" onclick="exitSlideShow()">
@@ -554,7 +594,7 @@ let allLetters = [];
 let lastKnownIds = new Set();
 let isFirstLoad = true;
 let selectedMsg = null;
-let selectedMsgId = null; // 삭제 대상 ID 보관
+let selectedMsgId = null;
 const ROW_COUNT = 3;
 
 // ── 5분 미입력 슬라이드 및 자동 스크롤 변수 ──
@@ -566,6 +606,11 @@ let slideTimer = null;
 let autoScrollInterval = null;
 let scrollDirection = 1;
 let userInteracting = false;
+
+// ── 유튜브 BGM 변수 ──
+const YOUTUBE_VIDEO_ID = '01XpV4LH3no'; // 클래식 피아노 영상 ID
+let ytPlayer = null;
+let isBgmPlaying = false;
 
 function isAdmin() {
   return localStorage.getItem('is_admin_logged') === 'true';
@@ -927,6 +972,55 @@ function exitSlideShow() {
   document.getElementById('screensaverArea').style.display = 'none';
   document.getElementById('slideCardContainer').innerHTML = '';
   resetActivity();
+}
+
+// ──────────────── 2-2. 유튜브 BGM API 제어 ────────────────
+(function loadYoutubeAPI() {
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+})();
+
+function onYouTubeIframeAPIReady() {
+  ytPlayer = new YT.Player('youtubePlayer', {
+    height: '0',
+    width: '0',
+    videoId: YOUTUBE_VIDEO_ID,
+    playerVars: {
+      'autoplay': 0,
+      'loop': 1,
+      'playlist': YOUTUBE_VIDEO_ID,
+      'controls': 0
+    },
+    events: {
+      'onReady': function(event) {
+        event.target.setVolume(30);
+      }
+    }
+  });
+}
+
+function toggleBgm() {
+  if (!ytPlayer || !ytPlayer.playVideo) return;
+
+  const btn = document.getElementById('bgmToggleBtn');
+  const icon = document.getElementById('bgmIcon');
+  const text = document.getElementById('bgmText');
+
+  if (!isBgmPlaying) {
+    ytPlayer.playVideo();
+    isBgmPlaying = true;
+    btn.classList.add('playing');
+    icon.innerText = '🔊';
+    text.innerText = '배경음악 끄기';
+  } else {
+    ytPlayer.pauseVideo();
+    isBgmPlaying = false;
+    btn.classList.remove('playing');
+    icon.innerText = '🎵';
+    text.innerText = '피아노 배경음악 켜기';
+  }
 }
 
 // ──────────────── 3. 상세 모달 및 삭제 (안전 ID 참조) ────────────────
