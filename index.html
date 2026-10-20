@@ -145,7 +145,6 @@
       box-shadow: 0 1px 3px rgba(70,50,20,.3);
     }
     
-    /* 카드 본체: 글 길이에 맞춰 유연하게 확장 */
     .card {
       background: var(--card);
       padding: 14px;
@@ -314,7 +313,7 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.04);
     }
     label { display: block; font-size: 13px; font-weight: 600; color: var(--sub); margin: 14px 0 6px; }
-    input, textarea {
+    input[type="text"], input[type="password"], input[type="date"], textarea {
       width: 100%;
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -426,6 +425,31 @@
     #pdfRenderArea { display: none; background: #fff; padding: 30px; color: #000; }
     #pdfRenderArea .pdf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
     #pdfRenderArea .pdf-card { border: 1px solid #ccc; padding: 14px; border-radius: 6px; page-break-inside: avoid; }
+
+    /* 사진 첨부용 CSS 추가 */
+    .media-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      padding: 5px;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+    .modal-media-wrap {
+      margin-top: 16px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f5f5f5;
+      border: 1px solid var(--line);
+    }
+    .modal-media-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -460,6 +484,11 @@
 
     <label>마음 남기기</label>
     <textarea id="fMsg" maxlength="500" placeholder="따뜻한 응원이나 마음을 담은 메시지를 남겨주세요"></textarea>
+    
+    <!-- 사진 첨부 기능 추가 -->
+    <label>사진 첨부 (선택, 5MB 이하)</label>
+    <input type="file" id="fImage" accept="image/*" style="margin-bottom: 15px; width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer;">
+    
     <button class="primary" id="btnSubmit">보내기</button>
   </div>
 
@@ -579,6 +608,7 @@
 <div id="pdfRenderArea"></div>
 
 <script>
+// ★ 새로 배포한 백엔드 앱스 스크립트 웹 앱 URL을 여기에 넣으세요.
 const API_URL = 'https://script.google.com/macros/s/AKfycbzxeyx3FOTqlP2qrvRbwSZdm1EKEVIwh52RPI8BernDdDCt8vP9FqqC41P7u60N_iJL/exec';
 
 const ADMIN_ID = 'admin';
@@ -684,7 +714,7 @@ function adminLogout() {
   location.reload();
 }
 
-// ──────────────── 1. 작성 화면 ────────────────
+// ──────────────── 1. 작성 화면 (사진 첨부 로직 통합) ────────────────
 function initWriter(role) {
   const badge = document.getElementById('roleBadge');
   if (role === 'teacher') {
@@ -752,33 +782,54 @@ function initWriter(role) {
     const msg = document.getElementById('fMsg').value.trim();
     if (!msg) return alert('메시지 내용을 입력해주세요.');
 
+    const fileInput = document.getElementById('fImage');
     const btn = this;
     btn.disabled = true;
     btn.innerText = '보내는 중...';
 
-    fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({
-        action: 'createMessage',
-        topic_id: activeTopic.id,
-        name: name,
-        role: actualRole,
-        student_id: studentId,
-        message: msg
+    if (fileInput && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      if (file.size > 5 * 1024 * 1024) {
+        btn.disabled = false;
+        btn.innerText = '보내기';
+        return alert('사진 용량은 5MB 이하만 가능합니다.');
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        sendToServer(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      sendToServer('');
+    }
+
+    function sendToServer(imageData) {
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'createMessage',
+          topic_id: activeTopic.id,
+          name: name,
+          role: actualRole,
+          student_id: studentId,
+          message: msg,
+          image_data: imageData
+        })
       })
-    })
-    .then(r => r.json())
-    .then(res => {
-      if (!res.ok) throw new Error(res.error);
-      alert('마음이 정상적으로 전달되었습니다!');
-      document.getElementById('fMsg').value = '';
-    })
-    .catch(err => alert('전송 실패: ' + err.message))
-    .finally(() => {
-      btn.disabled = false;
-      btn.innerText = '보내기';
-    });
+      .then(r => r.json())
+      .then(res => {
+        if (!res.ok) throw new Error(res.error);
+        alert('마음이 정상적으로 전달되었습니다!');
+        document.getElementById('fMsg').value = '';
+        if (fileInput) fileInput.value = '';
+      })
+      .catch(err => alert('전송 실패: ' + err.message))
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerText = '보내기';
+      });
+    }
   };
 }
 
@@ -855,9 +906,13 @@ function renderClothesline(letters) {
     letters.slice(i, i + ROW_COUNT).forEach(l => {
       const toneClass = getToneClass(l);
       const subInfo = l.role === '학생' ? l.student_id : l.role;
+      // 사진이 있는 경우 📷 뱃지 표시
+      const mediaIcon = l.image_url ? '<div class="media-badge">📷</div>' : '';
+
       html += `
         <div class="pin" onclick="openDetailModal('${l.id}')">
-          <div class="card">
+          <div class="card" style="position:relative;">
+            ${mediaIcon}
             <div class="ph ${toneClass}"><span>${escapeHtml(l.message)}</span></div>
             <div class="nm">
               <span>${escapeHtml(l.name)}</span>
@@ -1023,7 +1078,7 @@ function toggleBgm() {
   }
 }
 
-// ──────────────── 3. 상세 모달 및 삭제 (안전 ID 참조) ────────────────
+// ──────────────── 3. 상세 모달 및 삭제 (사진 뷰어 통합) ────────────────
 function openDetailModal(id) {
   const msg = allLetters.find(x => x.id === id);
   if (!msg) return;
@@ -1033,7 +1088,14 @@ function openDetailModal(id) {
 
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   document.getElementById('mWho').innerText = `${msg.name} (${subInfo})`;
-  document.getElementById('mBody').innerText = msg.message;
+  
+  // 모달 내 사진 렌더링
+  let mediaHtml = '';
+  if (msg.image_url) {
+    mediaHtml = `<div class="modal-media-wrap"><img src="${msg.image_url}" alt="첨부사진"></div>`;
+  }
+  
+  document.getElementById('mBody').innerHTML = `<p>${escapeHtml(msg.message)}</p>` + mediaHtml;
 
   const delBtn = document.getElementById('mDeleteBtn');
   if (isAdmin()) {
