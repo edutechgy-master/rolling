@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>서현고등학교 마음 보드</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KyoboHandwriting2022kkd.woff2" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
@@ -32,6 +33,12 @@
       min-height: 100dvh;
       word-break: keep-all;
     }
+
+    /* 💡 전광판 폰트 클래스 정의 */
+    .font-kyobo { font-family: 'KyoboHandwriting2022kkd', cursive !important; }
+    .font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; font-size: 17px !important; }
+    .font-gaegu { font-family: 'Gaegu', cursive !important; }
+
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
 
     header.main-header {
@@ -73,6 +80,34 @@
     header.main-header .meta-count b {
       color: var(--point);
       font-weight: 700;
+    }
+
+    /* 폰트 변경 플로팅 박스 (전광판 화면 우상단) */
+    .font-selector-box {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      z-index: 95;
+      background: rgba(255,255,255,0.9);
+      padding: 6px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      display: flex;
+      gap: 6px;
+    }
+    .font-btn {
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 12px;
+      color: var(--sub);
+    }
+    .font-btn.active {
+      background: var(--point);
+      color: #fff;
     }
 
     .role-badge-header {
@@ -165,7 +200,6 @@
       display: flex;
       align-items: flex-start;
       padding: 14px;
-      font-family: 'Gaegu', cursive;
       font-size: 19px;
       line-height: 1.55;
       color: #382F24;
@@ -179,7 +213,6 @@
       overflow-wrap: anywhere;
     }
     .card .nm {
-      font-family: 'Gaegu', cursive;
       font-size: 19.5px;
       font-weight: 700;
       margin-top: 12px;
@@ -393,7 +426,6 @@
       position: relative;
     }
     .modal-card .who {
-      font-family: 'Gaegu', cursive;
       font-size: 24px;
       color: #4A3F2F;
       margin-bottom: 12px;
@@ -401,7 +433,6 @@
       padding-bottom: 8px;
     }
     .modal-card .body {
-      font-family: 'Gaegu', cursive;
       font-size: 22px;
       line-height: 1.6;
       color: #382F24;
@@ -425,7 +456,6 @@
     #pdfRenderArea .pdf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
     #pdfRenderArea .pdf-card { border: 1px solid #ccc; padding: 14px; border-radius: 6px; page-break-inside: avoid; }
 
-    /* 💡 사진 짤림 방지(contain) 및 여백 배경 스타일 적용 */
     .card-thumbnail {
       width: 100%;
       height: 130px;
@@ -459,7 +489,7 @@
     }
   </style>
 </head>
-<body>
+<body id="appBody" class="font-kyobo"> <!-- 기본값 교보손글씨체 -->
 
 <!-- 1. 작성 화면 -->
 <div id="writeView" class="wrap" style="display:none;">
@@ -506,6 +536,12 @@
 <!-- 2. 교실 TV / 전광판 뷰어 -->
 <div id="displayView" style="display:none;">
   <header class="main-header">
+    <!-- 전광판 우상단 폰트 선택 버튼 -->
+    <div class="font-selector-box">
+      <button type="button" class="font-btn active" onclick="changeFont('kyobo', this)">교보손글씨</button>
+      <button type="button" class="font-btn" onclick="changeFont('pretendard', this)">고딕(가독성)</button>
+      <button type="button" class="font-btn" onclick="changeFont('gaegu', this)">가구체</button>
+    </div>
     <div class="sc">서 현 고 등 학 교</div>
     <h1 id="dispTitle"></h1>
     <div class="desc" id="dispDesc"></div>
@@ -612,7 +648,6 @@
 <div id="pdfRenderArea"></div>
 
 <script>
-// ★ 최신 웹 앱 URL을 여기에 입력하세요.
 const API_URL = 'https://script.google.com/macros/s/AKfycby2LdSEbtd3N66GIRn5ywSf0E1OYkeqpHduU4LPCMxxj0CLDCDnnGBrOhC-CjbkK6Xc/exec';
 
 const ADMIN_ID = 'admin';
@@ -643,6 +678,34 @@ let userInteracting = false;
 const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
+
+// 💡 실시간 폰트 변경 함수 (브라우저 기억 기능 포함)
+function changeFont(fontType, btnElement) {
+  const body = document.getElementById('appBody');
+  body.classList.remove('font-kyobo', 'font-pretendard', 'font-gaegu');
+  
+  if (fontType === 'kyobo') body.classList.add('font-kyobo');
+  else if (fontType === 'pretendard') body.classList.add('font-pretendard');
+  else if (fontType === 'gaegu') body.classList.add('font-gaegu');
+
+  // 버튼 활성화 디자인 변경
+  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+  if (btnElement) btnElement.classList.add('active');
+
+  // 선택한 폰트 기억
+  localStorage.setItem('mindboard_font', fontType);
+}
+
+// 페이지 로드 시 저장된 폰트 복원
+window.addEventListener('DOMContentLoaded', () => {
+  const savedFont = localStorage.getItem('mindboard_font') || 'kyobo';
+  const buttons = document.querySelectorAll('.font-btn');
+  let targetBtn = buttons[0];
+  if (savedFont === 'pretendard') targetBtn = buttons[1];
+  else if (savedFont === 'gaegu') targetBtn = buttons[2];
+  
+  changeFont(savedFont, targetBtn);
+});
 
 function isAdmin() {
   return localStorage.getItem('is_admin_logged') === 'true';
@@ -929,7 +992,7 @@ function showPopupFocus(m) {
   const popup = document.createElement('div');
   popup.className = `card ${toneClass} popup-focus`;
   popup.innerHTML = `
-    <div style="font-family:'Gaegu',cursive; font-size:24px; line-height:1.5; margin-bottom:12px;">${escapeHtml(m.message)}</div>
+    <div style="font-size:24px; line-height:1.5; margin-bottom:12px;">${escapeHtml(m.message)}</div>
     <div style="font-size:15px; font-weight:700; color:var(--point-dark); text-align:right;">${escapeHtml(subInfo)} ${escapeHtml(m.name)}</div>
   `;
   document.body.appendChild(popup);
@@ -1010,7 +1073,7 @@ function showNextSlide() {
   container.innerHTML = `
     <div class="card ${toneClass} slide-highlight-card">
       ${slideImgHtml}
-      <div style="font-family:'Gaegu',cursive; font-size:26px; line-height:1.5; margin-bottom:14px; color:#382F24;">${escapeHtml(msg.message)}</div>
+      <div style="font-size:26px; line-height:1.5; margin-bottom:14px; color:#382F24;">${escapeHtml(msg.message)}</div>
       <div style="font-size:16px; font-weight:700; color:var(--point-dark); text-align:right;">- ${escapeHtml(subInfo)} ${escapeHtml(msg.name)} -</div>
     </div>
   `;
@@ -1228,7 +1291,7 @@ function downloadPDF(topicId, topicTitle) {
 
       const renderArea = document.getElementById('pdfRenderArea');
       renderArea.innerHTML = `
-        <h1 style="text-align:center; font-family:'Gaegu',cursive; font-size:36px; border-bottom:2px solid #333; padding-bottom:12px;">
+        <h1 style="text-align:center; font-size:36px; border-bottom:2px solid #333; padding-bottom:12px;">
           서현고등학교 - ${topicTitle}
         </h1>
         <div style="font-size:13px; text-align:right; margin:8px 0 16px; color:#666;">
@@ -1237,7 +1300,7 @@ function downloadPDF(topicId, topicTitle) {
         <div class="pdf-grid">
           ${res.data.map(m => `
             <div class="pdf-card">
-              <div style="font-family:'Gaegu',cursive; font-size:20px; margin-bottom:10px; line-height:1.45;">${escapeHtml(m.message)}</div>
+              <div style="font-size:20px; margin-bottom:10px; line-height:1.45;">${escapeHtml(m.message)}</div>
               <div style="font-size:13px; color:#666; text-align:right;">- [${escapeHtml(m.role)}]${escapeHtml(m.name)}</div>
             </div>
           `).join('')}
