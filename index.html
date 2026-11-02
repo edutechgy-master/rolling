@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>서현고등학교 마음 보드</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+  <!-- 저작권 안심 무료 손글씨 웹폰트 모음 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KyoboHandwriting2022kkd.woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eleven_@1.0/MapoFlowerIsland.woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102_wetris@1.1/Ownglyph_kimjungsook-Rg.woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102_wetris@1.1/Ownglyph_AndongBN.woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/Ownglyph_ryuttifying-Rg.woff2" crossorigin="anonymous">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
@@ -26,7 +32,6 @@
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    /* 기본 전체 화면은 깔끔한 일반 폰트(Pretendard) 적용 */
     html, body {
       font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--ink);
@@ -36,10 +41,13 @@
       word-break: keep-all;
     }
 
-    /* 전광판 화면에만 적용되는 폰트 클래스 */
-    .disp-font-kyobo { font-family: 'KyoboHandwriting2022kkd', cursive !important; }
-    .disp-font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; }
-    .disp-font-gaegu { font-family: 'Gaegu', cursive !important; }
+    /* 💡 다양한 저작권 안심 손글씨 클래스 정의 */
+    .font-kyobo { font-family: 'KyoboHandwriting2022kkd', cursive !important; }
+    .font-kimjungsook { font-family: 'Ownglyph_kimjungsook-Rg', cursive !important; }
+    .font-andong { font-family: 'Ownglyph_AndongBN', cursive !important; }
+    .font-ryuttifying { font-family: 'Ownglyph_ryuttifying-Rg', cursive !important; }
+    .font-gaegu { font-family: 'Gaegu', cursive !important; }
+    .font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; }
 
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
 
@@ -56,7 +64,6 @@
       margin-bottom: 10px;
     }
     header.main-header h1 {
-      font-family: 'Pretendard Variable', Pretendard, sans-serif;
       font-size: 36px;
       font-weight: 700;
       color: #3F3323;
@@ -84,32 +91,9 @@
       font-weight: 700;
     }
 
-    /* 전광판 우상단 폰트 선택 박스 */
-    .font-selector-box {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      z-index: 95;
-      background: rgba(255,255,255,0.9);
-      padding: 6px 10px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      display: flex;
-      gap: 6px;
-    }
-    .font-btn {
-      background: none;
-      border: none;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 12px;
-      color: var(--sub);
-    }
-    .font-btn.active {
-      background: var(--point);
-      color: #fff;
+    /* 안내 문구 및 버튼은 항상 고딕체 유지 */
+    .ui-fixed-font {
+      font-family: 'Pretendard Variable', Pretendard, sans-serif !important;
     }
 
     .role-badge-header {
@@ -202,7 +186,7 @@
       display: flex;
       align-items: flex-start;
       padding: 14px;
-      font-size: 19px;
+      font-size: 20px;
       line-height: 1.55;
       color: #382F24;
       word-break: break-word;
@@ -215,7 +199,7 @@
       overflow-wrap: anywhere;
     }
     .card .nm {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
       margin-top: 12px;
       padding-top: 8px;
@@ -316,7 +300,6 @@
       border: 1px solid var(--line);
       padding: 10px 18px;
       border-radius: 30px;
-      font-family: inherit;
       font-size: 13.5px;
       font-weight: 700;
       color: var(--ink);
@@ -346,7 +329,7 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.04);
     }
     label { display: block; font-size: 13px; font-weight: 600; color: var(--sub); margin: 14px 0 6px; }
-    input[type="text"], input[type="password"], input[type="date"], textarea {
+    input[type="text"], input[type="password"], input[type="date"], select, textarea {
       width: 100%;
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -537,12 +520,6 @@
 <!-- 2. 교실 TV / 전광판 뷰어 -->
 <div id="displayView" style="display:none;">
   <header class="main-header" id="displayHeader">
-    <!-- 전광판 우상단 폰트 선택 버튼 -->
-    <div class="font-selector-box">
-      <button type="button" class="font-btn active" onclick="changeDisplayFont('kyobo', this)">교보손글씨</button>
-      <button type="button" class="font-btn" onclick="changeDisplayFont('pretendard', this)">고딕(가독성)</button>
-      <button type="button" class="font-btn" onclick="changeDisplayFont('gaegu', this)">가구체</button>
-    </div>
     <div class="sc">서 현 고 등 학 교</div>
     <h1 id="dispTitle"></h1>
     <div class="desc" id="dispDesc"></div>
@@ -552,19 +529,20 @@
 
   <main class="clothesline-wrap" id="dispClothesline"></main>
 
-  <div class="floating-qr">
+  <!-- 안내 문구 고딕체 고정 (ui-fixed-font 클래스 적용) -->
+  <div class="floating-qr ui-fixed-font">
     <div id="qrArea"></div>
     <div class="qr-tip">스마트폰으로 글 남기기</div>
   </div>
 
-  <button type="button" class="bgm-btn" id="bgmToggleBtn" onclick="toggleBgm()">
+  <button type="button" class="bgm-btn ui-fixed-font" id="bgmToggleBtn" onclick="toggleBgm()">
     <span id="bgmIcon">🎵</span>
     <span id="bgmText">피아노 배경음악 켜기</span>
   </button>
   <div id="youtubePlayer" style="display:none;"></div>
 
   <div id="screensaverArea" style="display:none;">
-    <div class="slide-backdrop" onclick="exitSlideShow()">
+    <div class="slide-backdrop ui-fixed-font" onclick="exitSlideShow()">
       ✨ 따뜻한 응원의 마음들을 전해드립니다 (화면을 누르면 보드로 돌아갑니다)
     </div>
     <div id="slideCardContainer"></div>
@@ -614,6 +592,17 @@
     
     <label>설명 문구</label>
     <input type="text" id="admDesc" placeholder="예: 친구, 선생님, 부모님의 따뜻한 응원을 전해주세요.">
+
+    <!-- 💡 대시보드에서 전광판 폰트 선택 기능 추가 -->
+    <label>전광판 글꼴(폰트) 선택</label>
+    <select id="admFontSelect">
+      <option value="kyobo">교보손글씨체 (추천, 깔끔하고 따뜻함)</option>
+      <option value="kimjungsook">온글잎 김정숙체 (다정하고 반듯한 손글씨)</option>
+      <option value="andong">온글잎 안동체 (세련되고 정돈된 손글씨)</option>
+      <option value="ryuttifying">온글잎 의율체 (귀겁고 아기자기한 손글씨)</option>
+      <option value="gaegu">가구체 (클래식한 감성 손글씨)</option>
+      <option value="pretendard">고딕체 (가독성 최우선 깔끔한 폰트)</option>
+    </select>
 
     <label>작성 기간 설정 (날짜 지정)</label>
     <div class="date-row">
@@ -680,30 +669,16 @@ const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
-// 💡 전광판 화면 전용 폰트 변경 함수 (대시보드는 영향 받지 않음)
-function changeDisplayFont(fontType, btnElement) {
+function applyDisplayFont(fontType) {
   const displayView = document.getElementById('displayView');
-  displayView.classList.remove('disp-font-kyobo', 'disp-font-pretendard', 'disp-font-gaegu');
+  displayView.classList.remove('font-kyobo', 'font-kimjungsook', 'font-andong', 'font-ryuttifying', 'font-gaegu', 'font-pretendard');
   
-  if (fontType === 'kyobo') displayView.classList.add('disp-font-kyobo');
-  else if (fontType === 'pretendard') displayView.classList.add('disp-font-pretendard');
-  else if (fontType === 'gaegu') displayView.classList.add('disp-font-gaegu');
-
-  document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
-  if (btnElement) btnElement.classList.add('active');
-
-  localStorage.setItem('mindboard_display_font', fontType);
-}
-
-// 전광판 로드 시 저장된 폰트 복원
-function initDisplayFont() {
-  const savedFont = localStorage.getItem('mindboard_display_font') || 'kyobo';
-  const buttons = document.querySelectorAll('.font-btn');
-  let targetBtn = buttons[0];
-  if (savedFont === 'pretendard') targetBtn = buttons[1];
-  else if (savedFont === 'gaegu') targetBtn = buttons[2];
-  
-  changeDisplayFont(savedFont, targetBtn);
+  if (fontType === 'kyobo') displayView.classList.add('font-kyobo');
+  else if (fontType === 'kimjungsook') displayView.classList.add('font-kimjungsook');
+  else if (fontType === 'andong') displayView.classList.add('font-andong');
+  else if (fontType === 'ryuttifying') displayView.classList.add('font-ryuttifying');
+  else if (fontType === 'gaegu') displayView.classList.add('font-gaegu');
+  else displayView.classList.add('font-pretendard');
 }
 
 function isAdmin() {
@@ -735,7 +710,6 @@ function formatPeriodText(start, end) {
 
 if (modeParam === 'display') {
   document.getElementById('displayView').style.display = 'block';
-  initDisplayFont();
   initDisplay();
   setupDisplayAutomation();
 } else if (modeParam === 'student' || roleParam === 'student') {
@@ -902,6 +876,10 @@ function initDisplay() {
       activeTopic = res.data;
       document.getElementById('dispTitle').innerText = activeTopic.title;
       document.getElementById('dispDesc').innerText = activeTopic.description;
+
+      // 대시보드에서 설정한 폰트 적용 (기본값 kyobo)
+      const fontChoice = activeTopic.font_style || 'kyobo';
+      applyDisplayFont(fontChoice);
 
       const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
       if (pText) document.getElementById('dispPeriod').innerText = pText;
@@ -1247,6 +1225,7 @@ function loadAdminDashboard() {
   document.getElementById('btnCreateTopic').onclick = function () {
     const title = document.getElementById('admTitle').value.trim();
     const desc = document.getElementById('admDesc').value.trim();
+    const fontStyle = document.getElementById('admFontSelect').value;
     const startAt = document.getElementById('admStart').value;
     const endAt = document.getElementById('admEnd').value;
 
@@ -1263,6 +1242,7 @@ function loadAdminDashboard() {
         action: 'createTopic',
         title: title,
         description: desc,
+        font_style: fontStyle,
         start_at: startAt,
         end_at: endAt
       })
