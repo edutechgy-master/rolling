@@ -6,16 +6,16 @@
   <title>서현고등학교 마음 보드</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
   
-  <!-- 저작권 안심 감성 손글씨 웹폰트 모음 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KyoboHandwriting2022kkd.woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102_wetris@1.1/Ownglyph_kimjungsook-Rg.woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102_wetris@1.1/Ownglyph_AndongBN.woff2" crossorigin="anonymous">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-  
+  <!-- 💡 고등학생 선호도가 높고 세련된 저작권 안심 무료 웹폰트 모음 -->
+  <!-- 1. 지마켓 산스 (굵고 시원시원하며 트렌디함) -->
+  <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/GmarketSansMedium.woff2" rel="stylesheet" crossorigin="anonymous">
+  <!-- 2. 에스코어 드림 (모던하고 깔끔한 고딕) -->
+  <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff2" rel="stylesheet" crossorigin="anonymous">
+  <!-- 3. 넥슨 Lv1 고딕 (부드럽고 가독성 좋음) -->
+  <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twenty-two@1.0/NEXON Lv1 Gothic Regular.woff2" rel="stylesheet" crossorigin="anonymous">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/html2canvas/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
@@ -40,18 +40,16 @@
       word-break: keep-all;
     }
 
-    /* 💡 전광판 감성 손글씨 클래스 정의 */
-    .font-kyobo { font-family: 'KyoboHandwriting2022kkd', cursive !important; }
-    .font-kimjungsook { font-family: 'Ownglyph_kimjungsook-Rg', cursive !important; }
-    .font-andong { font-family: 'Ownglyph_AndongBN', cursive !important; }
-    .font-gaegu { font-family: 'Gaegu', cursive !important; }
+    /* 💡 트렌디한 전광판 폰트 스타일 정의 */
+    .font-gmarket { font-family: 'GmarketSansMedium', sans-serif !important; }
+    .font-scoredream { font-family: 'S-CoreDream-5Medium', sans-serif !important; }
+    .font-nexon { font-family: 'NEXON Lv1 Gothic Regular', sans-serif !important; }
     .font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; }
 
-    /* 💡 셀렉트 박스 내부에서도 실제 폰트 모양으로 미리보기가 가능하도록 설정 */
-    select.preview-font-kyobo { font-family: 'KyoboHandwriting2022kkd', cursive !important; font-size: 16px; }
-    select.preview-font-kimjungsook { font-family: 'Ownglyph_kimjungsook-Rg', cursive !important; font-size: 16px; }
-    select.preview-font-andong { font-family: 'Ownglyph_AndongBN', cursive !important; font-size: 16px; }
-    select.preview-font-gaegu { font-family: 'Gaegu', cursive !important; font-size: 18px; }
+    /* 셀렉트 박스 내부 실시간 폰트 미리보기 */
+    select.preview-font-gmarket { font-family: 'GmarketSansMedium', sans-serif !important; font-size: 15px; }
+    select.preview-font-scoredream { font-family: 'S-CoreDream-5Medium', sans-serif !important; font-size: 15px; }
+    select.preview-font-nexon { font-family: 'NEXON Lv1 Gothic Regular', sans-serif !important; font-size: 15px; }
     select.preview-font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; font-size: 15px; }
 
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
@@ -96,7 +94,6 @@
       font-weight: 700;
     }
 
-    /* 안내 문구 고딕체 고정 */
     .ui-fixed-font {
       font-family: 'Pretendard Variable', Pretendard, sans-serif !important;
     }
@@ -191,7 +188,7 @@
       display: flex;
       align-items: flex-start;
       padding: 14px;
-      font-size: 20px;
+      font-size: 19px;
       line-height: 1.55;
       color: #382F24;
       word-break: break-word;
@@ -204,7 +201,7 @@
       overflow-wrap: anywhere;
     }
     .card .nm {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       margin-top: 12px;
       padding-top: 8px;
@@ -598,12 +595,11 @@
     <input type="text" id="admDesc" placeholder="예: 친구, 선생님, 부모님의 따뜻한 응원을 전해주세요.">
 
     <label>전광판 글꼴(폰트) 선택</label>
-    <select id="admFontSelect" class="preview-font-kyobo" onchange="updateSelectPreview(this)">
-      <option value="kyobo" class="font-kyobo">교보손글씨체 (깔끔하고 따뜻함)</option>
-      <option value="kimjungsook" class="font-kimjungsook">온글잎 김정숙체 (다정하고 반듯한 손글씨)</option>
-      <option value="andong" class="font-andong">온글잎 안동체 (세련되고 정돈된 손글씨)</option>
-      <option value="gaegu" class="font-gaegu">가구체 (아기자기한 감성 손글씨)</option>
-      <option value="pretendard" class="font-pretendard">고딕체 (가독성 최우선 깔끔한 폰트)</option>
+    <select id="admFontSelect" class="preview-font-gmarket" onchange="updateSelectPreview(this)">
+      <option value="gmarket" class="font-gmarket">지마켓 산스 (트렌디하고 시원시원함)</option>
+      <option value="scoredream" class="font-scoredream">에스코어 드림 (모던하고 세련됨)</option>
+      <option value="nexon" class="font-nexon">넥슨 Lv1 고딕 (부드럽고 깔끔함)</option>
+      <option value="pretendard" class="font-pretendard">프리텐다드 (기본 고딕)</option>
     </select>
 
     <label>작성 기간 설정 (날짜 지정)</label>
@@ -671,21 +667,20 @@ const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
-// 셀렉트 박스 자체의 폰트 미리보기 클래스 실시간 연동
+// 셀렉트 박스 실시간 미리보기 폰트 연동
 function updateSelectPreview(selectEl) {
-  selectEl.classList.remove('preview-font-kyobo', 'preview-font-kimjungsook', 'preview-font-andong', 'preview-font-gaegu', 'preview-font-pretendard');
+  selectEl.classList.remove('preview-font-gmarket', 'preview-font-scoredream', 'preview-font-nexon', 'preview-font-pretendard');
   selectEl.classList.add('preview-font-' + selectEl.value);
 }
 
 // 전광판 화면에 폰트 클래스 적용
 function applyDisplayFont(fontType) {
   const displayView = document.getElementById('displayView');
-  displayView.classList.remove('font-kyobo', 'font-kimjungsook', 'font-andong', 'font-gaegu', 'font-pretendard');
+  displayView.classList.remove('font-gmarket', 'font-scoredream', 'font-nexon', 'font-pretendard');
   
-  if (fontType === 'kyobo') displayView.classList.add('font-kyobo');
-  else if (fontType === 'kimjungsook') displayView.classList.add('font-kimjungsook');
-  else if (fontType === 'andong') displayView.classList.add('font-andong');
-  else if (fontType === 'gaegu') displayView.classList.add('font-gaegu');
+  if (fontType === 'gmarket') displayView.classList.add('font-gmarket');
+  else if (fontType === 'scoredream') displayView.classList.add('font-scoredream');
+  else if (fontType === 'nexon') displayView.classList.add('font-nexon');
   else displayView.classList.add('font-pretendard');
 }
 
@@ -904,7 +899,7 @@ function initDisplay() {
       document.getElementById('dispTitle').innerText = activeTopic.title;
       document.getElementById('dispDesc').innerText = activeTopic.description;
 
-      const fontChoice = activeTopic.font_style || 'kyobo';
+      const fontChoice = activeTopic.font_style || 'gmarket';
       applyDisplayFont(fontChoice);
 
       const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
@@ -1224,7 +1219,7 @@ function loadAdminDashboard() {
         const parentUrl = `${getBaseUrl()}?mode=parent&topic=${t.id}`;
         const displayUrl = `${getBaseUrl()}?mode=display&topic=${t.id}`;
         const pText = formatPeriodText(t.start_at, t.end_at);
-        const curFont = t.font_style || 'kyobo';
+        const curFont = t.font_style || 'gmarket';
 
         container.innerHTML += `
           <div class="admin-card">
@@ -1233,15 +1228,14 @@ function loadAdminDashboard() {
             <p style="font-size:14px; color:var(--sub);">${escapeHtml(t.description)}</p>
             ${pText ? `<p style="font-size:13px; color:var(--point); margin-top:4px;">${escapeHtml(pText)}</p>` : ''}
             
-            <!-- 💡 각 주제 카드별 전광판 폰트 즉시 변경 셀렉트 박스 -->
+            <!-- 💡 기존 진행 중인 주제도 폰트를 즉시 변경할 수 있는 셀렉트 박스 -->
             <div style="margin-top:12px; background:#FAF7F2; padding:10px; border-radius:8px; display:flex; align-items:center; gap:8px;">
               <span style="font-size:12px; font-weight:700; color:var(--sub); white-space:nowrap;">전광판 폰트:</span>
               <select class="preview-font-${curFont}" onchange="updateTopicFont('${t.id}', this.value); updateSelectPreview(this);" style="padding:6px; font-size:14px;">
-                <option value="kyobo" class="font-kyobo" ${curFont === 'kyobo' ? 'selected' : ''}>교보손글씨체 (깔끔하고 따뜻함)</option>
-                <option value="kimjungsook" class="font-kimjungsook" ${curFont === 'kimjungsook' ? 'selected' : ''}>온글잎 김정숙체 (다정하고 반듯한 손글씨)</option>
-                <option value="andong" class="font-andong" ${curFont === 'andong' ? 'selected' : ''}>온글잎 안동체 (세련되고 정돈된 손글씨)</option>
-                <option value="gaegu" class="font-gaegu" ${curFont === 'gaegu' ? 'selected' : ''}>가구체 (아기자기한 감성 손글씨)</option>
-                <option value="pretendard" class="font-pretendard" ${curFont === 'pretendard' ? 'selected' : ''}>고딕체 (가독성 최우선 깔끔한 폰트)</option>
+                <option value="gmarket" class="font-gmarket" ${curFont === 'gmarket' ? 'selected' : ''}>지마켓 산스 (트렌디하고 시원시원함)</option>
+                <option value="scoredream" class="font-scoredream" ${curFont === 'scoredream' ? 'selected' : ''}>에스코어 드림 (모던하고 세련됨)</option>
+                <option value="nexon" class="font-nexon" ${curFont === 'nexon' ? 'selected' : ''}>넥슨 Lv1 고딕 (부드럽고 깔끔함)</option>
+                <option value="pretendard" class="font-pretendard" ${curFont === 'pretendard' ? 'selected' : ''}>프리텐다드 (기본 고딕)</option>
               </select>
             </div>
 
