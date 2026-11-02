@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>서현고등학교 마음 보드</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
-  <!-- 저작권 안심 무료 손글씨 웹폰트 모음 -->
+  
+  <!-- 저작권 안심 감성 손글씨 웹폰트 모음 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KyoboHandwriting2022kkd.woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eleven_@1.0/MapoFlowerIsland.woff2" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102_wetris@1.1/Ownglyph_kimjungsook-Rg.woff2" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2102_wetris@1.1/Ownglyph_AndongBN.woff2" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/Ownglyph_ryuttifying-Rg.woff2" crossorigin="anonymous">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,13 +40,19 @@
       word-break: keep-all;
     }
 
-    /* 💡 다양한 저작권 안심 손글씨 클래스 정의 */
+    /* 💡 전광판 감성 손글씨 클래스 정의 */
     .font-kyobo { font-family: 'KyoboHandwriting2022kkd', cursive !important; }
     .font-kimjungsook { font-family: 'Ownglyph_kimjungsook-Rg', cursive !important; }
     .font-andong { font-family: 'Ownglyph_AndongBN', cursive !important; }
-    .font-ryuttifying { font-family: 'Ownglyph_ryuttifying-Rg', cursive !important; }
     .font-gaegu { font-family: 'Gaegu', cursive !important; }
     .font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; }
+
+    /* 💡 셀렉트 박스 내부에서도 실제 폰트 모양으로 미리보기가 가능하도록 설정 */
+    select.preview-font-kyobo { font-family: 'KyoboHandwriting2022kkd', cursive !important; font-size: 16px; }
+    select.preview-font-kimjungsook { font-family: 'Ownglyph_kimjungsook-Rg', cursive !important; font-size: 16px; }
+    select.preview-font-andong { font-family: 'Ownglyph_AndongBN', cursive !important; font-size: 16px; }
+    select.preview-font-gaegu { font-family: 'Gaegu', cursive !important; font-size: 18px; }
+    select.preview-font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; font-size: 15px; }
 
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
 
@@ -64,7 +69,7 @@
       margin-bottom: 10px;
     }
     header.main-header h1 {
-      font-size: 36px;
+      font-size: 38px;
       font-weight: 700;
       color: #3F3323;
       line-height: 1.25;
@@ -91,7 +96,7 @@
       font-weight: 700;
     }
 
-    /* 안내 문구 및 버튼은 항상 고딕체 유지 */
+    /* 안내 문구 고딕체 고정 */
     .ui-fixed-font {
       font-family: 'Pretendard Variable', Pretendard, sans-serif !important;
     }
@@ -529,7 +534,6 @@
 
   <main class="clothesline-wrap" id="dispClothesline"></main>
 
-  <!-- 안내 문구 고딕체 고정 (ui-fixed-font 클래스 적용) -->
   <div class="floating-qr ui-fixed-font">
     <div id="qrArea"></div>
     <div class="qr-tip">스마트폰으로 글 남기기</div>
@@ -593,15 +597,13 @@
     <label>설명 문구</label>
     <input type="text" id="admDesc" placeholder="예: 친구, 선생님, 부모님의 따뜻한 응원을 전해주세요.">
 
-    <!-- 💡 대시보드에서 전광판 폰트 선택 기능 추가 -->
     <label>전광판 글꼴(폰트) 선택</label>
-    <select id="admFontSelect">
-      <option value="kyobo">교보손글씨체 (추천, 깔끔하고 따뜻함)</option>
-      <option value="kimjungsook">온글잎 김정숙체 (다정하고 반듯한 손글씨)</option>
-      <option value="andong">온글잎 안동체 (세련되고 정돈된 손글씨)</option>
-      <option value="ryuttifying">온글잎 의율체 (귀겁고 아기자기한 손글씨)</option>
-      <option value="gaegu">가구체 (클래식한 감성 손글씨)</option>
-      <option value="pretendard">고딕체 (가독성 최우선 깔끔한 폰트)</option>
+    <select id="admFontSelect" class="preview-font-kyobo" onchange="updateSelectPreview(this)">
+      <option value="kyobo" class="font-kyobo">교보손글씨체 (깔끔하고 따뜻함)</option>
+      <option value="kimjungsook" class="font-kimjungsook">온글잎 김정숙체 (다정하고 반듯한 손글씨)</option>
+      <option value="andong" class="font-andong">온글잎 안동체 (세련되고 정돈된 손글씨)</option>
+      <option value="gaegu" class="font-gaegu">가구체 (아기자기한 감성 손글씨)</option>
+      <option value="pretendard" class="font-pretendard">고딕체 (가독성 최우선 깔끔한 폰트)</option>
     </select>
 
     <label>작성 기간 설정 (날짜 지정)</label>
@@ -669,16 +671,41 @@ const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
+// 셀렉트 박스 자체의 폰트 미리보기 클래스 실시간 연동
+function updateSelectPreview(selectEl) {
+  selectEl.classList.remove('preview-font-kyobo', 'preview-font-kimjungsook', 'preview-font-andong', 'preview-font-gaegu', 'preview-font-pretendard');
+  selectEl.classList.add('preview-font-' + selectEl.value);
+}
+
+// 전광판 화면에 폰트 클래스 적용
 function applyDisplayFont(fontType) {
   const displayView = document.getElementById('displayView');
-  displayView.classList.remove('font-kyobo', 'font-kimjungsook', 'font-andong', 'font-ryuttifying', 'font-gaegu', 'font-pretendard');
+  displayView.classList.remove('font-kyobo', 'font-kimjungsook', 'font-andong', 'font-gaegu', 'font-pretendard');
   
   if (fontType === 'kyobo') displayView.classList.add('font-kyobo');
   else if (fontType === 'kimjungsook') displayView.classList.add('font-kimjungsook');
   else if (fontType === 'andong') displayView.classList.add('font-andong');
-  else if (fontType === 'ryuttifying') displayView.classList.add('font-ryuttifying');
   else if (fontType === 'gaegu') displayView.classList.add('font-gaegu');
   else displayView.classList.add('font-pretendard');
+}
+
+// 기존 주제 폰트 실시간 변경 함수
+function updateTopicFont(topicId, fontType) {
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      action: 'updateTopicFont',
+      topic_id: topicId,
+      font_style: fontType
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (!res.ok) throw new Error(res.error);
+    alert('전광판 폰트가 성공적으로 변경되었습니다!');
+  })
+  .catch(err => alert('변경 실패: ' + err.message));
 }
 
 function isAdmin() {
@@ -877,7 +904,6 @@ function initDisplay() {
       document.getElementById('dispTitle').innerText = activeTopic.title;
       document.getElementById('dispDesc').innerText = activeTopic.description;
 
-      // 대시보드에서 설정한 폰트 적용 (기본값 kyobo)
       const fontChoice = activeTopic.font_style || 'kyobo';
       applyDisplayFont(fontChoice);
 
@@ -1198,6 +1224,7 @@ function loadAdminDashboard() {
         const parentUrl = `${getBaseUrl()}?mode=parent&topic=${t.id}`;
         const displayUrl = `${getBaseUrl()}?mode=display&topic=${t.id}`;
         const pText = formatPeriodText(t.start_at, t.end_at);
+        const curFont = t.font_style || 'kyobo';
 
         container.innerHTML += `
           <div class="admin-card">
@@ -1206,6 +1233,18 @@ function loadAdminDashboard() {
             <p style="font-size:14px; color:var(--sub);">${escapeHtml(t.description)}</p>
             ${pText ? `<p style="font-size:13px; color:var(--point); margin-top:4px;">${escapeHtml(pText)}</p>` : ''}
             
+            <!-- 💡 각 주제 카드별 전광판 폰트 즉시 변경 셀렉트 박스 -->
+            <div style="margin-top:12px; background:#FAF7F2; padding:10px; border-radius:8px; display:flex; align-items:center; gap:8px;">
+              <span style="font-size:12px; font-weight:700; color:var(--sub); white-space:nowrap;">전광판 폰트:</span>
+              <select class="preview-font-${curFont}" onchange="updateTopicFont('${t.id}', this.value); updateSelectPreview(this);" style="padding:6px; font-size:14px;">
+                <option value="kyobo" class="font-kyobo" ${curFont === 'kyobo' ? 'selected' : ''}>교보손글씨체 (깔끔하고 따뜻함)</option>
+                <option value="kimjungsook" class="font-kimjungsook" ${curFont === 'kimjungsook' ? 'selected' : ''}>온글잎 김정숙체 (다정하고 반듯한 손글씨)</option>
+                <option value="andong" class="font-andong" ${curFont === 'andong' ? 'selected' : ''}>온글잎 안동체 (세련되고 정돈된 손글씨)</option>
+                <option value="gaegu" class="font-gaegu" ${curFont === 'gaegu' ? 'selected' : ''}>가구체 (아기자기한 감성 손글씨)</option>
+                <option value="pretendard" class="font-pretendard" ${curFont === 'pretendard' ? 'selected' : ''}>고딕체 (가독성 최우선 깔끔한 폰트)</option>
+              </select>
+            </div>
+
             <div class="link-group">
               <div style="font-size:12px; font-weight:700; color:#6E6355; margin-bottom:2px;">📌 작성 링크 (클릭 시 이동 및 복사 가능)</div>
               <a href="${studentUrl}" target="_blank">🧑‍🎓 학생용 작성 링크 (?mode=student)</a>
