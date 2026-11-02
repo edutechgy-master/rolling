@@ -272,7 +272,6 @@
       margin-top: 7px;
     }
 
-    /* 좌하단 배경음악 컨트롤러 */
     .bgm-btn {
       position: fixed;
       left: 24px;
@@ -426,11 +425,12 @@
     #pdfRenderArea .pdf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
     #pdfRenderArea .pdf-card { border: 1px solid #ccc; padding: 14px; border-radius: 6px; page-break-inside: avoid; }
 
-    /* 전광판 카드 및 슬라이드용 사진 스타일 */
+    /* 💡 사진 짤림 방지(contain) 및 여백 배경 스타일 적용 */
     .card-thumbnail {
       width: 100%;
       height: 130px;
-      object-fit: cover;
+      object-fit: contain;
+      background: rgba(0,0,0,0.03);
       border-radius: 4px;
       margin-bottom: 10px;
       border: 1px solid rgba(0,0,0,0.06);
@@ -452,14 +452,16 @@
     }
     .modal-media-wrap img {
       width: 100%;
-      height: auto;
+      max-height: 60vh;
+      object-fit: contain;
       display: block;
+      margin: 0 auto;
     }
   </style>
 </head>
 <body>
 
-<!-- 1. 작성 화면 (학생, 교사, 학부모) -->
+<!-- 1. 작성 화면 -->
 <div id="writeView" class="wrap" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -472,25 +474,24 @@
   <div class="form-box" id="writeFormBox">
     <div id="boxStudent" style="display:none;">
       <label>학번 (예: 10420, 20315)</label>
-      <input type="text" id="fStudentId" maxlength="10" placeholder="학번을 입력하세요 (1, 2, 3학년 구분)">
+      <input type="text" id="fStudentId" maxlength="10" placeholder="학번을 입력하세요">
       <label>이름</label>
       <input type="text" id="fStudentName" maxlength="12" placeholder="이름을 입력하세요">
     </div>
 
     <div id="boxTeacher" style="display:none;">
-      <label>이름 및 담당 (예: 김철수 국어샘, 박영희 2-3담임)</label>
+      <label>이름 및 담당 (예: 김철수 국어샘)</label>
       <input type="text" id="fTeacherName" maxlength="20" placeholder="예: 홍길동 수학샘">
     </div>
 
     <div id="boxParent" style="display:none;">
-      <label>학생 이름 및 호칭 (예: 김철수 엄마, 박영희 학부모)</label>
+      <label>학생 이름 및 호칭 (예: 김철수 엄마)</label>
       <input type="text" id="fParentName" maxlength="20" placeholder="예: 홍길동 학부모">
     </div>
 
     <label>마음 남기기</label>
     <textarea id="fMsg" maxlength="500" placeholder="따뜻한 응원이나 마음을 담은 메시지를 남겨주세요"></textarea>
     
-    <!-- 사진 첨부 기능 추가 -->
     <label>사진 첨부 (선택, 5MB 이하)</label>
     <input type="file" id="fImage" accept="image/*" style="margin-bottom: 15px; width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer;">
     
@@ -514,13 +515,11 @@
 
   <main class="clothesline-wrap" id="dispClothesline"></main>
 
-  <!-- 우하단 QR코드 -->
   <div class="floating-qr">
     <div id="qrArea"></div>
     <div class="qr-tip">스마트폰으로 글 남기기</div>
   </div>
 
-  <!-- 좌하단 유튜브 배경음악 제어 버튼 -->
   <button type="button" class="bgm-btn" id="bgmToggleBtn" onclick="toggleBgm()">
     <span id="bgmIcon">🎵</span>
     <span id="bgmText">피아노 배경음악 켜기</span>
@@ -535,7 +534,7 @@
   </div>
 </div>
 
-<!-- 3. 관리자 로그인 화면 (기본 URL 접속 시 실행) -->
+<!-- 3. 관리자 로그인 화면 -->
 <div id="adminLoginView" class="wrap" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -613,8 +612,8 @@
 <div id="pdfRenderArea"></div>
 
 <script>
-// ★ 새로 배포한 백엔드 앱스 스크립트 웹 앱 URL을 여기에 넣으세요.
-const API_URL = 'https://script.google.com/macros/s/AKfycbwQDfZqibLcSVS3iuywN2rwkk1mGEnHScgHvTwTAqM5YDv2c0W0vJvhnr62FhDrb5pq/exec';
+// ★ 최신 웹 앱 URL을 여기에 입력하세요.
+const API_URL = 'https://script.google.com/macros/s/AKfycby2LdSEbtd3N66GIRn5ywSf0E1OYkeqpHduU4LPCMxxj0CLDCDnnGBrOhC-CjbkK6Xc/exec';
 
 const ADMIN_ID = 'admin';
 const ADMIN_PW = '7895301';
@@ -632,7 +631,6 @@ let selectedMsg = null;
 let selectedMsgId = null;
 const ROW_COUNT = 3;
 
-// ── 5분 미입력 슬라이드 및 자동 스크롤 변수 ──
 const IDLE_LIMIT = 5 * 60 * 1000;
 let lastActivityTime = Date.now();
 let isSlideShowActive = false;
@@ -642,8 +640,7 @@ let autoScrollInterval = null;
 let scrollDirection = 1;
 let userInteracting = false;
 
-// ── 유튜브 BGM 변수 ──
-const YOUTUBE_VIDEO_ID = '01XpV4LH3no'; // 클래식 피아노 영상 ID
+const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
@@ -674,7 +671,6 @@ function formatPeriodText(start, end) {
   return `작성 기간 : ${sStr} ~ ${eStr}`;
 }
 
-// ──────────────── 초기 화면 라우팅 ────────────────
 if (modeParam === 'display') {
   document.getElementById('displayView').style.display = 'block';
   initDisplay();
@@ -689,7 +685,6 @@ if (modeParam === 'display') {
   document.getElementById('writeView').style.display = 'block';
   initWriter('parent');
 } else {
-  // 기본 주소 접속 시 관리자 화면으로 분기
   if (isAdmin()) {
     document.getElementById('adminView').style.display = 'block';
     loadAdminDashboard();
@@ -699,7 +694,6 @@ if (modeParam === 'display') {
   }
 }
 
-// ──────────────── 관리자 인증 ────────────────
 document.getElementById('btnLogin').onclick = function() {
   const id = document.getElementById('admIdInput').value.trim();
   const pw = document.getElementById('admPwInput').value.trim();
@@ -719,7 +713,6 @@ function adminLogout() {
   location.reload();
 }
 
-// ──────────────── 1. 작성 화면 (사진 첨부 로직 통합) ────────────────
 function initWriter(role) {
   const badge = document.getElementById('roleBadge');
   if (role === 'teacher') {
@@ -838,7 +831,6 @@ function initWriter(role) {
   };
 }
 
-// ──────────────── 2. 전광판 뷰어 ────────────────
 function initDisplay() {
   fetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
     .then(r => r.json())
@@ -911,7 +903,6 @@ function renderClothesline(letters) {
     letters.slice(i, i + ROW_COUNT).forEach(l => {
       const toneClass = getToneClass(l);
       const subInfo = l.role === '학생' ? l.student_id : l.role;
-      // 기본 카드에 사진 썸네일 표시 적용
       const thumbnailHtml = l.image_url ? `<img src="${l.image_url}" class="card-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
       html += `
@@ -946,7 +937,6 @@ function showPopupFocus(m) {
   setTimeout(() => { popup.remove(); }, 4500);
 }
 
-// ──────────────── 2-1. 자동 스크롤 및 5분 미입력 슬라이드 쇼 ────────────────
 function setupDisplayAutomation() {
   ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
     window.addEventListener(evt, () => {
@@ -1015,7 +1005,6 @@ function showNextSlide() {
   const toneClass = getToneClass(msg);
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   
-  // 슬라이드 쇼에 사진 썸네일 표시 적용
   const slideImgHtml = msg.image_url ? `<img src="${msg.image_url}" class="slide-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
   container.innerHTML = `
@@ -1038,7 +1027,6 @@ function exitSlideShow() {
   resetActivity();
 }
 
-// ──────────────── 2-2. 유튜브 BGM API 제어 ────────────────
 (function loadYoutubeAPI() {
   const tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
@@ -1087,7 +1075,6 @@ function toggleBgm() {
   }
 }
 
-// ──────────────── 3. 상세 모달 및 삭제 (사진 뷰어 통합) ────────────────
 function openDetailModal(id) {
   const msg = allLetters.find(x => x.id === id);
   if (!msg) return;
@@ -1098,7 +1085,6 @@ function openDetailModal(id) {
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   document.getElementById('mWho').innerText = `${msg.name} (${subInfo})`;
   
-  // 모달 내 사진 렌더링
   let mediaHtml = '';
   if (msg.image_url) {
     mediaHtml = `<div class="modal-media-wrap"><img src="${msg.image_url}" alt="첨부사진"></div>`;
@@ -1158,7 +1144,6 @@ function deleteCurrentMessage() {
   });
 }
 
-// ──────────────── 4. 대시보드 관리 ────────────────
 function loadAdminDashboard() {
   fetch(`${API_URL}?action=listTopics&t=${Date.now()}`)
     .then(r => r.json())
@@ -1233,7 +1218,6 @@ function loadAdminDashboard() {
   };
 }
 
-// ──────────────── 5. PDF 저장 ────────────────
 function downloadPDF(topicId, topicTitle) {
   fetch(`${API_URL}?action=listMessages&topic_id=${topicId}&t=${Date.now()}`)
     .then(r => r.json())
@@ -1277,7 +1261,6 @@ function downloadPDF(topicId, topicTitle) {
     });
 }
 
-// ──────────────── 6. 참여자 통계 ────────────────
 function loadStats() {
   fetch(`${API_URL}?action=getStats&t=${Date.now()}`)
     .then(r => r.json())
