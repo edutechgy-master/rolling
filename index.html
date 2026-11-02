@@ -36,7 +36,7 @@
       background: var(--bg);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
       min-height: 100dvh;
-      word-break: keep-all;
+      word-break: keep-all; /* 기본적으로 단어 단위로 줄바꿈 유지 */
     }
 
     .font-gmarket { font-family: 'GmarketSansMedium', sans-serif !important; }
@@ -109,7 +109,6 @@
     .role-teacher { background: #F7E4E9; color: #8C354F; }
     .role-parent { background: #F7EFE4; color: #8C6235; }
 
-    /* 💡 가로 길이를 1280px로 넓혀 4~5개 배열도 넉넉하게 들어갑니다 */
     .clothesline-wrap {
       max-width: 1280px;
       margin: 0 auto;
@@ -131,7 +130,6 @@
       border-radius: 2px;
       box-shadow: 0 1px 0 rgba(255,255,255,.7);
     }
-    /* 💡 CSS 변수를 사용해 grid 가로 칸수를 동적으로 바꿈 */
     .row {
       display: grid;
       grid-template-columns: repeat(var(--grid-cols, 3), 1fr);
@@ -192,14 +190,15 @@
       font-size: 19px;
       line-height: 1.55;
       color: #382F24;
-      word-break: break-word;
+      word-break: keep-all; /* 단어 단위로 끊어지도록 수정 */
+      overflow-wrap: break-word; /* 긴 영문 URL 등 예외 처리용 */
     }
     .card .ph span {
       display: block;
       width: 100%;
       white-space: pre-wrap;
-      overflow: visible;
-      overflow-wrap: anywhere;
+      word-break: keep-all; /* 단어 잘림 완벽 방지 */
+      overflow-wrap: break-word;
     }
     .card .nm {
       font-size: 17px;
@@ -441,7 +440,7 @@
 
     #pdfRenderArea { display: none; background: #fff; padding: 30px; color: #000; }
     #pdfRenderArea .pdf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
-    #pdfRenderArea .pdf-card { border: 1px solid #ccc; padding: 14px; border-radius: 6px; page-break-inside: avoid; }
+    #pdfRenderArea .pdf-card { border: 1px solid #ccc; padding: 14px; border-radius: 6px; page-break-inside: avoid; word-break: keep-all; }
 
     .card-thumbnail {
       width: 100%;
@@ -604,7 +603,6 @@
       <option value="gaegu" class="font-gaegu">가구체 (기본 감성 손글씨)</option>
     </select>
 
-    <!-- 💡 새 주제 생성 시 메모 개수 설정 기능 추가 -->
     <label>한 줄에 보여질 메모 개수 (가로 배열)</label>
     <select id="admRowCount">
       <option value="3">3개씩 보기 (기본, 카드 크게)</option>
@@ -647,7 +645,7 @@
 
 <script>
 // ★ 선생님의 최신 API_URL 주소가 그대로 맞는지 다시 한 번 꼭 확인해주세요!
-const API_URL = 'https://script.google.com/macros/s/AKfycbwpySsgdzUdA6LrfnFLh0DQNaQ_2sTh1IfEZeS5TP21z9KxY6BGbs9kt_cAFPIccfZk/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby2LdSEbtd3N66GIRn5ywSf0E1OYkeqpHduU4LPCMxxj0CLDCDnnGBrOhC-CjbkK6Xc/exec';
 
 const ADMIN_ID = 'admin';
 const ADMIN_PW = '7895301';
@@ -663,7 +661,6 @@ let lastKnownIds = new Set();
 let isFirstLoad = true;
 let selectedMsg = null;
 let selectedMsgId = null;
-// 💡 ROW_COUNT를 상수가 아닌 변수로 변경 (기본값 3)
 let ROW_COUNT = 3;
 
 const IDLE_LIMIT = 5 * 60 * 1000;
@@ -695,7 +692,6 @@ function applyDisplayFont(fontType) {
   else displayView.classList.add('font-pretendard');
 }
 
-// 💡 가로 배열 개수(row_count) 실시간 업데이트 함수
 function updateTopicRowCount(topicId, count) {
   fetch(API_URL, {
     method: 'POST',
@@ -964,7 +960,6 @@ function initDisplay() {
       const fontChoice = activeTopic.font_style || 'gmarket';
       applyDisplayFont(fontChoice);
 
-      // 💡 서버에서 받아온 가로 배열 설정 적용 (기본 3개)
       ROW_COUNT = parseInt(activeTopic.row_count) || 3;
       document.documentElement.style.setProperty('--grid-cols', ROW_COUNT);
 
@@ -1026,7 +1021,6 @@ function renderClothesline(letters) {
   }
 
   let html = '';
-  // 💡 선택된 ROW_COUNT 개수만큼 카드를 잘라서 한 줄로 렌더링
   for (let i = 0; i < letters.length; i += ROW_COUNT) {
     html += '<div class="line"><div class="row">';
     letters.slice(i, i + ROW_COUNT).forEach(l => {
@@ -1057,8 +1051,9 @@ function showPopupFocus(m) {
   const subInfo = m.role === '학생' ? m.student_id : m.role;
   const popup = document.createElement('div');
   popup.className = `card ${toneClass} popup-focus`;
+  // 💡 팝업 텍스트 단어 잘림 방지
   popup.innerHTML = `
-    <div style="font-size:24px; line-height:1.5; margin-bottom:12px;">${escapeHtml(m.message)}</div>
+    <div style="font-size:24px; line-height:1.5; margin-bottom:12px; word-break: keep-all;">${escapeHtml(m.message)}</div>
     <div style="font-size:15px; font-weight:700; color:var(--point-dark); text-align:right;">${escapeHtml(subInfo)} ${escapeHtml(m.name)}</div>
   `;
   document.body.appendChild(popup);
@@ -1136,10 +1131,11 @@ function showNextSlide() {
   
   const slideImgHtml = msg.image_url ? `<img src="${msg.image_url}" class="slide-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
+  // 💡 슬라이드 텍스트 단어 잘림 방지
   container.innerHTML = `
     <div class="card ${toneClass} slide-highlight-card">
       ${slideImgHtml}
-      <div style="font-size:26px; line-height:1.5; margin-bottom:14px; color:#382F24;">${escapeHtml(msg.message)}</div>
+      <div style="font-size:26px; line-height:1.5; margin-bottom:14px; color:#382F24; word-break: keep-all;">${escapeHtml(msg.message)}</div>
       <div style="font-size:16px; font-weight:700; color:var(--point-dark); text-align:right;">- ${escapeHtml(subInfo)} ${escapeHtml(msg.name)} -</div>
     </div>
   `;
@@ -1322,7 +1318,6 @@ function loadAdminDashboard() {
                 </select>
               </div>
 
-              <!-- 💡 대시보드 카드에 가로 배열 수정 메뉴 추가 -->
               <div style="display:flex; gap:6px; align-items:center; margin-top:4px;">
                 <span style="font-size:12px; font-weight:700; color:var(--sub); width:50px;">배열 수정:</span>
                 <select onchange="updateTopicRowCount('${t.id}', this.value);" style="padding:6px; font-size:14px; width:80%;">
