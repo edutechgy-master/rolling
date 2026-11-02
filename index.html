@@ -36,7 +36,7 @@
       background: var(--bg);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
       min-height: 100dvh;
-      word-break: keep-all; /* 기본적으로 단어 단위로 줄바꿈 유지 */
+      word-break: keep-all; 
     }
 
     .font-gmarket { font-family: 'GmarketSansMedium', sans-serif !important; }
@@ -190,14 +190,14 @@
       font-size: 19px;
       line-height: 1.55;
       color: #382F24;
-      word-break: keep-all; /* 단어 단위로 끊어지도록 수정 */
-      overflow-wrap: break-word; /* 긴 영문 URL 등 예외 처리용 */
+      word-break: keep-all; 
+      overflow-wrap: break-word; 
     }
     .card .ph span {
       display: block;
       width: 100%;
       white-space: pre-wrap;
-      word-break: keep-all; /* 단어 잘림 완벽 방지 */
+      word-break: keep-all; 
       overflow-wrap: break-word;
     }
     .card .nm {
@@ -477,7 +477,6 @@
 </head>
 <body id="appBody">
 
-<!-- 1. 작성 화면 -->
 <div id="writeView" class="wrap" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -519,7 +518,6 @@
   </div>
 </div>
 
-<!-- 2. 교실 TV / 전광판 뷰어 -->
 <div id="displayView" style="display:none;">
   <header class="main-header" id="displayHeader">
     <div class="sc">서 현 고 등 학 교</div>
@@ -550,7 +548,6 @@
   </div>
 </div>
 
-<!-- 3. 관리자 로그인 화면 -->
 <div id="adminLoginView" class="wrap" style="display:none;">
   <header class="main-header">
     <div class="sc">서 현 고 등 학 교</div>
@@ -566,7 +563,6 @@
   </div>
 </div>
 
-<!-- 4. 관리자 대시보드 화면 -->
 <div id="adminView" class="wrap" style="display:none;">
   <header class="main-header" style="position:relative;">
     <div class="sc">서 현 고 등 학 교</div>
@@ -629,7 +625,6 @@
   <div id="adminTopicList"></div>
 </div>
 
-<!-- 상세 보기 및 관리자 삭제 모달 -->
 <div class="modal-dim" id="detailModal" hidden>
   <div class="modal-card">
     <div class="who" id="mWho"></div>
@@ -644,7 +639,7 @@
 <div id="pdfRenderArea"></div>
 
 <script>
-// ★ 선생님의 최신 API_URL 주소가 그대로 맞는지 다시 한 번 꼭 확인해주세요!
+// ★ 선생님의 최신 API_URL 주소로 연결되어 있어야 합니다!
 const API_URL = 'https://script.google.com/macros/s/AKfycby2LdSEbtd3N66GIRn5ywSf0E1OYkeqpHduU4LPCMxxj0CLDCDnnGBrOhC-CjbkK6Xc/exec';
 
 const ADMIN_ID = 'admin';
@@ -676,6 +671,32 @@ const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
+// 💡 날짜를 안전하게 YYYY-MM-DD로 변환
+function parseDateToYMD(dateStr) {
+  if (!dateStr || dateStr === 'true' || dateStr === 'false' || dateStr === 'undefined') return '';
+  const s = String(dateStr).trim();
+  const match = s.match(/^(\d{4})[-\.]\s?(\d{2})[-\.]\s?(\d{2})/);
+  if (match) return `${match[1]}-${match[2]}-${match[3]}`;
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+  return '';
+}
+
+// 💡 YYYY-MM-DD를 한국식 YYYY. MM. DD. 로 변환
+function formatPeriodText(start, end) {
+  if (!start && !end) return '';
+  const sYMD = parseDateToYMD(start);
+  const eYMD = parseDateToYMD(end);
+  const sStr = sYMD ? sYMD.replace(/-/g, '. ') + '.' : '시작일 미지정';
+  const eStr = eYMD ? eYMD.replace(/-/g, '. ') + '.' : '마감일 미지정';
+  return `작성 기간 : ${sStr} ~ ${eStr}`;
+}
+
 function updateSelectPreview(selectEl) {
   selectEl.classList.remove('preview-font-gmarket', 'preview-font-scoredream', 'preview-font-nexon', 'preview-font-pretendard', 'preview-font-gaegu');
   selectEl.classList.add('preview-font-' + selectEl.value);
@@ -696,11 +717,7 @@ function updateTopicRowCount(topicId, count) {
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({
-      action: 'updateTopicRowCount',
-      topic_id: topicId,
-      row_count: count
-    })
+    body: JSON.stringify({ action: 'updateTopicRowCount', topic_id: topicId, row_count: count })
   })
   .then(r => r.json())
   .then(res => {
@@ -714,11 +731,7 @@ function updateTopicFont(topicId, fontType) {
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({
-      action: 'updateTopicFont',
-      topic_id: topicId,
-      font_style: fontType
-    })
+    body: JSON.stringify({ action: 'updateTopicFont', topic_id: topicId, font_style: fontType })
   })
   .then(r => r.json())
   .then(res => {
@@ -731,16 +744,10 @@ function updateTopicFont(topicId, fontType) {
 function updateTopicDates(topicId) {
   const startAt = document.getElementById(`start_${topicId}`).value;
   const endAt = document.getElementById(`end_${topicId}`).value;
-  
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({
-      action: 'updateTopicDates',
-      topic_id: topicId,
-      start_at: startAt,
-      end_at: endAt
-    })
+    body: JSON.stringify({ action: 'updateTopicDates', topic_id: topicId, start_at: startAt, end_at: endAt })
   })
   .then(r => r.json())
   .then(res => {
@@ -751,15 +758,12 @@ function updateTopicDates(topicId) {
   .catch(err => alert('기간 수정 실패: ' + err.message));
 }
 
-function isAdmin() {
-  return localStorage.getItem('is_admin_logged') === 'true';
-}
+function isAdmin() { return localStorage.getItem('is_admin_logged') === 'true'; }
 
 function getToneClass(msg) {
   const role = msg.role || '학생';
   if (role === '교사') return 't-teacher';
   if (role === '학부모') return 't-parent';
-
   const sId = String(msg.student_id || '').trim();
   if (sId.startsWith('1')) return 't-grade1';
   if (sId.startsWith('2')) return 't-grade2';
@@ -767,23 +771,7 @@ function getToneClass(msg) {
   return 't-grade1';
 }
 
-function getBaseUrl() {
-  return window.location.origin + window.location.pathname;
-}
-
-function formatPeriodText(start, end) {
-  if (!start && !end) return '';
-  let sStr = '시작일 미지정';
-  let eStr = '마감일 미지정';
-  
-  const s = String(start).trim();
-  const e = String(end).trim();
-  
-  if (s && s !== 'true' && s !== 'false' && s !== 'undefined') sStr = s.slice(0, 10);
-  if (e && e !== 'true' && e !== 'false' && e !== 'undefined') eStr = e.slice(0, 10);
-  
-  return `작성 기간 : ${sStr} ~ ${eStr}`;
-}
+function getBaseUrl() { return window.location.origin + window.location.pathname; }
 
 if (modeParam === 'display') {
   document.getElementById('displayView').style.display = 'block';
@@ -851,14 +839,12 @@ function initWriter(role) {
       activeTopic = res.data;
       document.getElementById('viewTitle').innerText = activeTopic.title;
       document.getElementById('viewDesc').innerText = activeTopic.description;
-
-      const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
-      if (pText) document.getElementById('viewPeriod').innerText = pText;
+      document.getElementById('viewPeriod').innerText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
 
       if (activeTopic.end_at) {
-        const eVal = String(activeTopic.end_at).trim();
-        if (eVal && eVal !== 'true' && eVal !== 'false' && eVal !== 'undefined') {
-          const endDate = new Date(eVal.slice(0, 10) + 'T23:59:59');
+        const eYMD = parseDateToYMD(activeTopic.end_at);
+        if (eYMD) {
+          const endDate = new Date(eYMD + 'T23:59:59');
           if (new Date() > endDate) {
             document.getElementById('writeFormBox').style.display = 'none';
             document.getElementById('closedNotice').style.display = 'block';
@@ -866,17 +852,12 @@ function initWriter(role) {
         }
       }
     })
-    .catch(() => {
-      document.getElementById('viewTitle').innerText = '네트워크 연결을 확인하세요.';
-    });
+    .catch(() => { document.getElementById('viewTitle').innerText = '네트워크 연결을 확인하세요.'; });
 
   document.getElementById('btnSubmit').onclick = function () {
     if (!activeTopic) return alert('진행 중인 주제가 없습니다.');
 
-    let name = '';
-    let studentId = '';
-    let actualRole = '학생';
-
+    let name = '', studentId = '', actualRole = '학생';
     if (role === 'teacher') {
       actualRole = '교사';
       name = document.getElementById('fTeacherName').value.trim();
@@ -888,7 +869,6 @@ function initWriter(role) {
       studentId = '학부모';
       if (!name) return alert('자녀 이름 및 호칭(예: OOO 엄마)을 입력해주세요.');
     } else {
-      actualRole = '학생';
       studentId = document.getElementById('fStudentId').value.trim();
       name = document.getElementById('fStudentName').value.trim();
       if (!studentId || !name) return alert('학번과 이름을 모두 입력해주세요.');
@@ -910,9 +890,7 @@ function initWriter(role) {
         return alert('사진 용량은 5MB 이하만 가능합니다.');
       }
       const reader = new FileReader();
-      reader.onload = function(e) {
-        sendToServer(e.target.result);
-      };
+      reader.onload = function(e) { sendToServer(e.target.result); };
       reader.readAsDataURL(file);
     } else {
       sendToServer('');
@@ -957,21 +935,13 @@ function initDisplay() {
       document.getElementById('dispTitle').innerText = activeTopic.title;
       document.getElementById('dispDesc').innerText = activeTopic.description;
 
-      const fontChoice = activeTopic.font_style || 'gmarket';
-      applyDisplayFont(fontChoice);
-
+      applyDisplayFont(activeTopic.font_style || 'gmarket');
       ROW_COUNT = parseInt(activeTopic.row_count) || 3;
       document.documentElement.style.setProperty('--grid-cols', ROW_COUNT);
-
-      const pText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
-      if (pText) document.getElementById('dispPeriod').innerText = pText;
+      document.getElementById('dispPeriod').innerText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
 
       const targetUrl = `${getBaseUrl()}?mode=student&topic=${activeTopic.id}`;
-      new QRCode(document.getElementById('qrArea'), {
-        text: targetUrl,
-        width: 130,
-        height: 130
-      });
+      new QRCode(document.getElementById('qrArea'), { text: targetUrl, width: 130, height: 130 });
 
       pollMessages();
       setInterval(pollMessages, 4000);
@@ -1007,9 +977,7 @@ function pollMessages() {
         }
       });
 
-      if (hasNew) {
-        setTimeout(() => { renderClothesline(allLetters); }, 4500);
-      }
+      if (hasNew) setTimeout(() => { renderClothesline(allLetters); }, 4500);
     });
 }
 
@@ -1051,13 +1019,11 @@ function showPopupFocus(m) {
   const subInfo = m.role === '학생' ? m.student_id : m.role;
   const popup = document.createElement('div');
   popup.className = `card ${toneClass} popup-focus`;
-  // 💡 팝업 텍스트 단어 잘림 방지
   popup.innerHTML = `
     <div style="font-size:24px; line-height:1.5; margin-bottom:12px; word-break: keep-all;">${escapeHtml(m.message)}</div>
     <div style="font-size:15px; font-weight:700; color:var(--point-dark); text-align:right;">${escapeHtml(subInfo)} ${escapeHtml(m.name)}</div>
   `;
   document.body.appendChild(popup);
-
   setTimeout(() => { popup.remove(); }, 4500);
 }
 
@@ -1077,12 +1043,10 @@ function setupDisplayAutomation() {
 
   autoScrollInterval = setInterval(() => {
     if (isSlideShowActive || userInteracting) return;
-    
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     if (maxScroll <= 50) return;
 
     const currentScroll = window.scrollY;
-
     if (scrollDirection === 1) {
       if (currentScroll >= maxScroll - 5) {
         userInteracting = true;
@@ -1101,17 +1065,13 @@ function setupDisplayAutomation() {
   }, 40);
 
   setInterval(() => {
-    if (!isSlideShowActive && allLetters.length > 0) {
-      if (Date.now() - lastActivityTime >= IDLE_LIMIT) {
-        startSlideShow();
-      }
+    if (!isSlideShowActive && allLetters.length > 0 && Date.now() - lastActivityTime >= IDLE_LIMIT) {
+      startSlideShow();
     }
   }, 5000);
 }
 
-function resetActivity() {
-  lastActivityTime = Date.now();
-}
+function resetActivity() { lastActivityTime = Date.now(); }
 
 function startSlideShow() {
   if (allLetters.length === 0) return;
@@ -1128,10 +1088,8 @@ function showNextSlide() {
   const msg = allLetters[slideIndex];
   const toneClass = getToneClass(msg);
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
-  
   const slideImgHtml = msg.image_url ? `<img src="${msg.image_url}" class="slide-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
-  // 💡 슬라이드 텍스트 단어 잘림 방지
   container.innerHTML = `
     <div class="card ${toneClass} slide-highlight-card">
       ${slideImgHtml}
@@ -1139,7 +1097,6 @@ function showNextSlide() {
       <div style="font-size:16px; font-weight:700; color:var(--point-dark); text-align:right;">- ${escapeHtml(subInfo)} ${escapeHtml(msg.name)} -</div>
     </div>
   `;
-
   slideIndex = (slideIndex + 1) % allLetters.length;
 }
 
@@ -1161,26 +1118,14 @@ function exitSlideShow() {
 
 function onYouTubeIframeAPIReady() {
   ytPlayer = new YT.Player('youtubePlayer', {
-    height: '0',
-    width: '0',
-    videoId: YOUTUBE_VIDEO_ID,
-    playerVars: {
-      'autoplay': 0,
-      'loop': 1,
-      'playlist': YOUTUBE_VIDEO_ID,
-      'controls': 0
-    },
-    events: {
-      'onReady': function(event) {
-        event.target.setVolume(30);
-      }
-    }
+    height: '0', width: '0', videoId: YOUTUBE_VIDEO_ID,
+    playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': YOUTUBE_VIDEO_ID, 'controls': 0 },
+    events: { 'onReady': function(event) { event.target.setVolume(30); } }
   });
 }
 
 function toggleBgm() {
   if (!ytPlayer || !ytPlayer.playVideo) return;
-
   const btn = document.getElementById('bgmToggleBtn');
   const icon = document.getElementById('bgmIcon');
   const text = document.getElementById('bgmText');
@@ -1203,27 +1148,14 @@ function toggleBgm() {
 function openDetailModal(id) {
   const msg = allLetters.find(x => x.id === id);
   if (!msg) return;
-  
   selectedMsg = msg;
   selectedMsgId = id;
-
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   document.getElementById('mWho').innerText = `${msg.name} (${subInfo})`;
-  
   let mediaHtml = '';
-  if (msg.image_url) {
-    mediaHtml = `<div class="modal-media-wrap"><img src="${msg.image_url}" alt="첨부사진"></div>`;
-  }
-  
+  if (msg.image_url) mediaHtml = `<div class="modal-media-wrap"><img src="${msg.image_url}" alt="첨부사진"></div>`;
   document.getElementById('mBody').innerHTML = `<p>${escapeHtml(msg.message)}</p>` + mediaHtml;
-
-  const delBtn = document.getElementById('mDeleteBtn');
-  if (isAdmin()) {
-    delBtn.style.display = 'block';
-  } else {
-    delBtn.style.display = 'none';
-  }
-
+  document.getElementById('mDeleteBtn').style.display = isAdmin() ? 'block' : 'none';
   document.getElementById('detailModal').hidden = false;
 }
 
@@ -1234,13 +1166,9 @@ function closeModal() {
 }
 
 function deleteCurrentMessage() {
-  if (!selectedMsgId || !isAdmin()) {
-    return alert('삭제할 대상을 찾을 수 없거나 관리자 권한이 없습니다.');
-  }
-
+  if (!selectedMsgId || !isAdmin()) return alert('삭제할 대상을 찾을 수 없거나 관리자 권한이 없습니다.');
   const targetId = selectedMsgId;
   const authorName = selectedMsg ? selectedMsg.name : '해당';
-
   if (!confirm(`'${authorName}'님의 글을 삭제하시겠습니까?`)) return;
 
   const delBtn = document.getElementById('mDeleteBtn');
@@ -1286,10 +1214,8 @@ function loadAdminDashboard() {
         const curFont = t.font_style || 'gmarket';
         const curRow = t.row_count || 3;
         
-        const s = String(t.start_at).trim();
-        const e = String(t.end_at).trim();
-        const sVal = (s && s !== 'true' && s !== 'false' && s !== 'undefined') ? s.slice(0, 10) : '';
-        const eVal = (e && e !== 'true' && e !== 'false' && e !== 'undefined') ? e.slice(0, 10) : '';
+        const sVal = parseDateToYMD(t.start_at);
+        const eVal = parseDateToYMD(t.end_at);
 
         container.innerHTML += `
           <div class="admin-card">
@@ -1410,7 +1336,6 @@ function downloadPDF(topicId, topicTitle) {
           `).join('')}
         </div>
       `;
-
       renderArea.style.display = 'block';
 
       const opt = {
@@ -1420,7 +1345,6 @@ function downloadPDF(topicId, topicTitle) {
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
-
       html2pdf().set(opt).from(renderArea).save().then(() => {
         renderArea.style.display = 'none';
         renderArea.innerHTML = '';
@@ -1459,7 +1383,6 @@ function loadStats() {
       `;
 
       list.sort((a, b) => b.count - a.count);
-
       list.forEach(item => {
         const dateStr = item.last_at ? String(item.last_at).slice(5, 10).replace('-', '/') : '-';
         tableHtml += `
@@ -1472,7 +1395,6 @@ function loadStats() {
           </tr>
         `;
       });
-
       tableHtml += '</tbody></table>';
       document.getElementById('statsTableWrap').innerHTML = tableHtml;
     });
