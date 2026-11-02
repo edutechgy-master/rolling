@@ -426,17 +426,22 @@
     #pdfRenderArea .pdf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
     #pdfRenderArea .pdf-card { border: 1px solid #ccc; padding: 14px; border-radius: 6px; page-break-inside: avoid; }
 
-    /* 사진 첨부용 CSS 추가 */
-    .media-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 50%;
-      padding: 5px;
-      font-size: 14px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      z-index: 10;
+    /* 전광판 카드 및 슬라이드용 사진 스타일 */
+    .card-thumbnail {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .slide-thumbnail {
+      width: 100%;
+      max-height: 28vh;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      background: rgba(0,0,0,0.03);
     }
     .modal-media-wrap {
       margin-top: 16px;
@@ -906,13 +911,13 @@ function renderClothesline(letters) {
     letters.slice(i, i + ROW_COUNT).forEach(l => {
       const toneClass = getToneClass(l);
       const subInfo = l.role === '학생' ? l.student_id : l.role;
-      // 사진이 있는 경우 📷 뱃지 표시
-      const mediaIcon = l.image_url ? '<div class="media-badge">📷</div>' : '';
+      // 기본 카드에 사진 썸네일 표시 적용
+      const thumbnailHtml = l.image_url ? `<img src="${l.image_url}" class="card-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
       html += `
         <div class="pin" onclick="openDetailModal('${l.id}')">
           <div class="card" style="position:relative;">
-            ${mediaIcon}
+            ${thumbnailHtml}
             <div class="ph ${toneClass}"><span>${escapeHtml(l.message)}</span></div>
             <div class="nm">
               <span>${escapeHtml(l.name)}</span>
@@ -1009,9 +1014,13 @@ function showNextSlide() {
   const msg = allLetters[slideIndex];
   const toneClass = getToneClass(msg);
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
+  
+  // 슬라이드 쇼에 사진 썸네일 표시 적용
+  const slideImgHtml = msg.image_url ? `<img src="${msg.image_url}" class="slide-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
   container.innerHTML = `
     <div class="card ${toneClass} slide-highlight-card">
+      ${slideImgHtml}
       <div style="font-family:'Gaegu',cursive; font-size:26px; line-height:1.5; margin-bottom:14px; color:#382F24;">${escapeHtml(msg.message)}</div>
       <div style="font-size:16px; font-weight:700; color:var(--point-dark); text-align:right;">- ${escapeHtml(subInfo)} ${escapeHtml(msg.name)} -</div>
     </div>
