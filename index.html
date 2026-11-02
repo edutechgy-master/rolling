@@ -9,8 +9,6 @@
   <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/GmarketSansMedium.woff2" rel="stylesheet" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff2" rel="stylesheet" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twenty-two@1.0/NEXON Lv1 Gothic Regular.woff2" rel="stylesheet" crossorigin="anonymous">
-  
-  <!-- 💡 가구체 폰트 링크 유지 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
@@ -41,14 +39,12 @@
       word-break: keep-all;
     }
 
-    /* 💡 가구체를 포함한 폰트 클래스 */
     .font-gmarket { font-family: 'GmarketSansMedium', sans-serif !important; }
     .font-scoredream { font-family: 'S-CoreDream-5Medium', sans-serif !important; }
     .font-nexon { font-family: 'NEXON Lv1 Gothic Regular', sans-serif !important; }
     .font-pretendard { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; }
     .font-gaegu { font-family: 'Gaegu', cursive !important; }
 
-    /* 셀렉트 박스 내부 실시간 폰트 미리보기 */
     select.preview-font-gmarket { font-family: 'GmarketSansMedium', sans-serif !important; font-size: 15px; }
     select.preview-font-scoredream { font-family: 'S-CoreDream-5Medium', sans-serif !important; font-size: 15px; }
     select.preview-font-nexon { font-family: 'NEXON Lv1 Gothic Regular', sans-serif !important; font-size: 15px; }
@@ -597,7 +593,6 @@
     <label>설명 문구</label>
     <input type="text" id="admDesc" placeholder="예: 친구, 선생님, 부모님의 따뜻한 응원을 전해주세요.">
 
-    <!-- 💡 새 주제 생성 시 폰트 선택 (가구체 추가) -->
     <label>전광판 글꼴(폰트) 선택</label>
     <select id="admFontSelect" class="preview-font-gmarket" onchange="updateSelectPreview(this)">
       <option value="gmarket" class="font-gmarket">지마켓 산스 (트렌디하고 시원시원함)</option>
@@ -642,7 +637,7 @@
 
 <script>
 // ★ 선생님의 기존 API_URL 주소가 그대로 맞는지 확인해주세요.
-const API_URL = 'https://script.google.com/macros/s/AKfycbwd3KQbiBTvVVYN9nYGqXCwmZmP7RsEBS-dv4AytPebfLiiFPH-94xulxHlOuKo_t5w/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby2LdSEbtd3N66GIRn5ywSf0E1OYkeqpHduU4LPCMxxj0CLDCDnnGBrOhC-CjbkK6Xc/exec';
 
 const ADMIN_ID = 'admin';
 const ADMIN_PW = '7895301';
@@ -673,13 +668,11 @@ const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
-// 💡 가구체를 포함하여 실시간 미리보기 연동
 function updateSelectPreview(selectEl) {
   selectEl.classList.remove('preview-font-gmarket', 'preview-font-scoredream', 'preview-font-nexon', 'preview-font-pretendard', 'preview-font-gaegu');
   selectEl.classList.add('preview-font-' + selectEl.value);
 }
 
-// 💡 가구체를 포함하여 전광판 화면에 폰트 클래스 적용
 function applyDisplayFont(fontType) {
   const displayView = document.getElementById('displayView');
   displayView.classList.remove('font-gmarket', 'font-scoredream', 'font-nexon', 'font-pretendard', 'font-gaegu');
@@ -691,7 +684,6 @@ function applyDisplayFont(fontType) {
   else displayView.classList.add('font-pretendard');
 }
 
-// 기존 주제 폰트 실시간 변경 함수
 function updateTopicFont(topicId, fontType) {
   fetch(API_URL, {
     method: 'POST',
@@ -708,6 +700,30 @@ function updateTopicFont(topicId, fontType) {
     alert('전광판 폰트가 성공적으로 변경되었습니다!');
   })
   .catch(err => alert('변경 실패: ' + err.message));
+}
+
+// 💡 기간 수정 API 호출 함수
+function updateTopicDates(topicId) {
+  const startAt = document.getElementById(`start_${topicId}`).value;
+  const endAt = document.getElementById(`end_${topicId}`).value;
+  
+  fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      action: 'updateTopicDates',
+      topic_id: topicId,
+      start_at: startAt,
+      end_at: endAt
+    })
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (!res.ok) throw new Error(res.error);
+    alert('작성 기간이 성공적으로 수정되었습니다.');
+    location.reload();
+  })
+  .catch(err => alert('기간 수정 실패: ' + err.message));
 }
 
 function isAdmin() {
@@ -730,10 +746,18 @@ function getBaseUrl() {
   return window.location.origin + window.location.pathname;
 }
 
+// 💡 오류 데이터 필터링 기능 강화 (true/false 문자열 차단)
 function formatPeriodText(start, end) {
   if (!start && !end) return '';
-  const sStr = start ? String(start).slice(0, 10) : '시작일 미지정';
-  const eStr = end ? String(end).slice(0, 10) : '마감일 미지정';
+  let sStr = '시작일 미지정';
+  let eStr = '마감일 미지정';
+  
+  const s = String(start).trim();
+  const e = String(end).trim();
+  
+  if (s && s !== 'true' && s !== 'false' && s !== 'undefined') sStr = s.slice(0, 10);
+  if (e && e !== 'true' && e !== 'false' && e !== 'undefined') eStr = e.slice(0, 10);
+  
   return `작성 기간 : ${sStr} ~ ${eStr}`;
 }
 
@@ -808,10 +832,14 @@ function initWriter(role) {
       if (pText) document.getElementById('viewPeriod').innerText = pText;
 
       if (activeTopic.end_at) {
-        const endDate = new Date(String(activeTopic.end_at).slice(0, 10) + 'T23:59:59');
-        if (new Date() > endDate) {
-          document.getElementById('writeFormBox').style.display = 'none';
-          document.getElementById('closedNotice').style.display = 'block';
+        // true 값이 들어왔을 때 폼이 차단되는 문제 방지
+        const eVal = String(activeTopic.end_at).trim();
+        if (eVal && eVal !== 'true' && eVal !== 'false' && eVal !== 'undefined') {
+          const endDate = new Date(eVal.slice(0, 10) + 'T23:59:59');
+          if (new Date() > endDate) {
+            document.getElementById('writeFormBox').style.display = 'none';
+            document.getElementById('closedNotice').style.display = 'block';
+          }
         }
       }
     })
@@ -1227,6 +1255,12 @@ function loadAdminDashboard() {
         const displayUrl = `${getBaseUrl()}?mode=display&topic=${t.id}`;
         const pText = formatPeriodText(t.start_at, t.end_at);
         const curFont = t.font_style || 'gmarket';
+        
+        // 오류 방지용 안전한 날짜 추출
+        const s = String(t.start_at).trim();
+        const e = String(t.end_at).trim();
+        const sVal = (s && s !== 'true' && s !== 'false' && s !== 'undefined') ? s.slice(0, 10) : '';
+        const eVal = (e && e !== 'true' && e !== 'false' && e !== 'undefined') ? e.slice(0, 10) : '';
 
         container.innerHTML += `
           <div class="admin-card">
@@ -1235,16 +1269,26 @@ function loadAdminDashboard() {
             <p style="font-size:14px; color:var(--sub);">${escapeHtml(t.description)}</p>
             ${pText ? `<p style="font-size:13px; color:var(--point); margin-top:4px;">${escapeHtml(pText)}</p>` : ''}
             
-            <!-- 💡 가구체 옵션이 포함된 폰트 선택 박스 -->
-            <div style="margin-top:12px; background:#FAF7F2; padding:10px; border-radius:8px; display:flex; align-items:center; gap:8px;">
-              <span style="font-size:12px; font-weight:700; color:var(--sub); white-space:nowrap;">전광판 폰트:</span>
-              <select class="preview-font-${curFont}" onchange="updateTopicFont('${t.id}', this.value); updateSelectPreview(this);" style="padding:6px; font-size:14px;">
-                <option value="gmarket" class="font-gmarket" ${curFont === 'gmarket' ? 'selected' : ''}>지마켓 산스 (트렌디하고 시원시원함)</option>
-                <option value="scoredream" class="font-scoredream" ${curFont === 'scoredream' ? 'selected' : ''}>에스코어 드림 (모던하고 세련됨)</option>
-                <option value="nexon" class="font-nexon" ${curFont === 'nexon' ? 'selected' : ''}>넥슨 Lv1 고딕 (부드럽고 깔끔함)</option>
-                <option value="pretendard" class="font-pretendard" ${curFont === 'pretendard' ? 'selected' : ''}>프리텐다드 (기본 고딕)</option>
-                <option value="gaegu" class="font-gaegu" ${curFont === 'gaegu' ? 'selected' : ''}>가구체 (기본 감성 손글씨)</option>
-              </select>
+            <div style="margin-top:12px; background:#FAF7F2; padding:10px; border-radius:8px; display:flex; flex-direction:column; gap:8px;">
+              <!-- 💡 기간 수정 메뉴 -->
+              <div style="display:flex; gap:6px; align-items:center;">
+                <span style="font-size:12px; font-weight:700; color:var(--sub); width:50px;">기간 수정:</span>
+                <input type="date" id="start_${t.id}" value="${sVal}" style="padding:6px; font-size:13px; width:40%; border:1px solid #E2D9C4; border-radius:6px;">
+                <span style="color:var(--sub); font-weight:700;">~</span>
+                <input type="date" id="end_${t.id}" value="${eVal}" style="padding:6px; font-size:13px; width:40%; border:1px solid #E2D9C4; border-radius:6px;">
+                <button class="sub-btn" style="padding:6px 10px; font-weight:700;" onclick="updateTopicDates('${t.id}')">수정</button>
+              </div>
+              
+              <div style="display:flex; gap:6px; align-items:center; margin-top:4px;">
+                <span style="font-size:12px; font-weight:700; color:var(--sub); width:50px;">폰트 수정:</span>
+                <select class="preview-font-${curFont}" onchange="updateTopicFont('${t.id}', this.value); updateSelectPreview(this);" style="padding:6px; font-size:14px; width:80%;">
+                  <option value="gmarket" class="font-gmarket" ${curFont === 'gmarket' ? 'selected' : ''}>지마켓 산스 (트렌디하고 시원시원함)</option>
+                  <option value="scoredream" class="font-scoredream" ${curFont === 'scoredream' ? 'selected' : ''}>에스코어 드림 (모던하고 세련됨)</option>
+                  <option value="nexon" class="font-nexon" ${curFont === 'nexon' ? 'selected' : ''}>넥슨 Lv1 고딕 (부드럽고 깔끔함)</option>
+                  <option value="pretendard" class="font-pretendard" ${curFont === 'pretendard' ? 'selected' : ''}>프리텐다드 (기본 고딕)</option>
+                  <option value="gaegu" class="font-gaegu" ${curFont === 'gaegu' ? 'selected' : ''}>가구체 (기본 감성 손글씨)</option>
+                </select>
+              </div>
             </div>
 
             <div class="link-group">
