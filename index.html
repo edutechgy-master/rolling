@@ -6,6 +6,9 @@
   <title>서현고등학교 마음 보드</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
   
+  <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/GmarketSansMedium.woff2" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff2" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twenty-two@1.0/NEXON Lv1 Gothic Regular.woff2" rel="stylesheet" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
@@ -15,12 +18,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
-    @font-face {font-family:'GmarketSansMedium';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/GmarketSansMedium.woff2') format('woff2');font-display:swap;}
-    @font-face {font-family:'S-CoreDream-5Medium';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff2') format('woff2');font-display:swap;}
-    @font-face {font-family:'NEXON Lv1 Gothic Regular';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twenty-two@1.0/NEXON%20Lv1%20Gothic%20Regular.woff2') format('woff2');font-display:swap;}
-    .popup-focus {max-width:58vw;max-height:65vh;overflow:auto;}
-    @media(max-width:600px) {.slide-highlight-card {transform:translate(-50%,-50%) !important;animation:none;} .row {gap:8px;} .card {padding:8px;} }
-
     :root {
       --bg: #F3EDE1;
       --ink: #3C352C;
@@ -56,171 +53,38 @@
 
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
 
-    header.main-header {
-      text-align: center;
-      padding: 36px 14px 16px;
-      position: relative;
-    }
-    header.main-header .sc {
-      font-size: 13px;
-      letter-spacing: .45em;
-      color: #93856E;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    header.main-header h1 {
-      font-size: 38px;
-      font-weight: 700;
-      color: #3F3323;
-      line-height: 1.25;
-      margin-bottom: 8px;
-    }
-    header.main-header .desc {
-      font-size: 16px;
-      color: #554A3B;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-    header.main-header .period-text {
-      font-size: 13.5px;
-      color: var(--point);
-      font-weight: 700;
-    }
-    header.main-header .meta-count {
-      margin-top: 12px;
-      font-size: 14px;
-      color: var(--sub);
-    }
-    header.main-header .meta-count b {
-      color: var(--point);
-      font-weight: 700;
-    }
+    header.main-header { text-align: center; padding: 36px 14px 16px; position: relative; }
+    header.main-header .sc { font-size: 13px; letter-spacing: .45em; color: #93856E; font-weight: 600; margin-bottom: 10px; }
+    header.main-header h1 { font-size: 38px; font-weight: 700; color: #3F3323; line-height: 1.25; margin-bottom: 8px; }
+    header.main-header .desc { font-size: 16px; color: #554A3B; margin-bottom: 8px; font-weight: 500; }
+    header.main-header .period-text { font-size: 13.5px; color: var(--point); font-weight: 700; }
+    header.main-header .meta-count { margin-top: 12px; font-size: 14px; color: var(--sub); }
+    header.main-header .meta-count b { color: var(--point); font-weight: 700; }
 
-    .ui-fixed-font {
-      font-family: 'Pretendard Variable', Pretendard, sans-serif !important;
-    }
+    .ui-fixed-font { font-family: 'Pretendard Variable', Pretendard, sans-serif !important; }
 
-    .role-badge-header {
-      display: inline-block;
-      margin-bottom: 8px;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-    }
+    .role-badge-header { display: inline-block; margin-bottom: 8px; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
     .role-student { background: #E4EBF7; color: #35588C; }
     .role-teacher { background: #F7E4E9; color: #8C354F; }
     .role-parent { background: #F7EFE4; color: #8C6235; }
 
-    .clothesline-wrap {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 10px 18px 140px;
-    }
-    .line {
-      position: relative;
-      padding: 38px 0 14px;
-      margin-bottom: 14px;
-    }
-    .line::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 18px;
-      height: 2.5px;
-      background: #C4B599;
-      border-radius: 2px;
-      box-shadow: 0 1px 0 rgba(255,255,255,.7);
-    }
-    .row {
-      display: grid;
-      grid-template-columns: repeat(var(--grid-cols, 3), 1fr);
-      gap: 18px;
-      padding: 0 4px;
-    }
-    .pin {
-      position: relative;
-      min-width: 0;
-      padding-top: 14px;
-      background: none;
-      border: 0;
-      cursor: pointer;
-      text-align: left;
-      animation: sway 4.6s ease-in-out infinite;
-      transform-origin: 50% -14px;
-    }
+    .clothesline-wrap { max-width: 1280px; margin: 0 auto; padding: 10px 18px 140px; }
+    .line { position: relative; padding: 38px 0 14px; margin-bottom: 14px; }
+    .line::before { content: ''; position: absolute; left: 0; right: 0; top: 18px; height: 2.5px; background: #C4B599; border-radius: 2px; box-shadow: 0 1px 0 rgba(255,255,255,.7); }
+    .row { display: grid; grid-template-columns: repeat(var(--grid-cols, 3), 1fr); gap: 18px; padding: 0 4px; }
+    .pin { position: relative; min-width: 0; padding-top: 14px; background: none; border: 0; cursor: pointer; text-align: left; animation: sway 4.6s ease-in-out infinite; transform-origin: 50% -14px; }
     .pin:nth-child(2n) { animation-delay: -1.4s; }
     .pin:nth-child(3n) { animation-delay: -2.7s; }
-    @keyframes sway {
-      0%, 100% { transform: rotate(-1.2deg); }
-      50% { transform: rotate(1.4deg); }
-    }
-    .pin::before {
-      content: '';
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      margin-left: -6px;
-      width: 12px;
-      height: 28px;
-      background: linear-gradient(180deg, #E8CFA3, #CFAF7C);
-      border-radius: 3px;
-      z-index: 3;
-      box-shadow: 0 1px 3px rgba(70,50,20,.3);
-    }
+    @keyframes sway { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.4deg); } }
+    .pin::before { content: ''; position: absolute; top: -14px; left: 50%; margin-left: -6px; width: 12px; height: 28px; background: linear-gradient(180deg, #E8CFA3, #CFAF7C); border-radius: 3px; z-index: 3; box-shadow: 0 1px 3px rgba(70,50,20,.3); }
     
-    .card {
-      background: var(--card);
-      padding: 14px;
-      border-radius: 4px;
-      box-shadow: 0 5px 14px rgba(90,70,40,.18);
-      border: 1px solid #EFE7D6;
-      transition: transform 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+    .card { background: var(--card); padding: 14px; border-radius: 4px; box-shadow: 0 5px 14px rgba(90,70,40,.18); border: 1px solid #EFE7D6; transition: transform 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; }
     .card:hover { transform: translateY(-3px); }
     
-    .card .ph {
-      min-height: 140px;
-      height: auto;
-      border-radius: 3px;
-      display: flex;
-      align-items: flex-start;
-      padding: 14px;
-      font-size: 19px;
-      line-height: 1.55;
-      color: #382F24;
-      word-break: keep-all; 
-      overflow-wrap: break-word; 
-    }
-    .card .ph span {
-      display: block;
-      width: 100%;
-      white-space: pre-wrap;
-      word-break: keep-all; 
-      overflow-wrap: break-word;
-    }
-    .card .nm {
-      font-size: 17px;
-      font-weight: 700;
-      margin-top: 12px;
-      padding-top: 8px;
-      border-top: 1px dashed rgba(0,0,0,0.08);
-      color: #4A3F2F;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      overflow: hidden;
-    }
-    .card .nm em {
-      font-size: 11.5px;
-      font-weight: 500;
-      font-style: normal;
-      color: var(--sub);
-    }
+    .card .ph { min-height: 140px; height: auto; border-radius: 3px; display: flex; align-items: flex-start; padding: 14px; font-size: 19px; line-height: 1.55; color: #382F24; word-break: keep-all; overflow-wrap: break-word; }
+    .card .ph span { display: block; width: 100%; white-space: pre-wrap; word-break: keep-all; overflow-wrap: break-word; }
+    .card .nm { font-size: 17px; font-weight: 700; margin-top: 12px; padding-top: 8px; border-top: 1px dashed rgba(0,0,0,0.08); color: #4A3F2F; display: flex; justify-content: space-between; align-items: baseline; overflow: hidden; }
+    .card .nm em { font-size: 11.5px; font-weight: 500; font-style: normal; color: var(--sub); }
 
     .t-grade1 { background: linear-gradient(160deg, #FDF2D9, #F7E2B5); }
     .t-grade2 { background: linear-gradient(160deg, #DDF3E4, #C2E7CD); }
@@ -228,146 +92,30 @@
     .t-teacher { background: linear-gradient(160deg, #FBE0E7, #F5C6D3); }
     .t-parent { background: linear-gradient(160deg, #EFE6D8, #DFD1BE); }
 
-    .popup-focus {
-      position: fixed !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) scale(1.6) !important;
-      z-index: 9999;
-      box-shadow: 0 24px 70px rgba(0,0,0,0.45) !important;
-      animation: popIn 0.5s ease forwards;
-      width: 360px;
-      pointer-events: none;
-    }
-    @keyframes popIn {
-      from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
-      to { opacity: 1; transform: translate(-50%, -50%) scale(1.6); }
-    }
+    .popup-focus { position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) scale(1.6) !important; z-index: 9999; box-shadow: 0 24px 70px rgba(0,0,0,0.45) !important; animation: popIn 0.5s ease forwards; width: 360px; pointer-events: none; }
+    @keyframes popIn { from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); } to { opacity: 1; transform: translate(-50%, -50%) scale(1.6); } }
 
-    .slide-highlight-card {
-      position: fixed !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) scale(1.4) !important;
-      z-index: 95;
-      width: 440px;
-      max-width: 88vw;
-      box-shadow: 0 30px 80px rgba(50,30,10,0.4) !important;
-      animation: slideFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    @keyframes slideFadeIn {
-      from { opacity: 0; transform: translate(-50%, -46%) scale(1.2); }
-      to { opacity: 1; transform: translate(-50%, -50%) scale(1.4); }
-    }
-    .slide-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(30, 20, 10, 0.45);
-      backdrop-filter: blur(5px);
-      z-index: 94;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 50px;
-      color: #fff;
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
+    .slide-highlight-card { position: fixed !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) scale(1.4) !important; z-index: 95; width: 440px; max-width: 88vw; box-shadow: 0 30px 80px rgba(50,30,10,0.4) !important; animation: slideFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes slideFadeIn { from { opacity: 0; transform: translate(-50%, -46%) scale(1.2); } to { opacity: 1; transform: translate(-50%, -50%) scale(1.4); } }
+    .slide-backdrop { position: fixed; inset: 0; background: rgba(30, 20, 10, 0.45); backdrop-filter: blur(5px); z-index: 94; display: flex; align-items: flex-start; justify-content: center; padding-top: 50px; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: 0.05em; }
 
-    .floating-qr {
-      position: fixed;
-      right: 24px;
-      bottom: 24px;
-      z-index: 90;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(4px);
-      padding: 14px 16px 12px;
-      border-radius: 16px;
-      box-shadow: 0 8px 26px rgba(70, 50, 20, 0.22);
-      border: 1px solid var(--line);
-      text-align: center;
-    }
-    .floating-qr .qr-tip {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--point-dark);
-      margin-top: 7px;
-    }
+    .floating-qr { position: fixed; right: 24px; bottom: 24px; z-index: 90; background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(4px); padding: 14px 16px 12px; border-radius: 16px; box-shadow: 0 8px 26px rgba(70, 50, 20, 0.22); border: 1px solid var(--line); text-align: center; }
+    .floating-qr .qr-tip { font-size: 11.5px; font-weight: 700; color: var(--point-dark); margin-top: 7px; }
 
-    .bgm-btn {
-      position: fixed;
-      left: 24px;
-      bottom: 24px;
-      z-index: 92;
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(4px);
-      border: 1px solid var(--line);
-      padding: 10px 18px;
-      border-radius: 30px;
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--ink);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 20px rgba(70, 50, 20, 0.18);
-      transition: all 0.2s ease;
-    }
-    .bgm-btn:hover {
-      transform: scale(1.04);
-      background: #FFFDF7;
-    }
-    .bgm-btn.playing {
-      color: var(--point);
-      border-color: var(--point);
-      background: #FFF8E9;
-    }
+    .bgm-btn { position: fixed; left: 24px; bottom: 24px; z-index: 92; background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(4px); border: 1px solid var(--line); padding: 10px 18px; border-radius: 30px; font-size: 13.5px; font-weight: 700; color: var(--ink); cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 6px 20px rgba(70, 50, 20, 0.18); transition: all 0.2s ease; }
+    .bgm-btn:hover { transform: scale(1.04); background: #FFFDF7; }
+    .bgm-btn.playing { color: var(--point); border-color: var(--point); background: #FFF8E9; }
 
-    .form-box {
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px;
-      margin-top: 18px;
-      border: 1px solid var(--line);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-    }
+    .form-box { background: #fff; border-radius: 16px; padding: 24px; margin-top: 18px; border: 1px solid var(--line); box-shadow: 0 4px 14px rgba(0,0,0,0.04); }
     label { display: block; font-size: 13px; font-weight: 600; color: var(--sub); margin: 14px 0 6px; }
-    input[type="text"], input[type="password"], input[type="date"], select, textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 15px;
-      font-family: inherit;
-    }
+    input[type="text"], input[type="password"], input[type="date"], select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 12px; font-size: 15px; font-family: inherit; }
     textarea { min-height: 140px; resize: none; font-size: 16px; }
     .date-row { display: flex; gap: 10px; }
     .date-row > div { flex: 1; }
 
-    button.primary {
-      width: 100%;
-      height: 52px;
-      margin-top: 18px;
-      background: var(--point);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 16.5px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+    button.primary { width: 100%; height: 52px; margin-top: 18px; background: var(--point); color: #fff; border: none; border-radius: 10px; font-size: 16.5px; font-weight: 700; cursor: pointer; }
     button.primary:disabled { opacity: 0.55; cursor: not-allowed; background: #999; }
-    button.sub-btn {
-      padding: 8px 12px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      font-size: 12px;
-      cursor: pointer;
-      color: var(--ink);
-    }
+    button.sub-btn { padding: 8px 12px; background: #fff; border: 1px solid var(--line); border-radius: 8px; font-size: 12px; cursor: pointer; color: var(--ink); }
 
     .admin-card { background: #fff; border-radius: 12px; border: 1px solid var(--line); padding: 18px; margin-bottom: 14px; }
     .badge { display: inline-block; padding: 3px 8px; border-radius: 20px; font-size: 11px; background: #e9e9e9; color: #555; }
@@ -376,106 +124,27 @@
     table.stat-table th, table.stat-table td { border: 1px solid var(--line); padding: 8px; text-align: center; }
     table.stat-table th { background: #F8F5EE; }
 
-    .link-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-top: 12px;
-      background: #FAF7F2;
-      padding: 12px;
-      border-radius: 8px;
-    }
-    .link-group a {
-      font-size: 13px;
-      color: var(--point);
-      text-decoration: none;
-      font-weight: 600;
-    }
+    .link-group { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; background: #FAF7F2; padding: 12px; border-radius: 8px; }
+    .link-group a { font-size: 13px; color: var(--point); text-decoration: none; font-weight: 600; }
     .link-group a:hover { text-decoration: underline; }
 
-    .modal-dim {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background: rgba(30, 20, 10, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+    .modal-dim { position: fixed; inset: 0; z-index: 100; background: rgba(30, 20, 10, 0.45); display: flex; align-items: center; justify-content: center; padding: 20px; }
     .modal-dim[hidden] { display: none; }
-    .modal-card {
-      background: #FFFDF7;
-      width: 100%;
-      max-width: 460px;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
-      border: 1px solid var(--line);
-      position: relative;
-    }
-    .modal-card .who {
-      font-size: 20px;
-      color: #4A3F2F;
-      margin-bottom: 12px;
-      border-bottom: 1px dashed var(--line);
-      padding-bottom: 8px;
-    }
-    .modal-card .body {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #382F24;
-      white-space: pre-wrap;
-      margin-bottom: 20px;
-      max-height: 60vh;
-      overflow-y: auto;
-    }
+    .modal-card { background: #FFFDF7; width: 100%; max-width: 460px; border-radius: 16px; padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,0.25); border: 1px solid var(--line); position: relative; }
+    .modal-card .who { font-size: 20px; color: #4A3F2F; margin-bottom: 12px; border-bottom: 1px dashed var(--line); padding-bottom: 8px; }
+    .modal-card .body { font-size: 18px; line-height: 1.6; color: #382F24; white-space: pre-wrap; margin-bottom: 20px; max-height: 60vh; overflow-y: auto; }
     .modal-actions { display: flex; gap: 8px; }
-    .modal-actions button {
-      flex: 1;
-      height: 44px;
-      border-radius: 10px;
-      font-weight: 700;
-      border: 1px solid var(--line);
-      cursor: pointer;
-    }
+    .modal-actions button { flex: 1; height: 44px; border-radius: 10px; font-weight: 700; border: 1px solid var(--line); cursor: pointer; }
     .btn-delete { background: #FDF2F0; color: var(--err); border-color: #F8D3CE !important; }
 
     #pdfRenderArea { display: none; background: #fff; padding: 30px; color: #000; }
     #pdfRenderArea .pdf-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
     #pdfRenderArea .pdf-card { border: 1px solid #ccc; padding: 14px; border-radius: 6px; page-break-inside: avoid; word-break: keep-all; }
 
-    .card-thumbnail {
-      width: 100%;
-      height: 130px;
-      object-fit: contain;
-      background: rgba(0,0,0,0.03);
-      border-radius: 4px;
-      margin-bottom: 10px;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .slide-thumbnail {
-      width: 100%;
-      max-height: 28vh;
-      object-fit: contain;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      background: rgba(0,0,0,0.03);
-    }
-    .modal-media-wrap {
-      margin-top: 16px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #f5f5f5;
-      border: 1px solid var(--line);
-    }
-    .modal-media-wrap img {
-      width: 100%;
-      max-height: 60vh;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
+    .card-thumbnail { width: 100%; height: 130px; object-fit: contain; background: rgba(0,0,0,0.03); border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.06); }
+    .slide-thumbnail { width: 100%; max-height: 28vh; object-fit: contain; border-radius: 8px; margin-bottom: 16px; background: rgba(0,0,0,0.03); }
+    .modal-media-wrap { margin-top: 16px; border-radius: 12px; overflow: hidden; background: #f5f5f5; border: 1px solid var(--line); }
+    .modal-media-wrap img { width: 100%; max-height: 60vh; object-fit: contain; display: block; margin: 0 auto; }
   </style>
 </head>
 <body id="appBody">
@@ -642,41 +311,11 @@
 <div id="pdfRenderArea"></div>
 
 <script>
-// ★ 선생님의 최신 API_URL 주소로 연결되어 있어야 합니다!
+// ★ 주의: 선생님의 최신 '웹 앱 URL'을 반드시 아래에 넣어주세요! 
 const API_URL = 'https://script.google.com/macros/s/AKfycby2LdSEbtd3N66GIRn5ywSf0E1OYkeqpHduU4LPCMxxj0CLDCDnnGBrOhC-CjbkK6Xc/exec';
 
-// 새 배포 주소로 API_URL을 바꾸세요. 비밀번호는 서버 스크립트 속성에만 저장합니다.
-let adminToken = localStorage.getItem('maum_admin_token') || '';
-localStorage.removeItem('is_admin_logged');
-const nativeFetch = window.fetch.bind(window);
-async function apiFetch(url, options) {
-  adminToken = localStorage.getItem('maum_admin_token') || '';
-  let req;
-  if (options && options.body) req = JSON.parse(options.body);
-  else { const u = new URL(url); req = Object.fromEntries(u.searchParams); }
-  if (!['getActiveTopic','listMessages','createMessage','login'].includes(req.action)) req.admin_token = adminToken;
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 60000);
-  try {
-    const response = await nativeFetch(API_URL, {method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(req),signal:controller.signal,redirect:'follow'});
-    if (!response.ok) throw new Error('서버 응답 오류: '+response.status);
-    const result = await response.json();
-    if (!result.ok) {
-      if (String(result.error).includes('로그인이 필요')) {adminToken='';localStorage.removeItem('maum_admin_token');}
-      throw new Error(result.error || '요청 처리 실패');
-    }
-    return {json:async()=>result};
-  } finally { clearTimeout(timer); }
-}
-function safeImage(url) { return /^https:\/\/drive\.google\.com\/thumbnail\?id=[A-Za-z0-9_-]+&sz=w1000-h1000$/.test(String(url)) ? escapeHtml(url) : ''; }
-function validDates(a,b) { if (a && b && a>b) {alert('시작일이 종료일보다 늦습니다.');return false;} return true; }
-const topicTitles = new Map();
-let pendingRequest = null;
-let writerBusy = false;
-let writerChecking = false;
-let pollBusy = false;
-let displaySnapshot = '';
-
+const ADMIN_ID = 'admin';
+const ADMIN_PW = '7895301';
 
 const qs = new URLSearchParams(location.search);
 const modeParam = qs.get('mode');
@@ -704,21 +343,29 @@ const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
-function parseDateToYMD(value) { return /^\d{4}-\d{2}-\d{2}$/.test(String(value || '')) ? value : ''; }
-function writerState(t) {
-  activeTopic=t;
-  document.getElementById('viewTitle').textContent=t ? t.title : '진행 중인 주제가 없습니다.';
-  document.getElementById('viewDesc').textContent=t ? t.description : '';
-  document.getElementById('viewPeriod').textContent=t ? formatPeriodText(t.start_at,t.end_at) : '';
-  document.getElementById('writeFormBox').style.display=t && t.can_write?'block':'none';
-  const notice=document.getElementById('closedNotice');
-  notice.style.display=t && t.can_write?'none':'block';
-  notice.textContent=!t?'주제를 찾을 수 없습니다.':({scheduled:'아직 작성 시작일이 아닙니다.',closed:'작성 기간이 마감되었습니다.',inactive:'보관된 주제입니다.',invalid:'날짜 설정을 관리자에게 문의하세요.'})[t.write_status] || '작성할 수 없습니다.';
+function cleanDateString(dateStr) {
+  if (!dateStr || dateStr === 'true' || dateStr === 'false' || dateStr === 'undefined') return '';
+  let s = String(dateStr).replace(/['"]/g, '').trim();
+  if (s.length > 10 && s.includes('T')) s = s.split('T')[0];
+  return s;
 }
-async function refreshWriter() {
-  const res=await (await apiFetch(API_URL+'?action=getActiveTopic'+(paramTopicId?'&topic_id='+encodeURIComponent(paramTopicId):''))).json();
-  writerState(res.data); return res.data;
+
+function parseDateToYMD(dateStr) {
+  let s = cleanDateString(dateStr);
+  if (!s) return '';
+  const match = s.match(/^(\d{4})[-\.]\s?(\d{2})[-\.]\s?(\d{2})/);
+  if (match) return `${match[1]}-${match[2]}-${match[3]}`;
+  
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+  return '';
 }
+
 function formatPeriodText(start, end) {
   if (!start && !end) return '';
   const sYMD = parseDateToYMD(start);
@@ -745,7 +392,7 @@ function applyDisplayFont(fontType) {
 }
 
 function updateTopicRowCount(topicId, count) {
-  apiFetch(API_URL, {
+  fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'updateTopicRowCount', topic_id: topicId, row_count: count })
@@ -759,7 +406,7 @@ function updateTopicRowCount(topicId, count) {
 }
 
 function updateTopicFont(topicId, fontType) {
-  apiFetch(API_URL, {
+  fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'updateTopicFont', topic_id: topicId, font_style: fontType })
@@ -772,11 +419,17 @@ function updateTopicFont(topicId, fontType) {
   .catch(err => alert('변경 실패: ' + err.message));
 }
 
+// 💡 날짜 수정 시 빈칸 입력을 원천 차단하는 로직 추가
 function updateTopicDates(topicId) {
   const startAt = document.getElementById(`start_${topicId}`).value;
   const endAt = document.getElementById(`end_${topicId}`).value;
-  if (!validDates(startAt,endAt)) return;
-  apiFetch(API_URL, {
+  
+  if (!startAt || !endAt) {
+    alert('시작일과 종료일을 모두 지정해주세요. 빈칸으로 비워둔 채 수정할 수 없습니다.');
+    return;
+  }
+
+  fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'updateTopicDates', topic_id: topicId, start_at: startAt, end_at: endAt })
@@ -790,7 +443,7 @@ function updateTopicDates(topicId) {
   .catch(err => alert('기간 수정 실패: ' + err.message));
 }
 
-function isAdmin() { return !!localStorage.getItem('maum_admin_token'); }
+function isAdmin() { return localStorage.getItem('is_admin_logged') === 'true'; }
 
 function getToneClass(msg) {
   const role = msg.role || '학생';
@@ -828,19 +481,23 @@ if (modeParam === 'display') {
   }
 }
 
-document.getElementById('btnLogin').onclick = async function() {
-  this.disabled=true;
-  try {
-    const res=await (await apiFetch(API_URL,{body:JSON.stringify({action:'login',username:document.getElementById('admIdInput').value.trim(),password:document.getElementById('admPwInput').value})})).json();
-    adminToken=res.token;localStorage.setItem('maum_admin_token',adminToken);
-    document.getElementById('admPwInput').value='';
-    document.getElementById('adminLoginView').style.display='none';document.getElementById('adminView').style.display='block';
-    loadAdminDashboard();loadStats();
-  } catch(e) {alert(e.message);} finally {this.disabled=false;}
+document.getElementById('btnLogin').onclick = function() {
+  const id = document.getElementById('admIdInput').value.trim();
+  const pw = document.getElementById('admPwInput').value.trim();
+  if (id === ADMIN_ID && pw === ADMIN_PW) {
+    localStorage.setItem('is_admin_logged', 'true');
+    document.getElementById('adminLoginView').style.display = 'none';
+    document.getElementById('adminView').style.display = 'block';
+    loadAdminDashboard();
+    loadStats();
+  } else {
+    alert('아이디 또는 비밀번호가 올바르지 않습니다.');
+  }
 };
-async function adminLogout() {
-  try {await apiFetch(API_URL,{body:JSON.stringify({action:'logout'})});} catch(e) { console.warn(e.message); }
-  adminToken=''; localStorage.removeItem('maum_admin_token');location.reload();
+
+function adminLogout() {
+  localStorage.removeItem('is_admin_logged');
+  location.reload();
 }
 
 function initWriter(role) {
@@ -856,15 +513,34 @@ function initWriter(role) {
     document.getElementById('boxStudent').style.display = 'block';
   }
 
-  document.getElementById('writeFormBox').style.display='none';
-  refreshWriter().catch(e => {document.getElementById('viewTitle').textContent=e.message;});
-  setInterval(() => {if(!writerBusy)refreshWriter().catch(console.warn);},15000);
+  fetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
+    .then(r => r.json())
+    .then(res => {
+      if (!res.ok || !res.data) {
+        document.getElementById('viewTitle').innerText = '진행 중인 주제가 없습니다.';
+        document.getElementById('writeFormBox').style.display = 'none';
+        return;
+      }
+      activeTopic = res.data;
+      document.getElementById('viewTitle').innerText = activeTopic.title;
+      document.getElementById('viewDesc').innerText = activeTopic.description;
+      document.getElementById('viewPeriod').innerText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
 
-  document.getElementById('btnSubmit').onclick = async function () {
-    if (writerBusy || writerChecking) return;
-    writerChecking=true;
-    try { await refreshWriter(); } catch(e) { return alert(e.message); } finally {writerChecking=false;}
-    if (!activeTopic || !activeTopic.can_write) return alert('진행 중인 주제가 없습니다.');
+      if (activeTopic.end_at) {
+        const eYMD = parseDateToYMD(activeTopic.end_at);
+        if (eYMD) {
+          const endDate = new Date(eYMD + 'T23:59:59');
+          if (new Date() > endDate) {
+            document.getElementById('writeFormBox').style.display = 'none';
+            document.getElementById('closedNotice').style.display = 'block';
+          }
+        }
+      }
+    })
+    .catch(() => { document.getElementById('viewTitle').innerText = '네트워크 연결을 확인하세요.'; });
+
+  document.getElementById('btnSubmit').onclick = function () {
+    if (!activeTopic) return alert('진행 중인 주제가 없습니다.');
 
     let name = '', studentId = '', actualRole = '학생';
     if (role === 'teacher') {
@@ -880,30 +556,25 @@ function initWriter(role) {
     } else {
       studentId = document.getElementById('fStudentId').value.trim();
       name = document.getElementById('fStudentName').value.trim();
-      if (!/^\d{5}$/.test(studentId) || !name) return alert('숫자 5자리 학번과 이름을 입력해주세요.');
+      if (!studentId || !name) return alert('학번과 이름을 모두 입력해주세요.');
     }
 
     const msg = document.getElementById('fMsg').value.trim();
     if (!msg) return alert('메시지 내용을 입력해주세요.');
 
-    if (name.length>20 || msg.length>500) return alert('이름은 20자, 메시지는 500자 이하로 입력하세요.');
     const fileInput = document.getElementById('fImage');
     const btn = this;
     btn.disabled = true;
     btn.innerText = '보내는 중...';
-    writerBusy=true;
 
     if (fileInput && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       if (file.size > 5 * 1024 * 1024) {
         btn.disabled = false;
         btn.innerText = '보내기';
-        writerBusy=false;
         return alert('사진 용량은 5MB 이하만 가능합니다.');
       }
-      if (!['image/png','image/jpeg','image/gif','image/webp'].includes(file.type)) {writerBusy=false;btn.disabled=false;btn.innerText='보내기';return alert('PNG/JPEG/GIF/WebP 사진만 가능합니다.');}
       const reader = new FileReader();
-      reader.onerror = reader.onabort = () => {writerBusy=false;btn.disabled=false;btn.innerText='보내기';alert('사진을 읽지 못했습니다. 다시 선택하세요.');};
       reader.onload = function(e) { sendToServer(e.target.result); };
       reader.readAsDataURL(file);
     } else {
@@ -911,14 +582,11 @@ function initWriter(role) {
     }
 
     function sendToServer(imageData) {
-      const fingerprint=JSON.stringify([activeTopic.id,name,studentId,msg,imageData]);
-      if(!pendingRequest || pendingRequest.fingerprint!==fingerprint) pendingRequest={fingerprint,id:crypto.randomUUID()};
-      apiFetch(API_URL, {
+      fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
           action: 'createMessage',
-          request_id: pendingRequest.id,
           topic_id: activeTopic.id,
           name: name,
           role: actualRole,
@@ -930,7 +598,6 @@ function initWriter(role) {
       .then(r => r.json())
       .then(res => {
         if (!res.ok) throw new Error(res.error);
-        pendingRequest=null;
         alert('마음이 정상적으로 전달되었습니다!');
         document.getElementById('fMsg').value = '';
         if (fileInput) fileInput.value = '';
@@ -939,18 +606,16 @@ function initWriter(role) {
       .finally(() => {
         btn.disabled = false;
         btn.innerText = '보내기';
-        writerBusy=false;
-        refreshWriter().catch(console.warn);
       });
     }
   };
 }
 
 function initDisplay() {
-  apiFetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
+  fetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
     .then(r => r.json())
     .then(res => {
-      if (!res.ok || !res.data) throw new Error('주제를 찾을 수 없습니다.');
+      if (!res.ok || !res.data) return;
       activeTopic = res.data;
       document.getElementById('dispTitle').innerText = activeTopic.title;
       document.getElementById('dispDesc').innerText = activeTopic.description;
@@ -965,34 +630,40 @@ function initDisplay() {
 
       pollMessages();
       setInterval(pollMessages, 4000);
-    }).catch(e=>{document.getElementById('dispMeta').textContent=e.message;});
+    });
 }
 
-async function pollMessages() {
-  if (!activeTopic || pollBusy) return;
-  pollBusy=true;
-  try {
-    const t=(await (await apiFetch(API_URL+'?action=getActiveTopic&topic_id='+encodeURIComponent(activeTopic.id))).json()).data;
-    if(!t) throw new Error('주제를 찾을 수 없습니다.');
-    activeTopic=t; applyDisplayFont(t.font_style); ROW_COUNT=t.row_count;
-    document.documentElement.style.setProperty('--grid-cols',ROW_COUNT);
-    document.getElementById('dispTitle').textContent=t.title;
-    document.getElementById('dispDesc').textContent=t.description;
-    document.getElementById('dispPeriod').textContent=formatPeriodText(t.start_at,t.end_at);
-    const res=await (await apiFetch(API_URL+'?action=listMessages&topic_id='+encodeURIComponent(t.id))).json();
-    const msgs=res.data.slice().reverse();
-    const snapshot=JSON.stringify([msgs,t.font_style,t.row_count]);
-    const added=msgs.filter(m=>!lastKnownIds.has(m.id));
-    if(snapshot!==displaySnapshot) {
-      exitSlideShow(); document.querySelectorAll('.popup-focus').forEach(x=>x.remove());
-      allLetters=msgs; renderClothesline(msgs); displaySnapshot=snapshot;
-      if(selectedMsgId && !msgs.some(m=>m.id===selectedMsgId))closeModal();
-      if(!isFirstLoad && added.length) {resetActivity();showPopupFocus(added[0]);}
-    }
-    lastKnownIds=new Set(msgs.map(m=>m.id)); isFirstLoad=false;
-    document.getElementById('dispMeta').innerHTML=`지금까지 <b>${msgs.length}</b>장이 걸렸습니다`;
-  } catch(e) {document.getElementById('dispMeta').textContent='갱신 실패 · '+e.message;}
-  finally {pollBusy=false;}
+function pollMessages() {
+  if (!activeTopic) return;
+  fetch(`${API_URL}?action=listMessages&topic_id=${activeTopic.id}&t=${Date.now()}`)
+    .then(r => r.json())
+    .then(res => {
+      if (!res.ok) return;
+      const msgs = res.data.slice().reverse();
+      allLetters = msgs;
+
+      document.getElementById('dispMeta').innerHTML = `지금까지 <b>${msgs.length}</b>장이 걸렸습니다`;
+
+      if (isFirstLoad) {
+        msgs.forEach(m => lastKnownIds.add(m.id));
+        renderClothesline(msgs);
+        isFirstLoad = false;
+        return;
+      }
+
+      let hasNew = false;
+      msgs.forEach(m => {
+        if (!lastKnownIds.has(m.id)) {
+          lastKnownIds.add(m.id);
+          hasNew = true;
+          exitSlideShow();
+          resetActivity();
+          showPopupFocus(m);
+        }
+      });
+
+      if (hasNew) setTimeout(() => { renderClothesline(allLetters); }, 4500);
+    });
 }
 
 function renderClothesline(letters) {
@@ -1008,7 +679,7 @@ function renderClothesline(letters) {
     letters.slice(i, i + ROW_COUNT).forEach(l => {
       const toneClass = getToneClass(l);
       const subInfo = l.role === '학생' ? l.student_id : l.role;
-      const thumbnailHtml = l.image_url ? `<img src="${safeImage(l.image_url)}" class="card-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
+      const thumbnailHtml = l.image_url ? `<img src="${l.image_url}" class="card-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
       html += `
         <div class="pin" onclick="openDetailModal('${l.id}')">
@@ -1042,7 +713,7 @@ function showPopupFocus(m) {
 }
 
 function setupDisplayAutomation() {
-  ['click', 'mousemove', 'keydown', 'wheel', 'touchstart'].forEach(evt => {
+  ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
     window.addEventListener(evt, () => {
       resetActivity();
       if (isSlideShowActive) exitSlideShow();
@@ -1099,10 +770,10 @@ function startSlideShow() {
 function showNextSlide() {
   if (!isSlideShowActive || allLetters.length === 0) return;
   const container = document.getElementById('slideCardContainer');
-  const msg = allLetters[slideIndex % allLetters.length];
+  const msg = allLetters[slideIndex];
   const toneClass = getToneClass(msg);
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
-  const slideImgHtml = msg.image_url ? `<img src="${safeImage(msg.image_url)}" class="slide-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
+  const slideImgHtml = msg.image_url ? `<img src="${msg.image_url}" class="slide-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
 
   container.innerHTML = `
     <div class="card ${toneClass} slide-highlight-card">
@@ -1167,7 +838,7 @@ function openDetailModal(id) {
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   document.getElementById('mWho').innerText = `${msg.name} (${subInfo})`;
   let mediaHtml = '';
-  if (msg.image_url) mediaHtml = `<div class="modal-media-wrap"><img src="${safeImage(msg.image_url)}" alt="첨부사진"></div>`;
+  if (msg.image_url) mediaHtml = `<div class="modal-media-wrap"><img src="${msg.image_url}" alt="첨부사진"></div>`;
   document.getElementById('mBody').innerHTML = `<p>${escapeHtml(msg.message)}</p>` + mediaHtml;
   document.getElementById('mDeleteBtn').style.display = isAdmin() ? 'block' : 'none';
   document.getElementById('detailModal').hidden = false;
@@ -1189,7 +860,7 @@ function deleteCurrentMessage() {
   delBtn.disabled = true;
   delBtn.innerText = '삭제 중...';
 
-  apiFetch(API_URL, {
+  fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'deleteMessage', id: targetId })
@@ -1212,32 +883,45 @@ function deleteCurrentMessage() {
 }
 
 function loadAdminDashboard() {
-  apiFetch(`${API_URL}?action=listTopics&t=${Date.now()}`)
+  fetch(`${API_URL}?action=listTopics&t=${Date.now()}`)
     .then(r => r.json())
     .then(res => {
       if (!res.ok) return;
       const container = document.getElementById('adminTopicList');
       container.innerHTML = '';
       res.data.forEach(t => {
-        topicTitles.set(t.id,t.title);
         const studentUrl = `${getBaseUrl()}?mode=student&topic=${t.id}`;
         const teacherUrl = `${getBaseUrl()}?mode=teacher&topic=${t.id}`;
         const parentUrl = `${getBaseUrl()}?mode=parent&topic=${t.id}`;
         const displayUrl = `${getBaseUrl()}?mode=display&topic=${t.id}`;
         
-        const pText = formatPeriodText(t.start_at, t.end_at);
         const curFont = t.font_style || 'gmarket';
         const curRow = t.row_count || 3;
         
         const sVal = parseDateToYMD(t.start_at);
         const eVal = parseDateToYMD(t.end_at);
 
+        // 💡 날짜를 체크하여 대시보드 배지 텍스트를 "기간 마감"으로 동적 변환
+        let isActuallyActive = t.is_active;
+        let badgeText = t.is_active ? '진행 중' : '보관/종료';
+        let badgeClass = t.is_active ? 'active' : '';
+
+        if (eVal && t.is_active) {
+          const endDate = new Date(eVal + 'T23:59:59');
+          if (new Date() > endDate) {
+            isActuallyActive = false;
+            badgeText = '기간 마감';
+            badgeClass = '';
+          }
+        }
+
+        const pText = formatPeriodText(t.start_at, t.end_at);
+
         container.innerHTML += `
           <div class="admin-card">
-            <span class="badge ${t.is_active ? 'active' : ''}">${t.is_active ? '진행 중' : '보관/종료'}</span>
+            <span class="badge ${badgeClass}">${badgeText}</span>
             <h4 style="margin:8px 0; font-size:17px;">${escapeHtml(t.title)}</h4>
             <p style="font-size:14px; color:var(--sub);">${escapeHtml(t.description)}</p>
-            ${t.date_error ? `<p style="color:var(--err)">날짜 오류: ${escapeHtml(t.date_error)} · 기간을 다시 저장하세요.</p>` : ''}
             ${pText ? `<p style="font-size:13px; color:var(--point); margin-top:4px;">${escapeHtml(pText)}</p>` : ''}
             
             <div style="margin-top:12px; background:#FAF7F2; padding:10px; border-radius:8px; display:flex; flex-direction:column; gap:8px;">
@@ -1279,12 +963,12 @@ function loadAdminDashboard() {
 
             <div style="margin-top:14px; display:flex; gap:10px; align-items:center;">
               <a href="${displayUrl}" target="_blank" style="font-size:13.5px; color:var(--point); text-decoration:none; font-weight:700;">📺 전광판 열기</a>
-              <button class="sub-btn" style="margin-left:auto; font-weight:700; color:var(--point);" onclick="downloadPDF('${t.id}')">📄 PDF 저장</button>
+              <button class="sub-btn" style="margin-left:auto; font-weight:700; color:var(--point);" onclick="downloadPDF('${t.id}', '${escapeHtml(t.title)}')">📄 PDF 저장</button>
             </div>
           </div>
         `;
       });
-    }).catch(e=>{document.getElementById('adminTopicList').textContent=e.message; if(!adminToken){document.getElementById('adminLoginView').style.display='block';document.getElementById('adminView').style.display='none';}});
+    });
 
   document.getElementById('btnCreateTopic').onclick = function () {
     const title = document.getElementById('admTitle').value.trim();
@@ -1295,13 +979,12 @@ function loadAdminDashboard() {
     const endAt = document.getElementById('admEnd').value;
 
     if (!title) return alert('주제를 입력하세요.');
-    if (!validDates(startAt,endAt)) return;
 
     const btn = this;
     btn.disabled = true;
     btn.innerText = '배포 중...';
 
-    apiFetch(API_URL, {
+    fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({
@@ -1328,9 +1011,8 @@ function loadAdminDashboard() {
   };
 }
 
-function downloadPDF(topicId) {
-  const topicTitle=topicTitles.get(topicId)||'마음보드';
-  apiFetch(`${API_URL}?action=listMessages&topic_id=${topicId}&t=${Date.now()}`)
+function downloadPDF(topicId, topicTitle) {
+  fetch(`${API_URL}?action=listMessages&topic_id=${topicId}&t=${Date.now()}`)
     .then(r => r.json())
     .then(res => {
       if (!res.ok || !res.data || res.data.length === 0) {
@@ -1340,10 +1022,10 @@ function downloadPDF(topicId) {
       const renderArea = document.getElementById('pdfRenderArea');
       renderArea.innerHTML = `
         <h1 style="text-align:center; font-size:36px; border-bottom:2px solid #333; padding-bottom:12px;">
-          서현고등학교 - ${escapeHtml(topicTitle)}
+          서현고등학교 - ${topicTitle}
         </h1>
         <div style="font-size:13px; text-align:right; margin:8px 0 16px; color:#666;">
-          출력 일시: ${new Date().toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})} / 총 ${res.data.length}개 메모
+          출력 일시: ${new Date().toLocaleString('ko-KR')} / 총 ${res.data.length}개 메모
         </div>
         <div class="pdf-grid">
           ${res.data.map(m => `
@@ -1363,15 +1045,15 @@ function downloadPDF(topicId) {
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
-      return html2pdf().set(opt).from(renderArea).save().finally(() => {
+      html2pdf().set(opt).from(renderArea).save().then(() => {
         renderArea.style.display = 'none';
         renderArea.innerHTML = '';
       });
-    }).catch(e=>alert('PDF 저장 실패: '+e.message));
+    });
 }
 
 function loadStats() {
-  apiFetch(`${API_URL}?action=getStats&t=${Date.now()}`)
+  fetch(`${API_URL}?action=getStats&t=${Date.now()}`)
     .then(r => r.json())
     .then(res => {
       if (!res.ok) return;
@@ -1402,7 +1084,7 @@ function loadStats() {
 
       list.sort((a, b) => b.count - a.count);
       list.forEach(item => {
-        const dateStr = item.last_at ? escapeHtml(new Date(item.last_at).toLocaleDateString('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit'})) : '-';
+        const dateStr = item.last_at ? String(item.last_at).slice(5, 10).replace('-', '/') : '-';
         tableHtml += `
           <tr>
             <td><span class="badge">${escapeHtml(item.role || '학생')}</span></td>
@@ -1415,7 +1097,7 @@ function loadStats() {
       });
       tableHtml += '</tbody></table>';
       document.getElementById('statsTableWrap').innerHTML = tableHtml;
-    }).catch(e=>{document.getElementById('statsSummary').textContent=e.message;});
+    });
 }
 
 function escapeHtml(s) {
@@ -1426,4 +1108,3 @@ function escapeHtml(s) {
 </script>
 </body>
 </html>
-
