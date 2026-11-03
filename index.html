@@ -640,7 +640,7 @@
 
 <script>
 // ★ 선생님의 최신 API_URL 주소로 연결되어 있어야 합니다!
-const API_URL = 'https://script.google.com/macros/s/AKfycbw3O-Nh9ksuWh4QMYMrWHQ3opuOGz5gAIltQBVkwhMezqT4A9qB_bmldX9Sc2_QKwhV/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby2LdSEbtd3N66GIRn5ywSf0E1OYkeqpHduU4LPCMxxj0CLDCDnnGBrOhC-CjbkK6Xc/exec';
 
 const ADMIN_ID = 'admin';
 const ADMIN_PW = '7895301';
@@ -671,12 +671,21 @@ const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
 
-// 💡 날짜를 안전하게 YYYY-MM-DD로 변환
-function parseDateToYMD(dateStr) {
+// 💡 꼬여버린 따옴표를 완전히 제거하고 온전한 날짜로 바꾸는 함수
+function cleanDateString(dateStr) {
   if (!dateStr || dateStr === 'true' || dateStr === 'false' || dateStr === 'undefined') return '';
-  const s = String(dateStr).trim();
+  let s = String(dateStr).replace(/['"]/g, '').trim();
+  if (s.length > 10 && s.includes('T')) s = s.split('T')[0];
+  return s;
+}
+
+// 💡 2001년 버그 방지 및 안전한 날짜 추출
+function parseDateToYMD(dateStr) {
+  let s = cleanDateString(dateStr);
+  if (!s) return '';
   const match = s.match(/^(\d{4})[-\.]\s?(\d{2})[-\.]\s?(\d{2})/);
   if (match) return `${match[1]}-${match[2]}-${match[3]}`;
+  
   const d = new Date(s);
   if (!isNaN(d.getTime())) {
     const y = d.getFullYear();
@@ -687,7 +696,6 @@ function parseDateToYMD(dateStr) {
   return '';
 }
 
-// 💡 YYYY-MM-DD를 한국식 YYYY. MM. DD. 로 변환
 function formatPeriodText(start, end) {
   if (!start && !end) return '';
   const sYMD = parseDateToYMD(start);
@@ -842,6 +850,7 @@ function initWriter(role) {
       document.getElementById('viewPeriod').innerText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
 
       if (activeTopic.end_at) {
+        // 💡 2001년 버그가 수정된 정상 날짜로 비교
         const eYMD = parseDateToYMD(activeTopic.end_at);
         if (eYMD) {
           const endDate = new Date(eYMD + 'T23:59:59');
