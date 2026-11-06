@@ -5,38 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>서현고등학교 마음 보드</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
-  
   <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/GmarketSansMedium.woff2" rel="stylesheet" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff2" rel="stylesheet" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twenty-two@1.0/NEXON Lv1 Gothic Regular.woff2" rel="stylesheet" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/html2canvas/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
     :root {
-      --bg: #F3EDE1;
-      --ink: #3C352C;
-      --sub: #98896F;
-      --line: #E2D9C4;
-      --point: #8A6D3F;
-      --point-dark: #6F5730;
-      --card: #FFFDF7;
-      --err: #B3452F;
+      --bg: #F3EDE1; --ink: #3C352C; --sub: #98896F; --line: #E2D9C4;
+      --point: #8A6D3F; --point-dark: #6F5730; --card: #FFFDF7; --err: #B3452F;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     
     html, body {
       font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--ink);
-      background: var(--bg);
+      color: var(--ink); background: var(--bg);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
-      min-height: 100dvh;
-      word-break: keep-all; 
+      min-height: 100dvh; word-break: keep-all; 
     }
 
     .font-gmarket { font-family: 'GmarketSansMedium', sans-serif !important; }
@@ -52,7 +42,6 @@
     select.preview-font-gaegu { font-family: 'Gaegu', cursive !important; font-size: 18px; }
 
     .wrap { max-width: 620px; margin: 0 auto; padding: 20px 14px 100px; }
-
     header.main-header { text-align: center; padding: 36px 14px 16px; position: relative; }
     header.main-header .sc { font-size: 13px; letter-spacing: .45em; color: #93856E; font-weight: 600; margin-bottom: 10px; }
     header.main-header h1 { font-size: 38px; font-weight: 700; color: #3F3323; line-height: 1.25; margin-bottom: 8px; }
@@ -80,7 +69,6 @@
     
     .card { background: var(--card); padding: 14px; border-radius: 4px; box-shadow: 0 5px 14px rgba(90,70,40,.18); border: 1px solid #EFE7D6; transition: transform 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; }
     .card:hover { transform: translateY(-3px); }
-    
     .card .ph { min-height: 140px; height: auto; border-radius: 3px; display: flex; align-items: flex-start; padding: 14px; font-size: 19px; line-height: 1.55; color: #382F24; word-break: keep-all; overflow-wrap: break-word; }
     .card .ph span { display: block; width: 100%; white-space: pre-wrap; word-break: keep-all; overflow-wrap: break-word; }
     .card .nm { font-size: 17px; font-weight: 700; margin-top: 12px; padding-top: 8px; border-top: 1px dashed rgba(0,0,0,0.08); color: #4A3F2F; display: flex; justify-content: space-between; align-items: baseline; overflow: hidden; }
@@ -165,12 +153,10 @@
       <label>이름</label>
       <input type="text" id="fStudentName" maxlength="12" placeholder="이름을 입력하세요">
     </div>
-
     <div id="boxTeacher" style="display:none;">
       <label>이름 및 담당 (예: 김철수 국어샘)</label>
       <input type="text" id="fTeacherName" maxlength="20" placeholder="예: 홍길동 수학샘">
     </div>
-
     <div id="boxParent" style="display:none;">
       <label>학생 이름 및 호칭 (예: 김철수 엄마)</label>
       <input type="text" id="fParentName" maxlength="20" placeholder="예: 홍길동 학부모">
@@ -179,6 +165,10 @@
     <label>마음 남기기</label>
     <textarea id="fMsg" maxlength="500" placeholder="따뜻한 응원이나 마음을 담은 메시지를 남겨주세요"></textarea>
     
+    <!-- 💡 작성 시 사용할 4자리 비밀번호 필드 추가 -->
+    <label>글 수정/삭제용 비밀번호</label>
+    <input type="password" id="fPassword" maxlength="4" placeholder="숫자 4자리를 입력하세요" style="margin-bottom:15px; font-family:sans-serif;">
+
     <label>사진 첨부 (선택, 5MB 이하)</label>
     <input type="file" id="fImage" accept="image/*" style="margin-bottom: 15px; width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; cursor: pointer;">
     
@@ -258,10 +248,8 @@
     
     <label>주제 명칭</label>
     <input type="text" id="admTitle" placeholder="예: 2학기 1차 정기시험 응원 메시지">
-    
     <label>설명 문구</label>
     <input type="text" id="admDesc" placeholder="예: 친구, 선생님, 부모님의 따뜻한 응원을 전해주세요.">
-
     <label>전광판 글꼴(폰트) 선택</label>
     <select id="admFontSelect" class="preview-font-gmarket" onchange="updateSelectPreview(this)">
       <option value="gmarket" class="font-gmarket">지마켓 산스 (트렌디하고 시원시원함)</option>
@@ -270,26 +258,17 @@
       <option value="pretendard" class="font-pretendard">프리텐다드 (기본 고딕)</option>
       <option value="gaegu" class="font-gaegu">가구체 (기본 감성 손글씨)</option>
     </select>
-
     <label>한 줄에 보여질 메모 개수 (가로 배열)</label>
     <select id="admRowCount">
       <option value="3">3개씩 보기 (기본, 카드 크게)</option>
       <option value="4">4개씩 보기 (여유롭게)</option>
       <option value="5">5개씩 보기 (한 화면에 제일 많이)</option>
     </select>
-
     <label>작성 기간 설정 (날짜 지정)</label>
     <div class="date-row">
-      <div>
-        <span style="font-size:11px; color:var(--sub);">시작일</span>
-        <input type="date" id="admStart">
-      </div>
-      <div>
-        <span style="font-size:11px; color:var(--sub);">종료일</span>
-        <input type="date" id="admEnd">
-      </div>
+      <div><span style="font-size:11px; color:var(--sub);">시작일</span><input type="date" id="admStart"></div>
+      <div><span style="font-size:11px; color:var(--sub);">종료일</span><input type="date" id="admEnd"></div>
     </div>
-
     <button class="primary" id="btnCreateTopic">새 주제 등록 및 즉시 배포</button>
   </div>
 
@@ -301,9 +280,25 @@
   <div class="modal-card">
     <div class="who" id="mWho"></div>
     <div class="body" id="mBody"></div>
-    <div class="modal-actions">
+    
+    <!-- 💡 작성자용 수정 영역 -->
+    <div id="mEditArea" style="display:none; margin-bottom:20px;">
+      <textarea id="editMessageText" style="width:100%; min-height:100px; margin-bottom:8px;"></textarea>
+      <input type="password" id="editPassword" placeholder="작성 시 입력한 비밀번호" style="margin-bottom:8px; font-family:sans-serif;" maxlength="4">
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="primary" onclick="submitUserEdit()" style="margin-top:0; height:44px;">수정 완료</button>
+        <button type="button" onclick="hideUserEdit()" style="height:44px; border:1px solid var(--line); border-radius:10px; background:#fff; cursor:pointer; flex:1;">취소</button>
+      </div>
+    </div>
+
+    <div class="modal-actions" id="mUserActions">
       <button type="button" onclick="closeModal()">닫기</button>
-      <button type="button" class="btn-delete" id="mDeleteBtn" style="display:none;" onclick="deleteCurrentMessage()">이 게시물 삭제</button>
+      <button type="button" onclick="showUserEdit()" style="background:#FAF7F2; border-color:var(--line);">내 글 수정</button>
+      <button type="button" class="btn-delete" onclick="promptUserDelete()">내 글 삭제</button>
+    </div>
+    
+    <div class="modal-actions" id="mAdminActions" style="display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--line);">
+      <button type="button" class="btn-delete" onclick="deleteCurrentMessage()" style="background:#fff; color:var(--err);">[관리자 강제 삭제]</button>
     </div>
   </div>
 </div>
@@ -311,8 +306,8 @@
 <div id="pdfRenderArea"></div>
 
 <script>
-// ★ 주의: 선생님의 최신 '웹 앱 URL'을 반드시 아래에 넣어주세요! 
-const API_URL = 'https://script.google.com/macros/s/AKfycbz27A-H_Qf4MJjDTP0Fcez0jf8Ktv49ecD8I9n-3-40Km7MsM2oz5ddRy1jdTmWXbgC/exec';
+// ★ 주의: 3단계에서 새로 복사한 '웹 앱 URL'을 반드시 아래 따옴표 안에 넣어주세요!
+const API_URL = 'https://script.google.com/macros/s/AKfycbxWUVrLCTgj0i1tdJ2mes1kuohPmC3XffxRMlfGbGoju1zAr3wp3on4jt300eql686o/exec';
 
 const ADMIN_ID = 'admin';
 const ADMIN_PW = '7895301';
@@ -338,7 +333,6 @@ let slideTimer = null;
 let autoScrollInterval = null;
 let scrollDirection = 1;
 let userInteracting = false;
-
 const YOUTUBE_VIDEO_ID = '01XpV4LH3no';
 let ytPlayer = null;
 let isBgmPlaying = false;
@@ -349,13 +343,11 @@ function cleanDateString(dateStr) {
   if (s.length > 10 && s.includes('T')) s = s.split('T')[0];
   return s;
 }
-
 function parseDateToYMD(dateStr) {
   let s = cleanDateString(dateStr);
   if (!s) return '';
   const match = s.match(/^(\d{4})[-\.]\s?(\d{2})[-\.]\s?(\d{2})/);
   if (match) return `${match[1]}-${match[2]}-${match[3]}`;
-  
   const d = new Date(s);
   if (!isNaN(d.getTime())) {
     const y = d.getFullYear();
@@ -365,7 +357,6 @@ function parseDateToYMD(dateStr) {
   }
   return '';
 }
-
 function formatPeriodText(start, end) {
   if (!start && !end) return '';
   const sYMD = parseDateToYMD(start);
@@ -374,77 +365,51 @@ function formatPeriodText(start, end) {
   const eStr = eYMD ? eYMD.replace(/-/g, '. ') + '.' : '마감일 미지정';
   return `작성 기간 : ${sStr} ~ ${eStr}`;
 }
-
 function updateSelectPreview(selectEl) {
   selectEl.classList.remove('preview-font-gmarket', 'preview-font-scoredream', 'preview-font-nexon', 'preview-font-pretendard', 'preview-font-gaegu');
   selectEl.classList.add('preview-font-' + selectEl.value);
 }
-
 function applyDisplayFont(fontType) {
   const displayView = document.getElementById('displayView');
   displayView.classList.remove('font-gmarket', 'font-scoredream', 'font-nexon', 'font-pretendard', 'font-gaegu');
-  
   if (fontType === 'gmarket') displayView.classList.add('font-gmarket');
   else if (fontType === 'scoredream') displayView.classList.add('font-scoredream');
   else if (fontType === 'nexon') displayView.classList.add('font-nexon');
   else if (fontType === 'gaegu') displayView.classList.add('font-gaegu');
   else displayView.classList.add('font-pretendard');
 }
-
 function updateTopicRowCount(topicId, count) {
   fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'updateTopicRowCount', topic_id: topicId, row_count: count })
-  })
-  .then(r => r.json())
-  .then(res => {
+  }).then(r => r.json()).then(res => {
     if (!res.ok) throw new Error(res.error);
     alert('가로 배열 설정이 변경되었습니다! 전광판 화면에 즉시 반영됩니다.');
-  })
-  .catch(err => alert('변경 실패: ' + err.message));
+  }).catch(err => alert('변경 실패: ' + err.message));
 }
-
 function updateTopicFont(topicId, fontType) {
   fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'updateTopicFont', topic_id: topicId, font_style: fontType })
-  })
-  .then(r => r.json())
-  .then(res => {
+  }).then(r => r.json()).then(res => {
     if (!res.ok) throw new Error(res.error);
     alert('전광판 폰트가 성공적으로 변경되었습니다!');
-  })
-  .catch(err => alert('변경 실패: ' + err.message));
+  }).catch(err => alert('변경 실패: ' + err.message));
 }
-
-// 💡 날짜 수정 시 빈칸 입력을 원천 차단하는 로직 추가
 function updateTopicDates(topicId) {
   const startAt = document.getElementById(`start_${topicId}`).value;
   const endAt = document.getElementById(`end_${topicId}`).value;
-  
-  if (!startAt || !endAt) {
-    alert('시작일과 종료일을 모두 지정해주세요. 빈칸으로 비워둔 채 수정할 수 없습니다.');
-    return;
-  }
-
+  if (!startAt || !endAt) return alert('시작일과 종료일을 모두 지정해주세요. 빈칸으로 수정할 수 없습니다.');
   fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ action: 'updateTopicDates', topic_id: topicId, start_at: startAt, end_at: endAt })
-  })
-  .then(r => r.json())
-  .then(res => {
+  }).then(r => r.json()).then(res => {
     if (!res.ok) throw new Error(res.error);
     alert('작성 기간이 성공적으로 수정되었습니다.');
     location.reload();
-  })
-  .catch(err => alert('기간 수정 실패: ' + err.message));
+  }).catch(err => alert('기간 수정 실패: ' + err.message));
 }
-
 function isAdmin() { return localStorage.getItem('is_admin_logged') === 'true'; }
-
 function getToneClass(msg) {
   const role = msg.role || '학생';
   if (role === '교사') return 't-teacher';
@@ -455,27 +420,21 @@ function getToneClass(msg) {
   if (sId.startsWith('3')) return 't-grade3';
   return 't-grade1';
 }
-
 function getBaseUrl() { return window.location.origin + window.location.pathname; }
 
 if (modeParam === 'display') {
   document.getElementById('displayView').style.display = 'block';
-  initDisplay();
-  setupDisplayAutomation();
+  initDisplay(); setupDisplayAutomation();
 } else if (modeParam === 'student' || roleParam === 'student') {
-  document.getElementById('writeView').style.display = 'block';
-  initWriter('student');
+  document.getElementById('writeView').style.display = 'block'; initWriter('student');
 } else if (modeParam === 'teacher' || roleParam === 'teacher') {
-  document.getElementById('writeView').style.display = 'block';
-  initWriter('teacher');
+  document.getElementById('writeView').style.display = 'block'; initWriter('teacher');
 } else if (modeParam === 'parent' || roleParam === 'parent') {
-  document.getElementById('writeView').style.display = 'block';
-  initWriter('parent');
+  document.getElementById('writeView').style.display = 'block'; initWriter('parent');
 } else {
   if (isAdmin()) {
     document.getElementById('adminView').style.display = 'block';
-    loadAdminDashboard();
-    loadStats();
+    loadAdminDashboard(); loadStats();
   } else {
     document.getElementById('adminLoginView').style.display = 'block';
   }
@@ -488,17 +447,10 @@ document.getElementById('btnLogin').onclick = function() {
     localStorage.setItem('is_admin_logged', 'true');
     document.getElementById('adminLoginView').style.display = 'none';
     document.getElementById('adminView').style.display = 'block';
-    loadAdminDashboard();
-    loadStats();
-  } else {
-    alert('아이디 또는 비밀번호가 올바르지 않습니다.');
-  }
+    loadAdminDashboard(); loadStats();
+  } else { alert('아이디 또는 비밀번호가 올바르지 않습니다.'); }
 };
-
-function adminLogout() {
-  localStorage.removeItem('is_admin_logged');
-  location.reload();
-}
+function adminLogout() { localStorage.removeItem('is_admin_logged'); location.reload(); }
 
 function initWriter(role) {
   const badge = document.getElementById('roleBadge');
@@ -514,8 +466,7 @@ function initWriter(role) {
   }
 
   fetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
-    .then(r => r.json())
-    .then(res => {
+    .then(r => r.json()).then(res => {
       if (!res.ok || !res.data) {
         document.getElementById('viewTitle').innerText = '진행 중인 주제가 없습니다.';
         document.getElementById('writeFormBox').style.display = 'none';
@@ -536,143 +487,96 @@ function initWriter(role) {
           }
         }
       }
-    })
-    .catch(() => { document.getElementById('viewTitle').innerText = '네트워크 연결을 확인하세요.'; });
+    }).catch(() => { document.getElementById('viewTitle').innerText = '네트워크 연결을 확인하세요.'; });
 
   document.getElementById('btnSubmit').onclick = function () {
     if (!activeTopic) return alert('진행 중인 주제가 없습니다.');
 
     let name = '', studentId = '', actualRole = '학생';
     if (role === 'teacher') {
-      actualRole = '교사';
-      name = document.getElementById('fTeacherName').value.trim();
-      studentId = '선생님';
-      if (!name) return alert('이름과 담당(예: OOO 국어샘)을 입력해주세요.');
+      actualRole = '교사'; name = document.getElementById('fTeacherName').value.trim(); studentId = '선생님';
+      if (!name) return alert('이름과 담당을 입력해주세요.');
     } else if (role === 'parent') {
-      actualRole = '학부모';
-      name = document.getElementById('fParentName').value.trim();
-      studentId = '학부모';
-      if (!name) return alert('자녀 이름 및 호칭(예: OOO 엄마)을 입력해주세요.');
+      actualRole = '학부모'; name = document.getElementById('fParentName').value.trim(); studentId = '학부모';
+      if (!name) return alert('자녀 이름 및 호칭을 입력해주세요.');
     } else {
-      studentId = document.getElementById('fStudentId').value.trim();
-      name = document.getElementById('fStudentName').value.trim();
+      studentId = document.getElementById('fStudentId').value.trim(); name = document.getElementById('fStudentName').value.trim();
       if (!studentId || !name) return alert('학번과 이름을 모두 입력해주세요.');
     }
 
     const msg = document.getElementById('fMsg').value.trim();
     if (!msg) return alert('메시지 내용을 입력해주세요.');
+    
+    // 💡 4자리 비밀번호 확인
+    const pwd = document.getElementById('fPassword').value.trim();
+    if (!pwd || pwd.length < 4) return alert('글 수정/삭제 시 사용할 4자리 비밀번호를 입력해주세요.');
 
     const fileInput = document.getElementById('fImage');
-    const btn = this;
-    btn.disabled = true;
-    btn.innerText = '보내는 중...';
+    const btn = this; btn.disabled = true; btn.innerText = '보내는 중...';
 
     if (fileInput && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      if (file.size > 5 * 1024 * 1024) {
-        btn.disabled = false;
-        btn.innerText = '보내기';
-        return alert('사진 용량은 5MB 이하만 가능합니다.');
-      }
+      if (file.size > 5 * 1024 * 1024) { btn.disabled = false; btn.innerText = '보내기'; return alert('사진 용량은 5MB 이하만 가능합니다.'); }
       const reader = new FileReader();
       reader.onload = function(e) { sendToServer(e.target.result); };
       reader.readAsDataURL(file);
-    } else {
-      sendToServer('');
-    }
+    } else { sendToServer(''); }
 
     function sendToServer(imageData) {
       fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
-          action: 'createMessage',
-          topic_id: activeTopic.id,
-          name: name,
-          role: actualRole,
-          student_id: studentId,
-          message: msg,
-          image_data: imageData
+          action: 'createMessage', topic_id: activeTopic.id, name: name, role: actualRole,
+          student_id: studentId, message: msg, password: pwd, image_data: imageData // 💡 비밀번호 함께 전송
         })
-      })
-      .then(r => r.json())
-      .then(res => {
+      }).then(r => r.json()).then(res => {
         if (!res.ok) throw new Error(res.error);
         alert('마음이 정상적으로 전달되었습니다!');
         document.getElementById('fMsg').value = '';
+        document.getElementById('fPassword').value = '';
         if (fileInput) fileInput.value = '';
-      })
-      .catch(err => alert('전송 실패: ' + err.message))
-      .finally(() => {
-        btn.disabled = false;
-        btn.innerText = '보내기';
-      });
+      }).catch(err => alert('전송 실패: ' + err.message)).finally(() => { btn.disabled = false; btn.innerText = '보내기'; });
     }
   };
 }
 
 function initDisplay() {
   fetch(`${API_URL}?action=getActiveTopic${paramTopicId ? '&topic_id=' + paramTopicId : ''}&t=${Date.now()}`)
-    .then(r => r.json())
-    .then(res => {
+    .then(r => r.json()).then(res => {
       if (!res.ok || !res.data) return;
       activeTopic = res.data;
       document.getElementById('dispTitle').innerText = activeTopic.title;
       document.getElementById('dispDesc').innerText = activeTopic.description;
-
       applyDisplayFont(activeTopic.font_style || 'gmarket');
       ROW_COUNT = parseInt(activeTopic.row_count) || 3;
       document.documentElement.style.setProperty('--grid-cols', ROW_COUNT);
       document.getElementById('dispPeriod').innerText = formatPeriodText(activeTopic.start_at, activeTopic.end_at);
-
       const targetUrl = `${getBaseUrl()}?mode=student&topic=${activeTopic.id}`;
       new QRCode(document.getElementById('qrArea'), { text: targetUrl, width: 130, height: 130 });
-
-      pollMessages();
-      setInterval(pollMessages, 4000);
+      pollMessages(); setInterval(pollMessages, 4000);
     });
 }
 
 function pollMessages() {
   if (!activeTopic) return;
   fetch(`${API_URL}?action=listMessages&topic_id=${activeTopic.id}&t=${Date.now()}`)
-    .then(r => r.json())
-    .then(res => {
+    .then(r => r.json()).then(res => {
       if (!res.ok) return;
       const msgs = res.data.slice().reverse();
       allLetters = msgs;
-
       document.getElementById('dispMeta').innerHTML = `지금까지 <b>${msgs.length}</b>장이 걸렸습니다`;
-
-      if (isFirstLoad) {
-        msgs.forEach(m => lastKnownIds.add(m.id));
-        renderClothesline(msgs);
-        isFirstLoad = false;
-        return;
-      }
-
+      if (isFirstLoad) { msgs.forEach(m => lastKnownIds.add(m.id)); renderClothesline(msgs); isFirstLoad = false; return; }
       let hasNew = false;
       msgs.forEach(m => {
-        if (!lastKnownIds.has(m.id)) {
-          lastKnownIds.add(m.id);
-          hasNew = true;
-          exitSlideShow();
-          resetActivity();
-          showPopupFocus(m);
-        }
+        if (!lastKnownIds.has(m.id)) { lastKnownIds.add(m.id); hasNew = true; exitSlideShow(); resetActivity(); showPopupFocus(m); }
       });
-
       if (hasNew) setTimeout(() => { renderClothesline(allLetters); }, 4500);
     });
 }
 
 function renderClothesline(letters) {
   const container = document.getElementById('dispClothesline');
-  if (!letters.length) {
-    container.innerHTML = '<div style="text-align:center; padding:60px; color:var(--sub); font-size:16px;">첫 번째 응원 카드를 걸어주세요!</div>';
-    return;
-  }
-
+  if (!letters.length) { container.innerHTML = '<div style="text-align:center; padding:60px; color:var(--sub); font-size:16px;">첫 번째 응원 카드를 걸어주세요!</div>'; return; }
   let html = '';
   for (let i = 0; i < letters.length; i += ROW_COUNT) {
     html += '<div class="line"><div class="row">';
@@ -680,19 +584,14 @@ function renderClothesline(letters) {
       const toneClass = getToneClass(l);
       const subInfo = l.role === '학생' ? l.student_id : l.role;
       const thumbnailHtml = l.image_url ? `<img src="${l.image_url}" class="card-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
-
       html += `
         <div class="pin" onclick="openDetailModal('${l.id}')">
           <div class="card" style="position:relative;">
             ${thumbnailHtml}
             <div class="ph ${toneClass}"><span>${escapeHtml(l.message)}</span></div>
-            <div class="nm">
-              <span>${escapeHtml(l.name)}</span>
-              <em>${escapeHtml(subInfo)}</em>
-            </div>
+            <div class="nm"><span>${escapeHtml(l.name)}</span><em>${escapeHtml(subInfo)}</em></div>
           </div>
-        </div>
-      `;
+        </div>`;
     });
     html += '</div></div>';
   }
@@ -700,221 +599,184 @@ function renderClothesline(letters) {
 }
 
 function showPopupFocus(m) {
-  const toneClass = getToneClass(m);
-  const subInfo = m.role === '학생' ? m.student_id : m.role;
-  const popup = document.createElement('div');
-  popup.className = `card ${toneClass} popup-focus`;
+  const toneClass = getToneClass(m); const subInfo = m.role === '학생' ? m.student_id : m.role;
+  const popup = document.createElement('div'); popup.className = `card ${toneClass} popup-focus`;
   popup.innerHTML = `
     <div style="font-size:24px; line-height:1.5; margin-bottom:12px; word-break: keep-all;">${escapeHtml(m.message)}</div>
-    <div style="font-size:15px; font-weight:700; color:var(--point-dark); text-align:right;">${escapeHtml(subInfo)} ${escapeHtml(m.name)}</div>
-  `;
-  document.body.appendChild(popup);
-  setTimeout(() => { popup.remove(); }, 4500);
+    <div style="font-size:15px; font-weight:700; color:var(--point-dark); text-align:right;">${escapeHtml(subInfo)} ${escapeHtml(m.name)}</div>`;
+  document.body.appendChild(popup); setTimeout(() => { popup.remove(); }, 4500);
 }
 
 function setupDisplayAutomation() {
-  ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
-    window.addEventListener(evt, () => {
-      resetActivity();
-      if (isSlideShowActive) exitSlideShow();
-    });
-  });
-
-  window.addEventListener('wheel', () => {
-    userInteracting = true;
-    clearTimeout(window._userScrollTimer);
-    window._userScrollTimer = setTimeout(() => { userInteracting = false; }, 3000);
-  });
-
+  ['click', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt => { window.addEventListener(evt, () => { resetActivity(); if (isSlideShowActive) exitSlideShow(); }); });
+  window.addEventListener('wheel', () => { userInteracting = true; clearTimeout(window._userScrollTimer); window._userScrollTimer = setTimeout(() => { userInteracting = false; }, 3000); });
   autoScrollInterval = setInterval(() => {
     if (isSlideShowActive || userInteracting) return;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     if (maxScroll <= 50) return;
-
     const currentScroll = window.scrollY;
     if (scrollDirection === 1) {
-      if (currentScroll >= maxScroll - 5) {
-        userInteracting = true;
-        setTimeout(() => { scrollDirection = -1; userInteracting = false; }, 2000);
-      } else {
-        window.scrollBy({ top: 1.2, behavior: 'auto' });
-      }
+      if (currentScroll >= maxScroll - 5) { userInteracting = true; setTimeout(() => { scrollDirection = -1; userInteracting = false; }, 2000); } 
+      else { window.scrollBy({ top: 1.2, behavior: 'auto' }); }
     } else {
-      if (currentScroll <= 5) {
-        userInteracting = true;
-        setTimeout(() => { scrollDirection = 1; userInteracting = false; }, 2000);
-      } else {
-        window.scrollBy({ top: -1.8, behavior: 'auto' });
-      }
+      if (currentScroll <= 5) { userInteracting = true; setTimeout(() => { scrollDirection = 1; userInteracting = false; }, 2000); } 
+      else { window.scrollBy({ top: -1.8, behavior: 'auto' }); }
     }
   }, 40);
-
-  setInterval(() => {
-    if (!isSlideShowActive && allLetters.length > 0 && Date.now() - lastActivityTime >= IDLE_LIMIT) {
-      startSlideShow();
-    }
-  }, 5000);
+  setInterval(() => { if (!isSlideShowActive && allLetters.length > 0 && Date.now() - lastActivityTime >= IDLE_LIMIT) startSlideShow(); }, 5000);
 }
 
 function resetActivity() { lastActivityTime = Date.now(); }
-
 function startSlideShow() {
   if (allLetters.length === 0) return;
-  isSlideShowActive = true;
-  document.getElementById('screensaverArea').style.display = 'block';
-  slideIndex = 0;
-  showNextSlide();
-  slideTimer = setInterval(showNextSlide, 4500);
+  isSlideShowActive = true; document.getElementById('screensaverArea').style.display = 'block';
+  slideIndex = 0; showNextSlide(); slideTimer = setInterval(showNextSlide, 4500);
 }
-
 function showNextSlide() {
   if (!isSlideShowActive || allLetters.length === 0) return;
-  const container = document.getElementById('slideCardContainer');
   const msg = allLetters[slideIndex];
-  const toneClass = getToneClass(msg);
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
-  const slideImgHtml = msg.image_url ? `<img src="${msg.image_url}" class="slide-thumbnail" alt="첨부사진" onerror="this.style.display='none'">` : '';
-
-  container.innerHTML = `
-    <div class="card ${toneClass} slide-highlight-card">
+  const slideImgHtml = msg.image_url ? `<img src="${msg.image_url}" class="slide-thumbnail" onerror="this.style.display='none'">` : '';
+  document.getElementById('slideCardContainer').innerHTML = `
+    <div class="card ${getToneClass(msg)} slide-highlight-card">
       ${slideImgHtml}
       <div style="font-size:26px; line-height:1.5; margin-bottom:14px; color:#382F24; word-break: keep-all;">${escapeHtml(msg.message)}</div>
       <div style="font-size:16px; font-weight:700; color:var(--point-dark); text-align:right;">- ${escapeHtml(subInfo)} ${escapeHtml(msg.name)} -</div>
-    </div>
-  `;
+    </div>`;
   slideIndex = (slideIndex + 1) % allLetters.length;
 }
-
 function exitSlideShow() {
   if (!isSlideShowActive) return;
-  isSlideShowActive = false;
-  clearInterval(slideTimer);
-  document.getElementById('screensaverArea').style.display = 'none';
-  document.getElementById('slideCardContainer').innerHTML = '';
-  resetActivity();
+  isSlideShowActive = false; clearInterval(slideTimer);
+  document.getElementById('screensaverArea').style.display = 'none'; document.getElementById('slideCardContainer').innerHTML = ''; resetActivity();
 }
 
 (function loadYoutubeAPI() {
-  const tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  const firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
+  const firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 })();
-
 function onYouTubeIframeAPIReady() {
-  ytPlayer = new YT.Player('youtubePlayer', {
-    height: '0', width: '0', videoId: YOUTUBE_VIDEO_ID,
-    playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': YOUTUBE_VIDEO_ID, 'controls': 0 },
-    events: { 'onReady': function(event) { event.target.setVolume(30); } }
-  });
+  ytPlayer = new YT.Player('youtubePlayer', { height: '0', width: '0', videoId: YOUTUBE_VIDEO_ID, playerVars: { 'autoplay': 0, 'loop': 1, 'playlist': YOUTUBE_VIDEO_ID, 'controls': 0 }, events: { 'onReady': function(event) { event.target.setVolume(30); } } });
 }
-
 function toggleBgm() {
   if (!ytPlayer || !ytPlayer.playVideo) return;
-  const btn = document.getElementById('bgmToggleBtn');
-  const icon = document.getElementById('bgmIcon');
-  const text = document.getElementById('bgmText');
-
-  if (!isBgmPlaying) {
-    ytPlayer.playVideo();
-    isBgmPlaying = true;
-    btn.classList.add('playing');
-    icon.innerText = '🔊';
-    text.innerText = '배경음악 끄기';
-  } else {
-    ytPlayer.pauseVideo();
-    isBgmPlaying = false;
-    btn.classList.remove('playing');
-    icon.innerText = '🎵';
-    text.innerText = '피아노 배경음악 켜기';
-  }
+  const btn = document.getElementById('bgmToggleBtn'); const icon = document.getElementById('bgmIcon'); const text = document.getElementById('bgmText');
+  if (!isBgmPlaying) { ytPlayer.playVideo(); isBgmPlaying = true; btn.classList.add('playing'); icon.innerText = '🔊'; text.innerText = '배경음악 끄기'; } 
+  else { ytPlayer.pauseVideo(); isBgmPlaying = false; btn.classList.remove('playing'); icon.innerText = '🎵'; text.innerText = '피아노 배경음악 켜기'; }
 }
 
 function openDetailModal(id) {
   const msg = allLetters.find(x => x.id === id);
   if (!msg) return;
-  selectedMsg = msg;
-  selectedMsgId = id;
+  selectedMsg = msg; selectedMsgId = id;
   const subInfo = msg.role === '학생' ? msg.student_id : msg.role;
   document.getElementById('mWho').innerText = `${msg.name} (${subInfo})`;
-  let mediaHtml = '';
-  if (msg.image_url) mediaHtml = `<div class="modal-media-wrap"><img src="${msg.image_url}" alt="첨부사진"></div>`;
+  let mediaHtml = msg.image_url ? `<div class="modal-media-wrap"><img src="${msg.image_url}"></div>` : '';
   document.getElementById('mBody').innerHTML = `<p>${escapeHtml(msg.message)}</p>` + mediaHtml;
-  document.getElementById('mDeleteBtn').style.display = isAdmin() ? 'block' : 'none';
+  
+  hideUserEdit();
+  document.getElementById('mAdminActions').style.display = isAdmin() ? 'block' : 'none';
+  document.getElementById('mUserActions').style.display = 'flex';
   document.getElementById('detailModal').hidden = false;
 }
 
 function closeModal() {
   document.getElementById('detailModal').hidden = true;
-  selectedMsg = null;
-  selectedMsgId = null;
+  selectedMsg = null; selectedMsgId = null;
+  hideUserEdit();
+}
+
+// 💡 작성자 글 삭제 (비밀번호 모달 입력창)
+function promptUserDelete() {
+  if (!selectedMsgId) return;
+  const pw = prompt('본인이 작성한 글을 삭제하려면 4자리 비밀번호를 입력하세요.');
+  if (!pw) return;
+
+  fetch(API_URL, {
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'deleteMessageUser', id: selectedMsgId, password: pw })
+  }).then(r => r.json()).then(res => {
+    if (!res.ok) throw new Error(res.error);
+    alert('작성하신 글이 정상적으로 삭제되었습니다.');
+    closeModal(); pollMessages();
+  }).catch(err => alert(err.message));
+}
+
+// 💡 작성자 글 수정 폼 표시/숨김
+function showUserEdit() {
+  document.getElementById('mBody').style.display = 'none';
+  document.getElementById('mUserActions').style.display = 'none';
+  document.getElementById('mAdminActions').style.display = 'none';
+  
+  const editArea = document.getElementById('mEditArea');
+  editArea.style.display = 'block';
+  document.getElementById('editMessageText').value = selectedMsg.message;
+}
+
+function hideUserEdit() {
+  document.getElementById('mEditArea').style.display = 'none';
+  document.getElementById('editPassword').value = '';
+  document.getElementById('mBody').style.display = 'block';
+  document.getElementById('mUserActions').style.display = 'flex';
+  document.getElementById('mAdminActions').style.display = isAdmin() ? 'block' : 'none';
+}
+
+// 💡 작성자 글 수정 처리 (비밀번호 확인)
+function submitUserEdit() {
+  const pw = document.getElementById('editPassword').value.trim();
+  const newMsg = document.getElementById('editMessageText').value.trim();
+
+  if (!pw) return alert('작성 시 설정한 비밀번호를 입력하세요.');
+  if (!newMsg) return alert('수정할 메시지를 입력하세요.');
+
+  fetch(API_URL, {
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'editMessageUser', id: selectedMsgId, password: pw, message: newMsg })
+  }).then(r => r.json()).then(res => {
+    if (!res.ok) throw new Error(res.error);
+    alert('작성하신 글이 성공적으로 수정되었습니다.');
+    closeModal(); pollMessages();
+  }).catch(err => alert(err.message));
 }
 
 function deleteCurrentMessage() {
-  if (!selectedMsgId || !isAdmin()) return alert('삭제할 대상을 찾을 수 없거나 관리자 권한이 없습니다.');
-  const targetId = selectedMsgId;
-  const authorName = selectedMsg ? selectedMsg.name : '해당';
-  if (!confirm(`'${authorName}'님의 글을 삭제하시겠습니까?`)) return;
+  if (!selectedMsgId || !isAdmin()) return;
+  if (!confirm(`[관리자 권한] 해당 게시글을 강제 삭제하시겠습니까?`)) return;
 
-  const delBtn = document.getElementById('mDeleteBtn');
-  delBtn.disabled = true;
-  delBtn.innerText = '삭제 중...';
+  const delBtn = document.querySelector('#mAdminActions .btn-delete');
+  delBtn.disabled = true; delBtn.innerText = '삭제 중...';
 
   fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action: 'deleteMessage', id: targetId })
-  })
-  .then(r => r.json())
-  .then(res => {
+    method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'deleteMessage', id: selectedMsgId })
+  }).then(r => r.json()).then(res => {
     if (!res.ok) throw new Error(res.error);
-    alert('게시물이 정상적으로 삭제되었습니다.');
-    closeModal();
-    allLetters = allLetters.filter(x => x.id !== targetId);
-    lastKnownIds.delete(targetId);
-    renderClothesline(allLetters);
-    document.getElementById('dispMeta').innerHTML = `지금까지 <b>${allLetters.length}</b>장이 걸렸습니다`;
-  })
-  .catch(err => alert('삭제 실패: ' + err.message))
-  .finally(() => {
-    delBtn.disabled = false;
-    delBtn.innerText = '이 게시물 삭제';
+    alert('관리자 권한으로 삭제되었습니다.');
+    closeModal(); pollMessages();
+  }).catch(err => alert('삭제 실패: ' + err.message)).finally(() => {
+    delBtn.disabled = false; delBtn.innerText = '[관리자 강제 삭제]';
   });
 }
 
 function loadAdminDashboard() {
   fetch(`${API_URL}?action=listTopics&t=${Date.now()}`)
-    .then(r => r.json())
-    .then(res => {
+    .then(r => r.json()).then(res => {
       if (!res.ok) return;
-      const container = document.getElementById('adminTopicList');
-      container.innerHTML = '';
+      const container = document.getElementById('adminTopicList'); container.innerHTML = '';
       res.data.forEach(t => {
         const studentUrl = `${getBaseUrl()}?mode=student&topic=${t.id}`;
         const teacherUrl = `${getBaseUrl()}?mode=teacher&topic=${t.id}`;
         const parentUrl = `${getBaseUrl()}?mode=parent&topic=${t.id}`;
         const displayUrl = `${getBaseUrl()}?mode=display&topic=${t.id}`;
         
-        const curFont = t.font_style || 'gmarket';
-        const curRow = t.row_count || 3;
-        
-        const sVal = parseDateToYMD(t.start_at);
-        const eVal = parseDateToYMD(t.end_at);
+        const curFont = t.font_style || 'gmarket'; const curRow = t.row_count || 3;
+        const sVal = parseDateToYMD(t.start_at); const eVal = parseDateToYMD(t.end_at);
 
-        // 💡 날짜를 체크하여 대시보드 배지 텍스트를 "기간 마감"으로 동적 변환
-        let isActuallyActive = t.is_active;
-        let badgeText = t.is_active ? '진행 중' : '보관/종료';
-        let badgeClass = t.is_active ? 'active' : '';
-
+        let isActuallyActive = t.is_active; let badgeText = t.is_active ? '진행 중' : '보관/종료'; let badgeClass = t.is_active ? 'active' : '';
         if (eVal && t.is_active) {
           const endDate = new Date(eVal + 'T23:59:59');
-          if (new Date() > endDate) {
-            isActuallyActive = false;
-            badgeText = '기간 마감';
-            badgeClass = '';
-          }
+          if (new Date() > endDate) { isActuallyActive = false; badgeText = '기간 마감'; badgeClass = ''; }
         }
-
         const pText = formatPeriodText(t.start_at, t.end_at);
 
         container.innerHTML += `
@@ -971,62 +833,30 @@ function loadAdminDashboard() {
     });
 
   document.getElementById('btnCreateTopic').onclick = function () {
-    const title = document.getElementById('admTitle').value.trim();
-    const desc = document.getElementById('admDesc').value.trim();
-    const fontStyle = document.getElementById('admFontSelect').value;
-    const rowCount = document.getElementById('admRowCount').value;
-    const startAt = document.getElementById('admStart').value;
-    const endAt = document.getElementById('admEnd').value;
-
+    const title = document.getElementById('admTitle').value.trim(); const desc = document.getElementById('admDesc').value.trim();
+    const fontStyle = document.getElementById('admFontSelect').value; const rowCount = document.getElementById('admRowCount').value;
+    const startAt = document.getElementById('admStart').value; const endAt = document.getElementById('admEnd').value;
     if (!title) return alert('주제를 입력하세요.');
 
-    const btn = this;
-    btn.disabled = true;
-    btn.innerText = '배포 중...';
-
+    const btn = this; btn.disabled = true; btn.innerText = '배포 중...';
     fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({
-        action: 'createTopic',
-        title: title,
-        description: desc,
-        font_style: fontStyle,
-        row_count: rowCount,
-        start_at: startAt,
-        end_at: endAt
-      })
-    })
-    .then(r => r.json())
-    .then(res => {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'createTopic', title: title, description: desc, font_style: fontStyle, row_count: rowCount, start_at: startAt, end_at: endAt })
+    }).then(r => r.json()).then(res => {
       if (!res.ok) throw new Error(res.error);
-      alert('새 주제가 배포되었습니다!');
-      location.reload();
-    })
-    .catch(err => alert('오류: ' + err.message))
-    .finally(() => {
-      btn.disabled = false;
-      btn.innerText = '새 주제 등록 및 즉시 배포';
-    });
+      alert('새 주제가 배포되었습니다!'); location.reload();
+    }).catch(err => alert('오류: ' + err.message)).finally(() => { btn.disabled = false; btn.innerText = '새 주제 등록 및 즉시 배포'; });
   };
 }
 
 function downloadPDF(topicId, topicTitle) {
   fetch(`${API_URL}?action=listMessages&topic_id=${topicId}&t=${Date.now()}`)
-    .then(r => r.json())
-    .then(res => {
-      if (!res.ok || !res.data || res.data.length === 0) {
-        return alert('저장할 작성 메모가 없습니다.');
-      }
-
+    .then(r => r.json()).then(res => {
+      if (!res.ok || !res.data || res.data.length === 0) return alert('저장할 작성 메모가 없습니다.');
       const renderArea = document.getElementById('pdfRenderArea');
       renderArea.innerHTML = `
-        <h1 style="text-align:center; font-size:36px; border-bottom:2px solid #333; padding-bottom:12px;">
-          서현고등학교 - ${topicTitle}
-        </h1>
-        <div style="font-size:13px; text-align:right; margin:8px 0 16px; color:#666;">
-          출력 일시: ${new Date().toLocaleString('ko-KR')} / 총 ${res.data.length}개 메모
-        </div>
+        <h1 style="text-align:center; font-size:36px; border-bottom:2px solid #333; padding-bottom:12px;">서현고등학교 - ${topicTitle}</h1>
+        <div style="font-size:13px; text-align:right; margin:8px 0 16px; color:#666;">출력 일시: ${new Date().toLocaleString('ko-KR')} / 총 ${res.data.length}개 메모</div>
         <div class="pdf-grid">
           ${res.data.map(m => `
             <div class="pdf-card">
@@ -1037,74 +867,30 @@ function downloadPDF(topicId, topicTitle) {
         </div>
       `;
       renderArea.style.display = 'block';
-
-      const opt = {
-        margin: 10,
-        filename: `서현고_${topicTitle}_보관함.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-      html2pdf().set(opt).from(renderArea).save().then(() => {
-        renderArea.style.display = 'none';
-        renderArea.innerHTML = '';
-      });
+      const opt = { margin: 10, filename: `서현고_${topicTitle}_보관함.pdf`, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+      html2pdf().set(opt).from(renderArea).save().then(() => { renderArea.style.display = 'none'; renderArea.innerHTML = ''; });
     });
 }
 
 function loadStats() {
   fetch(`${API_URL}?action=getStats&t=${Date.now()}`)
-    .then(r => r.json())
-    .then(res => {
+    .then(r => r.json()).then(res => {
       if (!res.ok) return;
-      const list = res.data;
-      const totalCount = list.reduce((acc, cur) => acc + cur.count, 0);
-      document.getElementById('statsSummary').innerHTML = `
-        현재까지 총 <b>${list.length}명</b>이 <b>${totalCount}개</b>의 응원 메모를 남겼습니다.
-      `;
+      const list = res.data; const totalCount = list.reduce((acc, cur) => acc + cur.count, 0);
+      document.getElementById('statsSummary').innerHTML = `현재까지 총 <b>${list.length}명</b>이 <b>${totalCount}개</b>의 응원 메모를 남겼습니다.`;
+      if (list.length === 0) { document.getElementById('statsTableWrap').innerHTML = '<p style="text-align:center; padding:10px;">참여 데이터가 없습니다.</p>'; return; }
 
-      if (list.length === 0) {
-        document.getElementById('statsTableWrap').innerHTML = '<p style="text-align:center; padding:10px;">참여 데이터가 없습니다.</p>';
-        return;
-      }
-
-      let tableHtml = `
-        <table class="stat-table">
-          <thead>
-            <tr>
-              <th>구분</th>
-              <th>학번/호칭</th>
-              <th>이름</th>
-              <th>작성 수</th>
-              <th>최근 참여</th>
-            </tr>
-          </thead>
-          <tbody>
-      `;
-
+      let tableHtml = `<table class="stat-table"><thead><tr><th>구분</th><th>학번/호칭</th><th>이름</th><th>작성 수</th><th>최근 참여</th></tr></thead><tbody>`;
       list.sort((a, b) => b.count - a.count);
       list.forEach(item => {
         const dateStr = item.last_at ? String(item.last_at).slice(5, 10).replace('-', '/') : '-';
-        tableHtml += `
-          <tr>
-            <td><span class="badge">${escapeHtml(item.role || '학생')}</span></td>
-            <td>${escapeHtml(item.student_id || '-')}</td>
-            <td>${escapeHtml(item.name)}</td>
-            <td><b>${item.count}회</b></td>
-            <td>${dateStr}</td>
-          </tr>
-        `;
+        tableHtml += `<tr><td><span class="badge">${escapeHtml(item.role || '학생')}</span></td><td>${escapeHtml(item.student_id || '-')}</td><td>${escapeHtml(item.name)}</td><td><b>${item.count}회</b></td><td>${dateStr}</td></tr>`;
       });
-      tableHtml += '</tbody></table>';
-      document.getElementById('statsTableWrap').innerHTML = tableHtml;
+      tableHtml += '</tbody></table>'; document.getElementById('statsTableWrap').innerHTML = tableHtml;
     });
 }
 
-function escapeHtml(s) {
-  return String(s || '').replace(/[&<>"']/g, m => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[m]));
-}
+function escapeHtml(s) { return String(s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
 </script>
 </body>
 </html>
